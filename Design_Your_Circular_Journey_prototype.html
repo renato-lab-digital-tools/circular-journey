@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Your Circular Journey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#10172b; --navy-2:#1c2740; --navy-tint:#e8ecf3; --navy-line:#2a3450;
+  --accent:#1b2cff; --accent-tint:#e6ebfa; --logo-blue:#0055FF;
+  --ink:#172033; --muted:#566074; --faint:#8c97ad; --line:#c6d0e2; --panel:#eef2fb; --bg:#eaeef6;
+  --warn:#b45309; --warn-text:#8a5a00; --warn-bg:#fdf3e3; --warn-line:#e7c890;
+  --undet:#7a857f; --undet-bg:#eef0ee; --undet-line:#cdd4cf;
+  --r:12px; --mono:ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;line-height:1.6}
+a{color:var(--accent);font-weight:600}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:var(--navy);color:#fff;border-bottom:1px solid var(--navy-line)}
+.nav-in{max-width:1100px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;gap:14px}
+.nav-logo{height:26px;width:78px;color:#fff;flex-shrink:0}
+.nav-div{width:1px;height:22px;background:var(--navy-line);flex-shrink:0}
+.nav-title{font-size:15px;font-weight:700;color:#fff;white-space:nowrap}
+.nav-brand{display:flex;align-items:center;gap:14px;cursor:pointer}
+.nav-brand:hover .nav-title{color:#c7d3ea}
+.nav-spacer{flex:1}
+.nav-tag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;font-weight:700;color:#9db4dd;border:1px solid var(--navy-line);border-radius:99px;padding:3px 10px;white-space:nowrap}
+.nav-btn{background:transparent;color:#fff;border:1px solid var(--navy-line);border-radius:7px;padding:6px 13px;font-size:12.5px;font-weight:600;font-family:inherit;cursor:pointer}
+.nav-btn:hover{background:rgba(255,255,255,.08)}
+.nav-btn.on{background:#fff;color:var(--navy);border-color:#fff}
+
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px 70px}
+.btn{border-radius:8px;padding:13px 30px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;border:none}
+.btn-p{background:var(--navy);color:#fff}.btn-p:hover{background:var(--navy-2)}
+.btn-d{background:#b6c7e0;color:#fff;cursor:not-allowed}
+.btn-g{background:#fff;color:var(--muted);border:1px solid var(--line);padding:12px 24px;font-size:14px}
+.btn-g:hover{border-color:var(--navy);color:var(--navy)}
+.chip{border:1.5px solid #b3c3e3;background:#fff;color:var(--ink);border-radius:8px;padding:9px 15px;font-size:13px;display:inline-block;cursor:pointer;font-family:inherit}
+.chip:hover{border-color:var(--navy)}
+.chip.on{border-color:var(--navy);background:var(--navy-tint);color:var(--navy);font-weight:600;box-shadow:inset 3px 0 0 var(--accent)}
+.chip.unk.on{border-color:var(--warn);background:var(--warn-bg);color:var(--warn)}
+.pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;display:inline-block}
+.pill-c{color:var(--navy);border:1px solid var(--navy);background:var(--navy-tint)}
+.pill-w{color:var(--warn-text);border:1px solid var(--warn-line);background:var(--warn-bg)}
+.pill-u{color:var(--undet);border:1px solid var(--undet-line);background:var(--undet-bg)}
+input[type=text],input[type=email]{width:100%;padding:10px 13px;border:1.5px solid var(--line);border-radius:8px;font-size:13px;font-family:inherit}
+input:focus{border-color:var(--navy);outline:none;box-shadow:0 0 0 3px var(--accent-tint)}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px 24px}
+.notice{font-size:12.5px;color:var(--muted);background:var(--navy-tint);border-left:3px solid var(--navy);border-radius:0 8px 8px 0;padding:12px 15px;line-height:1.7}
+.notice.warn{background:var(--warn-bg);border-left-color:var(--warn);color:var(--warn-text)}
+
+/* top stepper */
+.stepper{display:flex;align-items:flex-start;justify-content:center;flex-wrap:nowrap;overflow-x:auto;padding:16px 4px 6px;margin-top:8px}
+.stepper .node{display:flex;flex-direction:column;align-items:center;gap:5px;width:88px;flex-shrink:0}
+.stepper .dot{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;background:#fff;border:2px solid var(--line);color:var(--faint)}
+.stepper .dot.done{background:var(--navy);border-color:var(--navy);color:#fff}
+.stepper .dot.cur{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:0 0 0 3px var(--accent-tint),0 0 0 4px var(--accent)}
+.stepper .lb{font-size:10.5px;text-align:center;color:var(--faint);line-height:1.3}
+.stepper .lb.on{color:var(--navy);font-weight:700}
+.stepper .bar{height:2px;width:22px;background:var(--line);margin-top:12px;flex-shrink:0}
+.stepper .bar.done{background:var(--navy)}
+
+/* flow shell */
+.shell{border-radius:var(--r);overflow:hidden;box-shadow:0 2px 12px rgba(16,23,43,.09);border:1px solid var(--navy);margin-top:6px;background:#fff}
+.shell-head{padding:16px 22px 4px;background:#fff}
+.shell-head .t{font-size:19px;font-weight:800;color:var(--navy)}
+.shell-head .s{font-size:12.5px;color:var(--muted);margin-top:2px}
+.shell-body{display:grid;grid-template-columns:minmax(210px,300px) 1fr}
+.illus{border-right:1px solid var(--line);padding:26px 20px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:14px;background:#fff}
+.illus .cap{font-size:12px;color:var(--muted);text-align:center;max-width:230px;line-height:1.6}
+.qpanel{background:var(--panel);padding:18px 26px 26px}
+.q{padding:16px 0;border-top:1px solid #d9e1f0}
+.q:first-child{border-top:none}
+.q .qt{font-weight:700;font-size:14.5px;margin:0 0 3px;color:var(--navy)}
+.q .qh{color:var(--muted);font-size:11.8px;margin:0 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.shell-foot{display:flex;gap:12px;justify-content:space-between;align-items:center;padding:16px 22px;background:#fff;border-top:1px solid var(--line);flex-wrap:wrap}
+.shell-foot .right{display:flex;gap:12px;flex-wrap:wrap;margin-left:auto}
+
+/* home */
+.hero{padding:44px 0 8px}
+.badge{display:inline-block;font-size:12px;font-weight:700;color:var(--warn-text);background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:99px;padding:4px 12px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--accent);font-weight:700;margin:16px 0 6px}
+.hero h1{font-size:36px;line-height:1.2;margin:0 0 14px;color:var(--navy);font-weight:800;letter-spacing:-.01em}
+.hero p.sub{font-size:16px;color:var(--muted);max-width:680px;margin:0;line-height:1.75}
+.home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:22px 0}
+.home-grid .card h4{margin:0 0 6px;font-size:15px;color:var(--navy)}
+.home-grid .card p{margin:0;font-size:12.8px;color:var(--muted);line-height:1.7}
+.sec{margin:26px 0}
+.sec h3{font-size:17px;color:var(--navy);margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.sec p{font-size:13.5px;color:var(--ink);line-height:1.8;margin:0 0 8px}
+.aud{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:10px}
+.aud .it{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.aud .it b{font-size:13px;color:var(--navy)}
+.aud .it span{font-size:12px;color:var(--muted);display:block;margin-top:3px;line-height:1.6}
+.flowlist{counter-reset:st;display:grid;gap:8px;margin-top:8px}
+.flowlist .fl{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px}
+.flowlist .fl .no{counter-increment:st;font-family:var(--mono);font-weight:700;color:var(--accent);flex-shrink:0}
+.flowlist .fl .no::before{content:counter(st)}
+.flowlist .fl b{font-size:13px;color:var(--navy)}
+.flowlist .fl span{font-size:12px;color:var(--muted)}
+
+/* CE accordion */
+.vflow{display:flex;align-items:flex-start;overflow-x:auto;padding:8px 2px 12px;margin-bottom:8px}
+.vflow .vn{display:flex;flex-direction:column;align-items:center;gap:4px;width:76px;flex-shrink:0;cursor:pointer}
+.vflow .vd{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;background:#fff;border:2px solid var(--line);color:var(--faint)}
+.vflow .vd.done{background:var(--navy);border-color:var(--navy);color:#fff}
+.vflow .vd.cur{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-tint)}
+.vflow .vl{font-size:9.5px;text-align:center;color:var(--faint);line-height:1.25}
+.vflow .vl.on{color:var(--navy);font-weight:700}
+.vflow .vbar{height:2px;width:16px;background:var(--line);margin-top:11px;flex-shrink:0}
+.vflow .vbar.done{background:var(--navy)}
+.phase-h{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;border:1px solid var(--line);border-radius:10px;cursor:pointer;margin-bottom:8px}
+.phase-h .ic{width:26px;height:26px;color:var(--navy);flex-shrink:0}
+.phase-h .pt{font-weight:700;font-size:14px;color:var(--navy)}
+.phase-h .pc{font-size:11.5px;color:var(--muted)}
+.ce-item{background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 15px;margin-bottom:9px}
+.ce-item.tbd{opacity:.8;border-style:dashed}
+.ce-top{display:flex;align-items:flex-start;gap:10px}
+.ce-num{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--accent);flex-shrink:0;margin-top:2px}
+.ce-title{font-weight:700;font-size:14px;color:var(--navy)}
+.ce-en{font-size:11px;color:var(--faint)}
+.ce-q{font-size:12.5px;color:var(--ink);margin:8px 0 10px;line-height:1.6}
+.ce-follow{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+
+/* results */
+.report{margin-top:6px}
+.rcard{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;margin-bottom:14px}
+.rcard h3{margin:0 0 8px;font-size:16px;color:var(--navy)}
+.rcard .rk{font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.08em;font-weight:700}
+.rhero{background:var(--navy);color:#fff;border-radius:var(--r);padding:24px 26px;margin-bottom:14px}
+.rhero h2{margin:0 0 8px;font-size:22px}
+.rhero p{margin:0;color:#c7d3ea;font-size:13.5px}
+.chipset{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.ctx{display:inline-block;font-size:12px;background:rgba(255,255,255,.1);border:1px solid var(--navy-line);border-radius:8px;padding:4px 10px;color:#e7edf7}
+.res{padding:10px 13px;border-radius:8px;font-size:12.5px;line-height:1.6;margin-bottom:8px}
+.res.ok{background:var(--navy-tint);color:var(--navy);border-left:3px solid var(--accent)}
+.res.gap{background:var(--warn-bg);color:var(--warn-text);border-left:3px solid var(--warn)}
+.res.und{background:var(--undet-bg);color:var(--undet);border-left:3px solid var(--undet-line)}
+.stat-row{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 4px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 16px;text-align:center;min-width:96px}
+.stat b{display:block;font-size:22px;color:var(--navy)}
+.stat span{font-size:11px;color:var(--muted)}
+.incentive{background:linear-gradient(180deg,#fff,#f4f7ff);border:1px solid var(--navy);border-radius:var(--r);padding:20px 22px;margin-bottom:14px}
+.incentive h3{margin:0 0 6px;color:var(--navy);font-size:16px}
+.incentive p{margin:0 0 12px;font-size:13px;color:var(--muted);line-height:1.7}
+.model-switch{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 14px}
+
+@media(max-width:760px){
+  .shell-body{grid-template-columns:1fr}
+  .illus{border-right:none;border-bottom:1px solid var(--line);padding:18px}
+  .illus svg{width:140px;height:auto}
+}
+@media(max-width:640px){
+  .nav-in{height:56px;gap:10px;padding:0 14px}
+  .nav-title{font-size:13px}
+  .wrap{padding:0 16px 50px}
+  .hero h1{font-size:26px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* scope band — Step 3 shares Step 5's stage taxonomy (linked by stage number + order, single accent) */
+.scope-band{display:flex;flex-wrap:wrap;align-items:stretch;gap:6px}
+.scope-cell{flex:1 1 130px;min-width:130px;border:1.5px solid var(--line);background:#fff;border-radius:9px;padding:10px 11px;font-size:12.5px;cursor:pointer;color:var(--ink);display:flex;align-items:center;gap:8px;line-height:1.4}
+.scope-cell:hover{border-color:var(--navy)}
+.scope-cell.on{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy);font-weight:600;color:var(--navy);background:var(--navy-tint)}
+.snum{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);font-size:10.5px;font-weight:700;color:var(--faint);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.scope-cell.on .snum,.scope-enable.on .snum,.phase-h.ctrl .snum{background:var(--navy);border-color:var(--navy);color:#fff}
+.scope-arrow{align-self:center;color:#c3ccdd;font-size:12px;flex-shrink:0}
+.scope-enable{margin-top:8px;border:1.5px dashed var(--navy-line);border-left:4px solid var(--navy);background:var(--navy-tint);border-radius:9px;padding:11px 13px;cursor:pointer;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.scope-enable.on{box-shadow:inset 0 0 0 1px var(--navy)}
+.scope-enable b{color:var(--navy);font-size:13px}
+.scope-en-note{font-size:11.5px;color:var(--muted)}
+.ctrl-tag{font-size:10.5px;font-weight:700;color:#fff;background:var(--navy);border-radius:99px;padding:2px 8px;margin-left:auto;white-space:nowrap}
+.stg-ic{width:22px;height:22px;flex-shrink:0}
+.scope-cell .stg-ic{color:var(--faint)}
+.scope-cell.on .stg-ic{color:var(--navy)}
+.scope-enable .stg-ic{color:var(--navy)}
+.phase-h .ph-ic{display:inline-flex;color:var(--navy);flex-shrink:0}
+.consent-line{display:flex;gap:9px;align-items:flex-start;margin-top:14px;max-width:440px;font-size:12.8px;color:var(--ink);line-height:1.5;cursor:pointer}
+.consent-line input{margin-top:2px;width:16px;height:16px;flex-shrink:0;accent-color:var(--navy);cursor:pointer}
+.anon-note{display:flex;align-items:center;gap:10px;margin:2px 0 22px;padding:11px 16px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:12.8px;color:var(--muted);line-height:1.55}
+.anon-note .lk{width:26px;height:26px;border-radius:8px;background:var(--navy-tint);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.anon-note .lk svg{width:14px;height:14px;color:var(--navy)}
+.anon-note b{color:var(--navy);font-weight:600}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="0 0 148 49"><g fill="currentColor">
+    <path d="M40.9 9.71001H69.15C69.64 9.71001 70.03 9.33001 70.03 8.85001V0.860001C70.03 0.390001 69.63 0 69.15 0H40.9C40.41 0 40.02 0.380001 40.02 0.860001V8.85001C40.02 9.32001 40.42 9.71001 40.9 9.71001Z"/>
+    <path d="M69.14 19.41H40.89C40.4 19.41 40.01 19.79 40.01 20.27V28.26C40.01 28.73 40.41 29.12 40.89 29.12H69.14C69.63 29.12 70.02 28.74 70.02 28.26V20.27C70.02 19.8 69.62 19.41 69.14 19.41Z"/>
+    <path d="M69.14 38.82H40.89C40.4 38.82 40.01 39.2 40.01 39.68V47.67C40.01 48.14 40.41 48.53 40.89 48.53H69.14C69.63 48.53 70.02 48.15 70.02 47.67V39.68C70.02 39.21 69.62 38.82 69.14 38.82Z"/>
+    <path d="M29.13 38.82H20.9C20.41 38.82 20.02 39.2 20.02 39.68V47.67C20.02 48.14 20.42 48.53 20.9 48.53H29.13C29.62 48.53 30.01 48.15 30.01 47.67V39.68C30.01 39.21 29.62 38.82 29.13 38.82Z"/>
+    <path d="M29.13 0.0100098H0.88C0.39 0.0100098 0 0.39001 0 0.87001V8.86001C0 9.33001 0.4 9.72001 0.88 9.72001H19.12C19.61 9.72001 20 10.1 20 10.58V28.27C20 28.74 20.4 29.13 20.88 29.13H29.12C29.61 29.13 30 28.75 30 28.27V0.87001C30 0.40001 29.6 0.0100098 29.12 0.0100098H29.13Z"/>
+    <path d="M19.12 29.12H0.88C0.39 29.12 0 29.5 0 29.98V37.97C0 38.44 0.4 38.83 0.88 38.83H19.12C19.61 38.83 20 38.45 20 37.97V29.98C20 29.51 19.6 29.12 19.12 29.12Z"/>
+  </g></symbol>
+</svg>
+
+<header class="nav"><div class="nav-in" id="nav"></div></header>
+<div class="wrap" id="app"></div>
+
+<script>
+/* ===== i18n ===== */
+var LANG="zh";
+function bi(zh,en){ return LANG==="zh"?zh:en; }
+function setLang(l){ LANG=l; render(); }
+
+/* ===== option data ===== */
+var FOCUS=[
+ {v:"display",zh:"電子顯示器",en:"Electronic displays"},
+ {v:"evcharger",zh:"電動車充電器",en:"EV chargers"},
+ {v:"laundry",zh:"商用洗衣・洗碗",en:"Commercial laundry / dishwashing"},
+ {v:"fridge",zh:"冷藏設備",en:"Refrigeration"},
+ {v:"phone",zh:"手機及平板電腦",en:"Phones & tablets"},
+ {v:"furniture",zh:"辦公家具（可選）",en:"Office furniture (optional)"}
+];
+var ROLES=[
+ {v:"brand",zh:"最終產品與品牌／市場責任掌握者",en:"Final product & brand / market owner"},
+ {v:"maker",zh:"最終產品製造商（非品牌商）",en:"Final product manufacturer (non-brand)"},
+ {v:"component",zh:"中間財／零組件／模組供應商",en:"Intermediate / component / module supplier"},
+ {v:"other",zh:"其他製造或供應角色",en:"Other manufacturing or supply role"}
+];
+/* SCOPES share the SAME keys/labels/icons as PHASES (Step 5) so the two read as one taxonomy.
+   Linear value-chain: design→sourcing→manufacture→logistics→sales→use→eol, plus cross-cutting enabling. */
+var SCOPES=[
+ {v:"design",zh:"產品設計",en:"Product design"},
+ {v:"sourcing",zh:"原料採購",en:"Sourcing"},
+ {v:"manufacture",zh:"生產製造",en:"Manufacturing"},
+ {v:"logistics",zh:"物流",en:"Logistics"},
+ {v:"sales",zh:"銷售",en:"Sales"},
+ {v:"use",zh:"產品使用",en:"Product use"},
+ {v:"eol",zh:"生命週期結束",en:"End of life"},
+ {v:"enabling",zh:"跨階段賦能",en:"Enabling"},
+ {v:"unsure",zh:"尚不確定",en:"Not yet clear"}
+];
+/* One line-style icon per stage, shared by Step 3 chips and Step 5 phase headers. 24x24, stroke=currentColor. */
+var STAGE_ICONS={
+ design:'<path d="M21 7.5 12 3 3 7.5v9L12 21l9-4.5v-9Z"/><path d="m3 7.5 9 4.5 9-4.5M12 21v-9"/>',
+ sourcing:'<path d="m12 2.6 9 4.8-9 4.8-9-4.8 9-4.8Z"/><path d="m3 12.2 9 4.8 9-4.8"/><path d="m3 16.9 9 4.8 9-4.8"/>',
+ manufacture:'<path d="M3 21V9l5.5 3.5V9L14 12.5V6l6 3v12Z"/><path d="M7 21v-3M12 21v-3M17 21v-3"/>',
+ logistics:'<path d="M3 6.5h11v9H3z"/><path d="M14 9.5h3.6L21 13v2.5h-7z"/><circle cx="7" cy="18" r="1.5"/><circle cx="17.5" cy="18" r="1.5"/>',
+ sales:'<path d="M20.5 12.5 12.5 20.5 4 12V4h8Z"/><circle cx="8.5" cy="8.5" r="1.4"/>',
+ use:'<path d="M8 12.5V6a2 2 0 0 1 4 0v5.5"/><path d="M12 11.5V4.6a2 2 0 0 1 4 0V13"/><path d="M16 10.6a2 2 0 0 1 4 0V14a7 7 0 0 1-7 7 6 6 0 0 1-5-2.6l-3-4.2a2 2 0 0 1 3-2.2l2 1.8"/>',
+ eol:'<path d="M17 8.5 20 11.5 17 14.5"/><path d="M20 11.5H9.5A4.5 4.5 0 0 0 9 20"/><path d="M7 15.5 4 12.5 7 9.5"/><path d="M4 12.5h10.5A4.5 4.5 0 0 0 15 4"/>',
+ enabling:'<circle cx="12" cy="12" r="2.4"/><circle cx="5" cy="6" r="1.5"/><circle cx="19" cy="6" r="1.5"/><circle cx="5" cy="18" r="1.5"/><circle cx="19" cy="18" r="1.5"/><path d="M6.4 7.1 10 10.4M17.6 7.1 14 10.4M6.4 16.9 10 13.6M17.6 16.9 14 13.6"/>'
+};
+function stageIcon(k,cls){ return '<svg class="'+(cls||"stg-ic")+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+(STAGE_ICONS[k]||"")+'</svg>'; }
+var MARKETS=[
+ {v:"tw",zh:"台灣",en:"Taiwan"},{v:"cn",zh:"中國",en:"China"},{v:"jp",zh:"日本",en:"Japan"},
+ {v:"sg",zh:"新加坡",en:"Singapore"},{v:"eu",zh:"歐盟",en:"EU"},{v:"asean",zh:"其他東協國家",en:"Other ASEAN"},
+ {v:"other",zh:"其他",en:"Other"}
+];
+var CRIT=[
+ {v:"rare",zh:"稀土",en:"Rare earths"},{v:"cobalt",zh:"鈷",en:"Cobalt"},{v:"lithium",zh:"鋰",en:"Lithium"},
+ {v:"nickel",zh:"鎳",en:"Nickel"},{v:"othercrit",zh:"其他關鍵材料",en:"Other critical materials"},
+ {v:"unsure",zh:"不確定",en:"Not sure"},{v:"none",zh:"皆無",en:"None"}
+];
+var MODELS=[
+ {v:"sales",zh:"循環化的一般產品銷售",en:"Circularised product sales",
+  dz:"所有權仍移轉的既有銷售，透過設計、材料、可維修、回收與價值保留提高循環性。",
+  de:"Ownership still transfers; circularity improved via design, materials, repairability, recovery and value retention.",
+  must:[],support:[1,2,3,4,5,6,12,14,15,16]},
+ {v:"lifetime",zh:"延長產品壽命服務",en:"Product-life-extension services",
+  dz:"以維護、維修、升級、翻新或再製造，將產品壽命與服務收入連結。",
+  de:"Link product lifetime with service revenue through maintenance, repair, upgrade, refurbishment or remanufacturing.",
+  must:[1,7],support:[2,3,6,10,11,12,14,15,16]},
+ {v:"access",zh:"使用權取代所有權",en:"Access over ownership",
+  dz:"以租賃、訂閱、共享或績效付費，由企業保留資產與生命週期責任。",
+  de:"Retain assets and life-cycle responsibility through leasing, subscription, sharing or performance-based payment.",
+  must:[1,7,12],support:[8,9,10,11,14,15,16]}
+];
+var ESPR_MAP={1:"direct",2:"direct",3:"enable",4:"enable",6:"enable",7:"direct",12:"direct",14:"evidence",15:"enable",16:"evidence"};
+
+var CE=[
+ {id:1,zh:"循環設計",en:"Design for Circularity",qz:"此產品／產品線是否已在設計規格中納入至少一項循環設計要求，例如耐久性、可維修性、可拆解性、可升級性、模組化、再使用、翻新、再製造、可回收性或有害物質減量？",qe:"Has this product line built at least one circular-design requirement (durability, repairability, disassembly, upgradeability, modularity, reuse, refurbishment, remanufacturing, recyclability or hazardous-substance reduction) into its design specs?"},
+ {id:2,zh:"循環原料採購",en:"Circular Sourcing",qz:"此產品／產品線是否已優先選用再生料、可再生材料、可回收材料、低風險材料，或已設定避免/替代受關切有害物質與高風險關鍵材料的採購要求？",qe:"Does this product line prioritise recycled, renewable, recyclable or low-risk materials, or set requirements to avoid/substitute substances of concern and high-risk critical materials?"},
+ {id:3,zh:"循環採購策略",en:"Circular Procurement",qz:"貴公司是否已將循環性條件納入採購政策、供應商選擇、RFQ/RFP、採購合約、供應商評估或驗收標準？",qe:"Has your company built circularity conditions into procurement policy, supplier selection, RFQ/RFP, contracts, supplier evaluation or acceptance criteria?"},
+ {id:4,zh:"製程最佳化",en:"Process Optimisation",qz:"此產品／製程是否已採取流程優化，以降低單位產品的原料、能源、水、化學品使用量、製程損耗、廢棄物或有害排放？",qe:"Has this product/process adopted optimisation to reduce per-unit material, energy, water, chemical use, process loss, waste or hazardous emissions?"},
+ {id:5,zh:"產業、區域或都市共生",en:"Industrial / Regional / Urban Symbiosis",qz:"貴公司是否已與其他組織建立副產品、廢熱、廢水、廢料、包材、物流或設施資源的共享／交換機制，使一方的剩餘資源成為另一方的投入？",qe:"Has your company set up sharing/exchange of by-products, waste heat, wastewater, scrap, packaging, logistics or facilities so one party's surplus becomes another's input?"},
+ {id:6,zh:"減量、再使用、變更用途",en:"Reduce / Reuse / Repurpose",qz:"此產品／產品線是否已採取減量、再使用或變更用途策略，以降低新材料或新產品需求？",qe:"Has this product line adopted reduce, reuse or repurpose strategies to lower demand for new materials or products?"},
+ {id:7,zh:"維護與維修",en:"Maintenance & Repair",qz:"此產品／設備是否已建立維護或維修機制，使產品能維持功能、恢復性能或延長使用壽命？",qe:"Has this product/equipment established maintenance or repair mechanisms that keep function, restore performance or extend service life?"},
+ {id:8,zh:"績效型服務",en:"Performance-Based Approaches",qz:"貴公司是否已採用租賃、訂閱、按使用量付費、按績效付費或其他功能/服務型模式，使客戶取得產品功能而非單純購買產品所有權？",qe:"Does your company use leasing, subscription, pay-per-use, pay-for-performance or other function/service models, so customers obtain product function rather than ownership?"},
+ {id:9,zh:"共享以提高使用率",en:"Sharing to Intensify Use",qz:"貴公司是否透過共享平台、共用資產池、租借、共乘/共用或其他機制，提高耐用品、設備、空間、容器或資產的使用率？",qe:"Does your company raise utilisation of durable goods, equipment, space, containers or assets through sharing platforms, asset pools, rental or shared use?"},
+ {id:10,zh:"翻新",en:"Refurbishing",qz:"貴公司是否對使用後、退回、展示、租賃期滿或功能衰退的產品進行翻新，使其恢復原本或接近原本功能，並再次銷售、租賃或內部再使用？",qe:"Does your company refurbish used, returned, ex-display, end-of-lease or degraded products back to original/near-original function and resell, re-lease or reuse them?"},
+ {id:11,zh:"再製造",en:"Remanufacturing",qz:"貴公司是否以標準化工業流程對使用後產品或零組件進行再製造，使其達到新品或修改後規格、預期壽命與保固要求？",qe:"Does your company remanufacture used products or components through standardised industrial processes to new/modified specs, expected life and warranty?"},
+ {id:12,zh:"逆向物流",en:"Reverse Logistics",qz:"貴公司是否建立逆向物流機制，將使用後、未售、退貨、租賃期滿、維修件或廢棄產品/零件收回並導入再使用、維修、翻新、再製造、回收或處理？",qe:"Has your company established reverse logistics to collect used, unsold, returned, end-of-lease, repaired or discarded products/parts and route them to reuse, repair, refurbishment, remanufacturing, recycling or treatment?"},
+ {id:13,zh:"資源階梯式利用",en:"Cascading of Resources",qz:"貴公司是否規劃或執行資源階梯式利用，將資源優先導向較高價值用途，再依序轉向較低價值用途，並將能源回收視為後段選項？",qe:"Does your company cascade resources toward higher-value uses first, then lower-value uses, treating energy recovery as a last-stage option?"},
+ {id:14,zh:"物料回收",en:"Recycling",qz:"貴公司是否透過機械、物理、化學或生物程序回收產品、零件、材料或包裝，以降低廢棄並維持或提升材料品質？",qe:"Does your company recycle products, parts, materials or packaging via mechanical, physical, chemical or biological processes to cut waste and maintain/upgrade material quality?"},
+ {id:15,zh:"廢棄物管理",en:"Waste Management",qz:"貴公司是否已建立廢棄物分類、貯存、清運、再利用、處理與最終處置管理制度，以降低廢棄、污染與資源損失？",qe:"Has your company established waste sorting, storage, collection, reuse, treatment and final-disposal management to reduce waste, pollution and resource loss?"},
+ {id:16,zh:"材料回收",en:"Material Recovery",qz:"貴公司是否從廢棄物、使用後產品、製程副產物或回收料中回收有價值材料，並使其重新投入價值鏈？",qe:"Does your company recover valuable materials from waste, used products, process by-products or recyclate and return them to the value chain?"},
+ {id:17,zh:"能源回收",en:"Energy Recovery",qz:"貴公司是否在無法再使用、翻新、再製造或材料回收後，才採取能源回收，例如廢棄物發電、熱能回收、厭氧消化或替代燃料？",qe:"Does your company use energy recovery (waste-to-energy, heat recovery, anaerobic digestion, alternative fuels) only after reuse, refurbishment, remanufacturing or material recovery are not possible?"},
+ {id:18,zh:"生態系統復育",en:"Ecosystem Regeneration",qz:"貴公司是否採取恢復、修復或改善自然生態系統的行動，例如土壤修復、水域改善、生物多樣性復育、棲地保護或再生農業/林業供應？",qe:"Does your company act to restore, remediate or improve natural ecosystems — soil remediation, water improvement, biodiversity restoration, habitat protection or regenerative agriculture/forestry?"}
+];
+CE.push(
+ {id:19,zh:"教育與研究",en:"Education & Research",qz:"貴公司是否已透過教育、訓練或研究，培養員工、使用者或合作夥伴理解與實施循環經濟所需的知識、技能與專業能力，並將研究成果轉化為改善依據？",qe:"Has your company built the knowledge, skills and capabilities to understand and implement circularity — through education, training or research — and turned findings into a basis for improvement?"},
+ {id:20,zh:"創新",en:"Innovation",qz:"貴公司是否已透過技術、組織、商業模式、制度或社會層面的新作法，改變產品、流程、系統或行為，以促成循環資源流？",qe:"Has your company changed products, processes, systems or behaviour through new technological, organisational, business-model, institutional or social approaches to enable circular resource flows?"},
+ {id:21,zh:"協作與網絡",en:"Collaboration & Networks",qz:"貴公司是否已與價值鏈上下游、同業或跨界夥伴建立協作關係，或參與多方倡議，透過聯合行動與知識交流改善循環績效？",qe:"Has your company established partnerships or joined multi-stakeholder initiatives across the value chain to improve circularity through joint action and knowledge exchange?"},
+ {id:22,zh:"協助使用者改變行為",en:"Helping Users Change Behaviour",qz:"貴公司是否已透過替代方案、透明資訊或數位工具，協助客戶或使用者在購買、使用、維護、維修、交回或處置階段做出更循環的選擇？",qe:"Has your company helped customers or users make more circular choices — across purchase, use, maintenance, repair, take-back or disposal — through accessible alternatives, transparent information or digital tools?"},
+ {id:23,zh:"政策與法律體系",en:"Policy & Legal System",qz:"貴公司是否已因應或參與相關政策、法規或產品責任要求（如標示、回收取回、財務責任），或已將其納入營運與產品規劃？",qe:"Has your company responded to or engaged with relevant policy, regulatory or product-responsibility requirements (e.g. labelling, take-back, financing obligations), or built them into its planning?"},
+ {id:24,zh:"金融服務",en:"Financial Services",qz:"貴公司是否已運用融資、投資、保險或永續分類等金融工具，為循環商業模式、技術、基礎設施或營運提供資金或分散風險？",qe:"Has your company used financing, investment, insurance or sustainable-classification tools to fund or de-risk circular business models, technologies, infrastructure or operations?"},
+ {id:25,zh:"數位化",en:"Digitalization",qz:"貴公司是否已運用數位技術與透明、即時的資料，在價值鏈中分享資訊、掌握資源流，並支援產品設計、可追溯性與生命週期決策？",qe:"Has your company used digital technologies and transparent, timely data to share information across the value chain, track resource flows, and support product design, traceability and life-cycle decisions?"}
+);
+function ceById(id){ for(var k=0;k<CE.length;k++) if(CE[k].id===id) return CE[k]; return null; }
+
+/* Stages = linear value chain + cross-cutting enabling. Action→stage mapping is a PROPOSAL pending Emily's confirmation. */
+var PHASES=[
+ {k:"design",zh:"產品設計",en:"Product design",ids:[1]},
+ {k:"sourcing",zh:"原料採購",en:"Sourcing",ids:[2,3]},
+ {k:"manufacture",zh:"生產製造",en:"Manufacturing",ids:[4,5,6]},
+ {k:"logistics",zh:"物流",en:"Logistics",ids:[12]},
+ {k:"sales",zh:"銷售",en:"Sales",ids:[8,9]},
+ {k:"use",zh:"產品使用",en:"Product use",ids:[7,10,11]},
+ {k:"eol",zh:"生命週期結束",en:"End of life",ids:[13,14,15,16,17]},
+ {k:"enabling",zh:"跨階段賦能",en:"Enabling",ids:[18,19,20,21,22,23,24,25]}
+];
+function phaseIcon(){ return '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 7v5l3 2"/></svg>'; }
+
+var ANSWERS=[{v:"done",zh:"已執行",en:"Implemented"},{v:"not",zh:"未執行",en:"Not implemented"},{v:"na",zh:"自評不適用",en:"Self-assessed N/A"}];
+
+/* ===== state ===== */
+var S={
+ step:1,
+ product:{focus:"",name:"",country:"",city:"",locNote:"",partner:"",markets:[],marketOther:"",scopes:[],role:"",roleOther:""},
+ life:{durability:"",lifespan:"",repairable:""},
+ journeys:[], model:"",
+ ce:{}, cePhase:0,
+ contact:{want:"",company:"",name:"",email:"",tax:"",consent:{report:false,service:false,mkt:false,research:false}},
+ resultModel:""
+};
+
+/* ===== step meta ===== */
+var STEP_NODES=[
+ ["分析單位","Product"],["角色與範疇","Role"],
+ ["路徑","Journeys"],["循環行動","Actions"],["旅程地圖","Map"]
+];
+
+/* ===== nav ===== */
+function renderNav(){
+ var brand='<span class="nav-brand" onclick="go(1)" title="'+bi("回首頁","Home")+'"><svg class="nav-logo" viewBox="0 0 148 49"><use href="#logo"/></svg><span class="nav-div"></span><span class="nav-title">Design Your Circular Journey</span></span>';
+ var lang='<button class="nav-btn '+(LANG==="zh"?"on":"")+'" onclick="setLang(\'zh\')">繁中</button>'+
+          '<button class="nav-btn '+(LANG==="en"?"on":"")+'" onclick="setLang(\'en\')">EN</button>';
+ document.getElementById("nav").innerHTML=brand+'<span class="nav-spacer"></span>'+lang;
+}
+
+/* ===== top stepper (steps 2-8 -> nodes 1-7) ===== */
+function topStepper(){
+ var cur=S.step-2; // 0-based node index
+ var h='<div class="stepper">';
+ for(var i=0;i<STEP_NODES.length;i++){
+   var st=i<cur?"done":(i===cur?"cur":"");
+   h+='<div class="node"><div class="dot '+st+'">'+(i<cur?"✓":(i+1))+'</div><div class="lb '+(i===cur?"on":"")+'">'+bi(STEP_NODES[i][0],STEP_NODES[i][1])+'</div></div>';
+   if(i<STEP_NODES.length-1) h+='<div class="bar '+(i<cur?"done":"")+'"></div>';
+ }
+ return h+'</div>';
+}
+
+/* ===== chip helpers ===== */
+function chip(label,on,onclick,cls){ return '<span class="chip '+(cls||"")+' '+(on?"on":"")+'" onclick="'+onclick+'">'+(on?"✓ ":"")+label+'</span>'; }
+function singleChips(list,cur,key){ return list.map(function(o){return chip(bi(o.zh,o.en),cur===o.v,"setP('"+key+"','"+o.v+"')");}).join(""); }
+function multiChips(list,arr,key){ return list.map(function(o){return chip(bi(o.zh,o.en),arr.indexOf(o.v)>-1,"toggleP('"+key+"','"+o.v+"')",(o.v==="unsure"||o.v==="none")?"unk":"");}).join(""); }
+
+/* ===== setters ===== */
+function setP(k,v){ S.product[k]=v; render(); }
+function toggleP(k,v){ var a=S.product[k]; var i=a.indexOf(v); if(i>-1)a.splice(i,1); else a.push(v); render(); }
+function setLife(k,v){ S.life[k]=v; render(); }
+function toggleJourney(j){ var i=S.journeys.indexOf(j); if(i>-1){S.journeys.splice(i,1); if(j==="B")S.model="";} else S.journeys.push(j); render(); }
+function setModel(v){ S.model=v; render(); }
+function setCE(id,st){ if(!S.ce[id])S.ce[id]={}; S.ce[id].status=st; render(); }
+function setCEtarget(id,v){ if(!S.ce[id])S.ce[id]={}; S.ce[id].target=v; render(); }
+function setPhase(i){ S.cePhase=i; render(); }
+function setWant(v){ S.contact.want=v; render(); }
+function setConsent(k){ S.contact.consent[k]=!S.contact.consent[k]; render(); }
+function isEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v||""); }
+/* report-footer contact block (moved here from the old standalone step) */
+function rptOk(){ var c=S.contact; return !!(c.company&&c.company.trim()) && !!(c.name&&c.name.trim()) && isEmail(c.email) && c.consent.report; }
+function setTax(el){ S.contact.tax=(el.value||"").replace(/[^0-9]/g,"").slice(0,20); el.value=S.contact.tax; rptValidate(); }
+function rptValidate(){
+  var b=document.getElementById("rpt-send"); if(b){ var ok=rptOk(); b.disabled=!ok; b.className="btn "+(ok?"btn-p":"btn-d"); }
+  var hint=document.getElementById("rpt-hint");
+  if(hint){ var v=S.contact.email||""; if(!v){ hint.textContent=bi("我們會把完整 PDF 報告寄到這裡。","We'll email the full PDF report here."); hint.style.color="var(--muted)"; }
+    else if(isEmail(v)){ hint.textContent=bi("Email 格式正確 ✓","Email looks valid ✓"); hint.style.color="var(--navy)"; }
+    else { hint.textContent=bi("請輸入有效的 Email，例如 name@company.com","Please enter a valid email, e.g. name@company.com"); hint.style.color="var(--warn-text)"; } }
+}
+function submitReport(){ if(rptOk()){ S.contact.sent=true; render(); } }
+function summaryDownload(){ alert(bi("（示意）已產生一頁摘要，實作版將直接下載，無需留下任何資料。","(Demo) A one-page summary is generated; the live version downloads it directly with no details required.")); }
+function pv(){ var ok=!!S.product.focus && (S.product.country||"").trim().length>0; var b=document.getElementById("footnext"); if(b){ b.disabled=!ok; b.className="btn "+(ok?"btn-p":"btn-d"); } }
+function go(n){ S.step=n; window.scrollTo(0,0); render(); }
+function next(){ if(S.step<6) go(S.step+1); }
+function prev(){ if(S.step>1) go(S.step-1); }
+function demoFill(){ CE.forEach(function(a){ if(a.tbd)return; var r=Math.random(); var st=r<0.5?"done":(r<0.8?"not":"na"); S.ce[a.id]={status:st,target:(st==="done"&&Math.random()>0.5)?"yes":""}; }); render(); }
+function replayOther(){ if(S.journeys.length===1){ S.journeys=[S.journeys[0]==="A"?"B":"A"]; if(S.journeys[0]==="B"&&!S.model)S.model="lifetime"; } S.resultModel=""; go(4); }
+
+/* ===== illustrations ===== */
+function svgBattery(){return '<svg width="180" height="126" viewBox="0 0 200 140" fill="none"><rect x="46" y="44" width="96" height="56" rx="9" stroke="#10172b" stroke-width="3" fill="#fff"/><rect x="144" y="60" width="11" height="24" rx="3" fill="#10172b"/><rect x="58" y="56" width="20" height="32" rx="4" fill="#e8ecf3" stroke="#10172b" stroke-width="2"/><rect x="84" y="56" width="20" height="32" rx="4" fill="#e8ecf3" stroke="#10172b" stroke-width="2"/><path d="M126 52 L114 76 H123 L117 96 L136 68 H126 L133 52 Z" fill="#1b2cff"/></svg>';}
+function svgNodes(){return '<svg width="180" height="126" viewBox="0 0 200 140" fill="none"><circle cx="46" cy="70" r="14" stroke="#10172b" stroke-width="3" fill="#e8ecf3"/><circle cx="100" cy="38" r="14" stroke="#10172b" stroke-width="3" fill="#fff"/><circle cx="100" cy="102" r="14" stroke="#10172b" stroke-width="3" fill="#fff"/><circle cx="154" cy="70" r="14" stroke="#1b2cff" stroke-width="3" fill="#fff"/><path d="M58 63 l30 -18 M58 77 l30 18 M112 45 l30 18 M112 95 l30 -18" stroke="#9db4dd" stroke-width="2.5" stroke-linecap="round"/></svg>';}
+function svgGlobe(){return '<svg width="180" height="126" viewBox="0 0 200 140" fill="none"><circle cx="100" cy="70" r="42" fill="#e8ecf3" stroke="#10172b" stroke-width="3"/><line x1="100" y1="28" x2="100" y2="112" stroke="#10172b" stroke-width="2.4"/><line x1="58" y1="70" x2="142" y2="70" stroke="#10172b" stroke-width="2.4"/><ellipse cx="100" cy="70" rx="18" ry="42" stroke="#10172b" stroke-width="2.2" fill="none"/><ellipse cx="100" cy="70" rx="34" ry="42" stroke="#9db4dd" stroke-width="2" fill="none"/></svg>';}
+function svgDoc(){return '<svg width="180" height="126" viewBox="0 0 200 140" fill="none"><rect x="74" y="24" width="70" height="92" rx="7" stroke="#10172b" stroke-width="3" fill="#fff"/><rect x="62" y="34" width="70" height="92" rx="7" stroke="#10172b" stroke-width="3" fill="#e8ecf3"/><path d="M74 52 h46 M74 66 h46 M74 80 h30" stroke="#10172b" stroke-width="3" stroke-linecap="round"/><circle cx="120" cy="104" r="15" fill="#fff" stroke="#1b2cff" stroke-width="3"/><path d="M114 104 l4 4 l8 -9" stroke="#1b2cff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';}
+function svgPath(){return '<svg width="180" height="126" viewBox="0 0 200 140" fill="none"><path d="M30 110 C70 110 60 40 100 40 C140 40 130 110 170 110" stroke="#10172b" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="30" cy="110" r="8" fill="#e8ecf3" stroke="#10172b" stroke-width="3"/><circle cx="100" cy="40" r="8" fill="#fff" stroke="#10172b" stroke-width="3"/><circle cx="170" cy="110" r="9" fill="#fff" stroke="#1b2cff" stroke-width="3"/></svg>';}
+
+/* ===== shell ===== */
+function foot(nextLabel,nextOk){
+ var back=S.step>2?'<button class="btn btn-g" onclick="prev()">'+bi("← 上一步","← Back")+'</button>':'<button class="btn btn-g" onclick="go(1)">'+bi("← 回首頁","← Home")+'</button>';
+ var nb='<button id="footnext" class="btn '+(nextOk?"btn-p":"btn-d")+'"'+(nextOk?"":" disabled")+' onclick="next()">'+nextLabel+'</button>';
+ return '<div class="shell-foot">'+back+'<span class="right">'+nb+'</span></div>';
+}
+function shell(title,sub,illus,cap,body,nextLabel,nextOk){
+ return topStepper()+'<div class="shell"><div class="shell-head"><div class="t">'+title+'</div><div class="s">'+sub+'</div></div>'+
+  '<div class="shell-body"><div class="illus">'+illus+'<div class="cap">'+cap+'</div></div><div class="qpanel">'+body+'</div></div>'+
+  foot(nextLabel,nextOk)+'</div>';
+}
+function qBlock(title,hint,body){ return '<div class="q"><div class="qt">'+title+'</div><div class="qh">'+hint+'</div>'+body+'</div>'; }
+function otherInput(show,key,ph){ return show?'<input type="text" style="margin-top:8px;max-width:320px" value="'+(S.product[key]||"")+'" oninput="S.product.'+key+'=this.value" placeholder="'+ph+'">':''; }
+
+/* Step 3 scope selector: 6 sequential stages as a value-chain band + cross-cutting Enabling band.
+   Uses the same keys/colours as PHASES so it visually mirrors Step 5. */
+function scopeSelector(){
+ var arr=S.product.scopes;
+ var seqKeys=["design","sourcing","manufacture","logistics","sales","use","eol"];
+ var seq=seqKeys.map(function(k){return SCOPES.filter(function(s){return s.v===k;})[0];});
+ var enab=SCOPES.filter(function(s){return s.v==="enabling";})[0];
+ var uns=SCOPES.filter(function(s){return s.v==="unsure";})[0];
+ var h='<div class="scope-band">';
+ seq.forEach(function(o,i){
+   var on=arr.indexOf(o.v)>-1;
+   h+='<div class="scope-cell'+(on?" on":"")+'" onclick="toggleP(\'scopes\',\''+o.v+'\')">'+
+      stageIcon(o.v,"stg-ic")+'<span>'+bi(o.zh,o.en)+'</span></div>';
+   if(i<seq.length-1) h+='<span class="scope-arrow">→</span>';
+ });
+ h+='</div>';
+ var eon=arr.indexOf("enabling")>-1;
+ h+='<div class="scope-enable'+(eon?" on":"")+'" onclick="toggleP(\'scopes\',\'enabling\')">'+
+    stageIcon("enabling","stg-ic")+'<b>'+bi(enab.zh,enab.en)+'</b>'+
+    '<span class="scope-en-note">'+bi("跨越以上所有階段的共通能力（教育、創新、協作、數位、政策、金融…）","Cross-cutting capabilities that span all stages above")+'</span></div>';
+ var uon=arr.indexOf("unsure")>-1;
+ h+='<div style="margin-top:8px">'+chip(bi(uns.zh,uns.en),uon,"toggleP('scopes','unsure')","unk")+'</div>';
+ return h;
+}
+
+/* ===== SCREENS ===== */
+function scHome(){
+ var deliver=[["您目前的循環定位","Where you stand","看見這條產品線在 25 項循環行動中的現況起點。","See where this product line stands across 25 circular actions."],
+   ["路徑與優先缺口","Path & priorities","對照您選定的方向，辨識既有優勢與優先補強項目。","Match your chosen direction; identify existing strengths and priority gaps."],
+   ["帶得走的旅程地圖","A map to act on","一份可帶回團隊討論、直接推進的循環旅程地圖。","A Circular Journey Map you can take back to the team and act on."]];
+ var aud=[["最終產品與品牌企業","Final product & brand owners"],["最終產品製造商","Final product manufacturers"],["零組件／模組供應商","Component / module suppliers"]];
+ var flow=[["界定焦點產品","Define the focus product"],["說明角色與價值鏈範疇","Describe role & value-chain scope"],["選擇啟程方向","Choose your direction"],["回顧 25 項循環行動","Review your 25 circular actions"],["查看您的旅程地圖","View your journey map"]];
+ var h='<div class="hero">'+
+   '<span class="badge">◐ '+bi("市場測試版","Market test")+'</span>'+
+   '<div class="eyebrow">DESIGN YOUR CIRCULAR JOURNEY · 2026 APAC MANUFACTURING PILOT</div>'+
+   '<h1>'+bi("設計您的企業循環轉型路徑","Design your company's circular journey")+'</h1>'+
+   '<p class="sub">'+bi("循環轉型沒有單一路徑。從一項焦點產品出發，檢視您已採取的循環行動，看它們如何支持您想走的方向——ESPR／歐盟市場準備，或新的收益機會。",
+     "There is no single path to circularity. Start from one focus product, review the circular actions you already take, and see how they support where you want to go — ESPR / EU-market readiness, or new-revenue opportunities.")+'</p></div>';
+ h+='<div class="home-grid">'+deliver.map(function(d){return '<div class="card"><h4>'+bi(d[0],d[1])+'</h4><p>'+bi(d[2],d[3])+'</p></div>';}).join("")+'</div>';
+ h+='<div class="anon-note"><span class="lk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><span>'+bi("<b>匿名開始</b>，先看即時結果。需要可帶回團隊的完整報告時，最後一步再留 Email 就好。","<b>Start anonymously</b> and see instant results. Leave an email in the last step only when you want the full report for your team.")+'</span></div>';
+ h+='<div style="margin:4px 0 24px"><button class="btn btn-p" onclick="go(2)">'+bi("開始 →","Start →")+'</button><span style="margin-left:14px;font-size:12px;color:var(--faint)">'+bi("約 20–30 分鐘","About 20–30 min")+'</span></div>';
+ h+='<div class="sec"><h3>◑ '+bi("關於本計畫","About the Programme")+'</h3><p>'+bi("Design Your Circular Journey Program 旨在協助參與企業以一項焦點產品為分析單位，盤點現有循環經濟行動，理解不同循環轉型方向所需的能力、資料、合作關係與後續行動。","The Design Your Circular Journey Program helps participating companies assess one focus product, review their existing circular-economy actions, and understand the capabilities, data, partnerships and next steps required for different circular-transition pathways.")+'</p><p>'+bi("本計畫並非單次問卷調查，而是一項結合線上評估、循環旅程分析、在地合作與後續交流活動的企業支持計畫。企業完成線上填寫後，將取得 Circular Journey Map，並可選擇接收完整 PDF 報告，作為內部討論及後續活動的基礎。","The Programme is not a one-off survey. It combines an online assessment, Circular Journey analysis, local partnerships and follow-up activities. After completing the assessment, participating companies can view a Circular Journey Map and choose to receive a full PDF report for internal discussion and subsequent Programme activities.")+'</p><p style="font-size:12.5px;color:var(--muted)">'+bi("計畫期間：［YYYY 年 MM 月 DD 日］至［YYYY 年 MM 月 DD 日］","Programme period: [DD Month YYYY] to [DD Month YYYY]")+'</p></div>';
+ h+='<div class="sec"><h3>◑ '+bi("關於本工具","About this tool")+'</h3><p>'+bi("亞太製造業正同時面對產品法規（如歐盟 ESPR）與新的商業機會。企業缺的通常不是更多資訊，而是一套把外部變化轉成決策的方法。本工具以焦點產品、企業角色與控制權、25 項循環經濟行動為結構，協助您看清現況、缺口與下一步。","Asia-Pacific manufacturers face both product regulation (e.g. EU ESPR) and new business opportunities. What companies lack is usually not more information, but a way to turn external change into decisions. This tool is structured around a focus product, your company's role and control, and 25 circular-economy actions — helping you see your current status, gaps and next steps.")+'</p></div>';
+ h+='<div class="sec"><h3>◑ '+bi("適用對象","Who it is for")+'</h3><p>'+bi("首波聚焦選定最終產品及其零組件的製造業企業：","The first version focuses on selected final-product and component manufacturers:")+'</p><div class="aud">'+
+   aud.map(function(a){return '<div class="it"><b>'+bi(a[0],a[1])+'</b></div>';}).join("")+'</div>'+
+   '<p style="font-size:12px;color:var(--muted);margin-top:10px">'+bi("首波產品：電子顯示器、電動車充電器、商用洗衣／洗碗、冷藏設備、手機及平板電腦；辦公家具為可選擴充。材料供應商本版暫不納入。","First-wave products: electronic displays, EV chargers, commercial laundry / dishwashing, refrigeration, phones & tablets; office furniture is optional. Material suppliers are not included in this version.")+'</p></div>';
+ h+='<div class="sec"><h3>◆ '+bi("您會完成的流程","The flow you will complete")+'</h3><div class="flowlist">'+
+   flow.map(function(f){return '<div class="fl"><span class="no"></span><div><b>'+bi(f[0],f[1])+'</b></div></div>';}).join("")+'</div>'+
+   '<p style="font-size:12px;color:var(--muted);margin-top:8px">'+bi("約 20–30 分鐘，過程中可隨時返回修改。","About 20–30 min; you can go back and edit at any time.")+'</p></div>';
+ h+='<div class="sec"><h3>◆ '+bi("方法與 ISO 說明","Method & ISO note")+'</h3><p>'+bi("本工具以 ISO 59000 系列（含 ISO 59004:2024）作為方法參考，建立跨產品、跨市場可共同理解的循環經濟語言；25 項循環經濟行動構成共用輸入層。標準的角色是提供結構，而非替企業決定唯一答案。參與本工具不代表完成 ISO 符合性評估或取得認證，也不構成 ESPR 合規判定。","This tool references the ISO 59000 series (including ISO 59004:2024) to build a shared circular-economy language across products and markets; the 25 circular-economy actions form a common input layer. Standards provide structure, not a single answer. Participation does not mean an ISO conformity assessment or certification, and is not an ESPR compliance ruling.")+'</p></div>';
+ h+='<div class="sec"><h3>◆ '+bi("關於我們","About us")+'</h3><p>'+bi("REnato lab 是一支永續工程團隊，結合科學、工程、商業與設計，以更少的自然資源創造更大的影響力，並陪伴企業一步步展開務實、可調適的循環經濟旅程。","REnato lab is a sustainable engineering team combining science, engineering, business and design — creating greater impact with fewer natural resources, and guiding companies step by step on a practical, adaptable circular-economy journey.")+'</p></div>';
+ h+='<div class="sec"><h3>◆ '+bi("在地合作單位","Local partner")+'</h3><p>'+bi("在地合作單位：［合作單位正式名稱］","Local partner: [Official organisation name]")+'</p></div>';
+ h+='<div class="sec"><h3>◆ '+bi("資料使用","Data use")+'</h3><div class="notice" style="margin:6px 0">'+bi("您可以匿名完成填寫並查看即時結果。如您選擇接收完整 PDF 報告，我們將使用您提供的姓名、Email、公司名稱或其他聯絡資訊，以產製、寄送報告及進行必要聯繫。填答內容可能經去識別化或彙整後，用於研究、統計、計畫評估及工具改善；除法律要求或經您同意外，不會將可識別您的個人資料提供給無關第三方。本工具為市場測試版本，結果僅供方向性參考，不構成法律意見、合規判定或認證結果。",
+   "You may complete the assessment anonymously and view the instant results. If you choose to receive the full PDF report, we will use the name, email address, company name or other contact information you provide to generate and deliver the report and to make any necessary related contact. Your responses may be de-identified or aggregated for research, statistical analysis, Programme evaluation and tool improvement; we will not disclose personally identifiable information to unrelated third parties unless required by law or authorised by you. This tool is a market-test version. Its results are for directional reference only and do not constitute legal advice, a compliance determination or certification.")+'</div></div>';
+ h+='<button class="btn btn-p" onclick="go(2)">'+bi("開始 →","Start →")+'</button>'+
+    '<span style="margin-left:14px;font-size:12px;color:var(--faint)">'+bi("約 20–30 分鐘","About 20–30 min")+'</span>';
+ return '<div style="max-width:820px">'+h+'</div>';
+}
+
+function sc2(){
+ var p=S.product;
+ var body=qBlock(bi("您要分析的焦點產品是？","What is your focus product?"),bi("界定分析單位，並自動推導對應的 ESPR 面向。","Defines the analysis unit and the automatic ESPR-aspect mapping."),
+   '<div class="chips">'+singleChips(FOCUS,p.focus,"focus")+'</div>');
+ body+=qBlock(bi("產品線／產品名稱（選填）","Product line / name (optional)"),bi("方便您在報告中辨識。","Helps you identify it in the report."),
+   '<input type="text" style="max-width:360px" value="'+(p.name||"")+'" oninput="S.product.name=this.value" placeholder="'+bi("例：X 系列 27 吋顯示器","e.g. X-series 27-inch display")+'">');
+ body+=qBlock(bi("本次填答單位所在地","Location of the responding entity"),bi("請填寫實際負責本次填答的公司、營運據點或事業單位所在地。此欄位用於辨識計畫參與地區、在地合作單位及後續活動，不等同於產品製造地、公司註冊地或主要銷售市場。","Please specify the location of the company, operating site or business unit responsible for this submission. This is used to identify the Programme location, local partner and relevant follow-up activities. It does not necessarily indicate the product's place of manufacture, the company's registered office or its main sales market."),
+   '<div style="display:grid;gap:10px;max-width:420px">'+
+   '<div><label class="qh" style="display:block;margin-bottom:4px">'+bi("國家／地區（必填）","Country / territory (required)")+'</label><input type="text" value="'+(p.country||"")+'" oninput="S.product.country=this.value; pv()" placeholder="'+bi("例：台灣","e.g. Taiwan")+'"></div>'+
+   '<div><label class="qh" style="display:block;margin-bottom:4px">'+bi("城市／行政區（選填）","City / region (optional)")+'</label><input type="text" value="'+(p.city||"")+'" oninput="S.product.city=this.value" placeholder="'+bi("例：台北市","e.g. Taipei")+'"></div>'+
+   '<div><label class="qh" style="display:block;margin-bottom:4px">'+bi("其他說明（選填）","Additional details (optional)")+'</label><input type="text" value="'+(p.locNote||"")+'" oninput="S.product.locNote=this.value"></div>'+
+   '</div>');
+ body+=qBlock(bi("請問您是透過哪個合作單位參與本計畫？","Which partner organisation referred or invited you to this Programme?"),bi("此資訊用於辨識本次計畫的合作來源及後續支援安排，不影響您的分析結果。","This information is used to identify the Programme referral source and arrange follow-up support. It does not affect your analysis results."),
+   '<input type="text" style="max-width:420px" value="'+(p.partner||"")+'" oninput="S.product.partner=this.value" placeholder="'+bi("合作單位名稱（選填）","Partner organisation (optional)")+'">');
+ var ok=!!p.focus && (p.country||"").trim().length>0;
+ return shell(bi("分析單位","Analysis unit"),bi("界定您的焦點產品","Define your focus product"),svgBattery(),
+   bi("先選定一項焦點產品，後續分析都圍繞它展開。","Pick one focus product; everything else centres on it."),
+   body,bi("下一步 →","Next →"),ok);
+}
+
+function sc3(){
+ var p=S.product;
+ var body=qBlock(bi("您的企業角色？","Your company role?"),bi("名義角色只是描述；真正的判斷依據是下一題的價值鏈範疇。","Your nominal role is descriptive; the real driver is the value-chain scope below."),
+   '<div class="chips">'+singleChips(ROLES,p.role,"role")+'</div>'+otherInput(p.role==="other","roleOther",bi("請簡述您的角色","Briefly describe your role")));
+ body+=qBlock(bi("您對此焦點產品實際能影響哪些範疇？（可複選）","Which value-chain scopes do you actually influence? (multiple)"),bi("決定缺口中哪些能自行處理、哪些需要外部合作。","Determines which gaps you can handle internally vs need partners for."),
+   scopeSelector());
+ body+=qBlock(bi("主要銷售市場？（可複選）","Main sales markets? (multiple)"),bi("提供市場情境與 ESPR 相關性；非合規結論。","Market context and ESPR relevance; not a compliance conclusion."),
+   '<div class="chips">'+multiChips(MARKETS,p.markets,"markets")+'</div>'+otherInput(p.markets.indexOf("other")>-1,"marketOther",bi("請說明其他市場","Please specify other markets")));
+ var ok=!!p.role&&p.scopes.length>0&&p.markets.length>0;
+ return shell(bi("角色與價值鏈範疇","Role & value-chain scope"),bi("您能控制什麼","What you can control"),svgNodes(),
+   bi("循環路徑取決於您能控制什麼，而非名義身分。","Your circular options depend on what you control, not your nominal label."),
+   body,bi("下一步 →","Next →"),ok);
+}
+
+function sc5(){
+ var jA=S.journeys.indexOf("A")>-1, jB=S.journeys.indexOf("B")>-1;
+ function bigRow(sel,onclick,title,desc){
+   return '<div onclick="'+onclick+'" style="cursor:pointer;border:1.5px solid '+(sel?"var(--navy)":"var(--line)")+';background:'+(sel?"var(--navy-tint)":"#fff")+';border-radius:10px;padding:14px 16px;margin-bottom:10px;'+(sel?"box-shadow:inset 3px 0 0 var(--accent);":"")+'">'+
+     '<div style="display:flex;align-items:center;gap:10px"><span style="width:20px;height:20px;border-radius:5px;border:2px solid '+(sel?"var(--navy)":"var(--line)")+';background:'+(sel?"var(--navy)":"#fff")+';color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px">'+(sel?"✓":"")+'</span>'+
+     '<b style="font-size:14.5px;color:var(--navy)">'+title+'</b></div>'+
+     '<div style="font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.6">'+desc+'</div></div>';
+ }
+ var body='<div class="notice" style="margin-bottom:14px">'+bi("可以只選一條，或兩條一起看。（可複選）","Pick one path, or explore both together. (multiple)")+'</div>';
+ body+=bigRow(jA,"toggleJourney('A')",bi("路徑 A｜ESPR／歐盟市場準備","Path A | ESPR / EU-market readiness"),
+   bi("理解現有行動如何支持未來產品要求準備，辨識尚缺的能力、資料與證據。結果只表達準備度。","See how current actions support future product-requirement readiness; identify missing capability, data and evidence. Results express readiness only."));
+ body+=bigRow(jB,"toggleJourney('B')",bi("路徑 B｜新收益機會","Path B | New-revenue opportunity"),
+   bi("檢視產品銷售、延壽服務與使用權模式的成立條件，辨識可行基礎與優先驗證事項。","Check the conditions for product sales, life-extension services and access models; find your feasible base and what to validate first."));
+ if(jB){
+   body+='<div class="q" style="border-top:none;padding-top:4px"><div class="qh">'+bi("路徑 B 請選定一種商業模型（完整 PDF 會提供三種比較）：","For Path B, pick one business model (the full PDF compares all three):")+'</div><div class="chips">'+
+     MODELS.map(function(m){return chip(bi(m.zh,m.en),S.model===m.v,"setModel('"+m.v+"')");}).join("")+'</div></div>';
+ }
+ var ok=S.journeys.length>0&&(!jB||!!S.model);
+ return shell(bi("啟程方向","Journeys"),bi("您想先探索哪個方向","Where to start"),svgPath(),
+   bi("不同起點沒有高下，只反映您當下最重要的問題。","No starting point is better — it just reflects what matters most now."),
+   body,bi("下一步 →","Next →"),ok);
+}
+
+function sc6(){
+ // priority set
+ var priority={};
+ if(S.journeys.indexOf("A")>-1) Object.keys(ESPR_MAP).forEach(function(k){priority[k]=1;});
+ if(S.journeys.indexOf("B")>-1&&S.model){ var m=MODELS.filter(function(x){return x.v===S.model;})[0]; m.must.concat(m.support).forEach(function(id){priority[id]=1;}); }
+ function realIds(ph){ return ph.ids.filter(function(id){return !ceById(id).tbd;}); }
+ function phaseAnswered(ph){ var r=realIds(ph); return r.filter(function(id){return S.ce[id]&&S.ce[id].status;}).length; }
+ function phaseDone(ph){ var r=realIds(ph); return r.length>0 && phaseAnswered(ph)===r.length; }
+ // value-chain flow strip
+ var vf='<div class="vflow">';
+ PHASES.forEach(function(ph,idx){
+   var done=phaseDone(ph), cur=idx===S.cePhase;
+   vf+='<div class="vn" onclick="setPhase('+idx+')"><div class="vd '+(done?"done":"")+' '+(cur?"cur":"")+'">'+(done?"✓":(idx+1))+'</div><div class="vl '+(cur?"on":"")+'">'+bi(ph.zh,ph.en)+'</div></div>';
+   if(idx<PHASES.length-1) vf+='<div class="vbar '+(done?"done":"")+'"></div>';
+ });
+ vf+='</div>';
+
+ function renderCE(id){
+   var a=ceById(id), r=S.ce[id]||{};
+   var isPri=!!priority[id];
+   var opts=ANSWERS.map(function(o){return chip(bi(o.zh,o.en),r.status===o.v,"setCE("+id+",'"+o.v+"')");}).join("");
+   var follow="";
+   if(r.status==="done"){
+     var ty=[{v:"yes",zh:"是",en:"Yes"},{v:"no",zh:"否",en:"No"}];
+     follow='<div class="ce-follow"><div class="qh">'+bi("是否已設定目標？","Target set?")+'</div><div class="chips">'+
+       ty.map(function(o){return chip(bi(o.zh,o.en),r.target===o.v,"setCEtarget("+id+",'"+o.v+"')");}).join("")+'</div>'+
+       '<input type="text" style="margin-top:8px" placeholder="'+bi("目標或執行情況說明（選填）","Target or status note (optional)")+'" value="'+(r.note||"")+'" oninput="if(!S.ce['+id+'])S.ce['+id+']={};S.ce['+id+'].note=this.value"></div>';
+   }
+   if(r.status==="na"&&isPri) follow+='<div class="notice warn" style="margin-top:8px">'+bi("這項與您所選路徑高度相關，建議再確認「不適用」的理由。","This is highly relevant to your chosen path — please reconfirm why it's N/A.")+'</div>';
+   return '<div class="ce-item'+(a.tbd?" tbd":"")+'"><div class="ce-top"><span class="ce-num">'+id+'</span><div style="flex:1"><span class="ce-title">'+bi(a.zh,a.en)+'</span> <span class="ce-en">'+(a.tbd?"":a.en)+'</span> '+
+     (isPri?'<span class="pill pill-c">'+bi("優先","Priority")+'</span>':'')+(a.tbd?' <span class="pill pill-u">'+bi("整理中","Coming")+'</span>':'')+'</div></div>'+
+     '<div class="ce-q">'+bi(a.qz,a.qe)+'</div><div class="chips">'+opts+'</div>'+follow+'</div>';
+ }
+
+ var ph=PHASES[S.cePhase];
+ var pans=phaseAnswered(ph), ptot=realIds(ph).length;
+ var body='<div class="notice" style="margin-bottom:10px">'+bi("我們把 25 項循環行動依「價值鏈階段」分組，一段一段完成即可。","We grouped the 25 circular actions by value-chain stage — complete them stage by stage.")+' <a href="javascript:demoFill()" style="font-size:11px">'+bi("（測試用：一鍵示意填答）","(test: auto-fill)")+'</a></div>';
+ body+=vf;
+ var controlled=S.product.scopes.indexOf(ph.k)>-1;
+ var ctag=controlled?'<span class="ctrl-tag">'+bi("您掌控此階段","You control this")+'</span>':'';
+ body+='<div class="phase-h'+(controlled?" ctrl":"")+'"><span class="ph-ic">'+stageIcon(ph.k,"stg-ic")+'</span><div style="flex:1"><div class="pt">'+bi(ph.zh,ph.en)+'</div><div class="pc">'+(ptot>0?bi("已答 "+pans+"/"+ptot,"Answered "+pans+"/"+ptot):bi("跨階段賦能整理中","Enabling actions being finalised"))+'</div></div>'+ctag+'</div>';
+ ph.ids.forEach(function(id){ body+=renderCE(id); });
+ // within-step advance
+ if(S.cePhase<PHASES.length-1) body+='<div style="text-align:right;margin-top:6px"><button class="btn btn-g" onclick="setPhase('+(S.cePhase+1)+')">'+bi("下一階段 →","Next stage →")+'</button></div>';
+
+ var pIds=Object.keys(priority).map(Number);
+ var ansP=pIds.filter(function(id){return S.ce[id]&&S.ce[id].status;}).length;
+ var ok=pIds.length===0||ansP===pIds.length;
+ var remain=pIds.length-ansP;
+ var sub=pIds.length?(remain>0?bi("還有 "+remain+" 項優先行動待答",""+remain+" priority action(s) left"):bi("優先行動已完成 ✓","Priority actions complete ✓")):bi("檢視 25 項循環行動","Review your 25 circular actions");
+ return shell(bi("檢視您的循環行動","Review your circular actions"),sub,svgDoc(),
+   bi("逐項標記現況；已執行可補目標與說明。","Mark each item; if implemented, add a target and note."),
+   body,bi("看結果 →","See map →"),ok);
+}
+
+/* Report-footer block: the user sees the report first, THEN chooses to leave details for the full PDF. */
+function reportContact(){
+ var c=S.contact;
+ if(c.sent){
+   return '<div class="incentive"><h3>'+bi("已送出 ✓","Done ✓")+'</h3><p style="margin:0">'+bi("完整 PDF 報告將寄到您的信箱","The full PDF report is on its way to your inbox")+(c.email?'：<b>'+c.email+'</b>':'')+bi("。",".")+'</p></div>';
+ }
+ var hasB=S.journeys.indexOf("B")>-1;
+ var desc=hasB
+   ? bi("這頁的即時結果只顯示您選的一種商業模型。完整 PDF 會把「循環化銷售／延壽服務／使用權」三種模式的必要、使能與選擇性缺口一次列出並附理由，可帶回團隊討論。留下 Email，我們便寄給您。",
+        "The instant results here show only your selected business model. The full PDF lays out the must / enabling / optional gaps for all three models side by side, with reasons — ready to take back to your team. Leave your email and we'll send it.")
+   : bi("完整 PDF 報告會把您的缺口、依賴與下一步整理成可帶回團隊討論的版本。留下 Email，我們便寄給您。",
+        "The full PDF report packages your gaps, dependencies and next steps into a version you can take back to the team. Leave your email and we'll send it.");
+ var ok0=rptOk();
+ var h='<div class="incentive"><h3>'+bi("想要完整 PDF 報告？","Want the full PDF report?")+'</h3><p>'+desc+'</p>';
+ h+='<div style="display:grid;gap:12px;max-width:440px">';
+ h+='<div><label class="qh" style="display:block;margin-bottom:4px">'+bi("公司名稱（必填）","Company name (required)")+'</label>'+
+    "<input type='text' value='"+(c.company||"")+"' oninput=\"S.contact.company=this.value; rptValidate()\"></div>";
+ h+='<div><label class="qh" style="display:block;margin-bottom:4px">'+bi("姓名（必填）","Name (required)")+'</label>'+
+    "<input type='text' value='"+(c.name||"")+"' oninput=\"S.contact.name=this.value; rptValidate()\"></div>";
+ h+='<div><label class="qh" style="display:block;margin-bottom:4px">'+bi("Email（必填）","Email (required)")+'</label>'+
+    "<input type='email' inputmode='email' autocomplete='email' value='"+(c.email||"")+"' oninput=\"S.contact.email=this.value; rptValidate()\" placeholder='name@company.com'>"+
+    '<div class="qh" id="rpt-hint" style="margin-top:4px">'+bi("我們會把完整 PDF 報告寄到這裡。","We'll email the full PDF report here.")+'</div></div>';
+ h+='<div><label class="qh" style="display:block;margin-bottom:4px">'+bi("統一編號（選填）","Business ID (optional)")+'</label>'+
+    "<input type='text' inputmode='numeric' maxlength='20' value='"+(c.tax||"")+"' oninput=\"setTax(this)\" placeholder='"+bi("僅限數字，上限 20 字","Digits only, up to 20")+"'></div>";
+ h+='</div>';
+ h+='<label class="consent-line"><input type="checkbox" '+(c.consent.report?"checked":"")+' onclick="S.contact.consent.report=this.checked;rptValidate()"><span>'+bi("同意提供上述資料，用於產製並寄送本報告及必要聯繫。","I agree to provide the above information to generate, send this report and make any necessary contact.")+'</span></label>';
+ h+='<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:14px">'+
+    '<button id="rpt-send" class="btn '+(ok0?"btn-p":"btn-d")+'" '+(ok0?"":"disabled")+' onclick="submitReport()">'+bi("產生並寄送報告 →","Generate & send the report →")+'</button>'+
+    '<button class="btn btn-g" onclick="summaryDownload()">'+bi("下載一頁摘要（免留資料）","Download the one-page summary (no details needed)")+'</button></div>';
+ return h+'</div>';
+}
+
+/* ===== results ===== */
+function targetSet(){
+ var t={};
+ if(S.journeys.indexOf("A")>-1) Object.keys(ESPR_MAP).forEach(function(k){ t[k]=t[k]||{}; t[k].A=ESPR_MAP[k]; });
+ var mv=S.resultModel||S.model;
+ if(S.journeys.indexOf("B")>-1&&mv){ var m=MODELS.filter(function(x){return x.v===mv;})[0];
+   m.must.forEach(function(id){ t[id]=t[id]||{}; t[id].B="must"; });
+   m.support.forEach(function(id){ t[id]=t[id]||{}; if(!t[id].B)t[id].B="support"; });
+ }
+ return t;
+}
+function sc8(){
+ var t=targetSet(), ids=Object.keys(t).map(Number);
+ var have=[],gaps=[],nas=[];
+ ids.forEach(function(id){ var r=S.ce[id]||{}; if(r.status==="done")have.push(id); else if(r.status==="na")nas.push(id); else gaps.push(id); });
+ var done=0,not=0,na=0; CE.forEach(function(a){var r=S.ce[a.id];if(r&&r.status==="done")done++;else if(r&&r.status==="na")na++;else if(r&&r.status==="not")not++;});
+ var pName=FOCUS.filter(function(x){return x.v===S.product.focus;})[0];
+ var pLabel=pName?bi(pName.zh,pName.en):bi("未選產品","No product");
+ var roleO=ROLES.filter(function(x){return x.v===S.product.role;})[0];
+ var jLabel=S.journeys.map(function(j){return j==="A"?bi("ESPR 準備","ESPR readiness"):bi("新收益","New revenue");}).join(" ・ ")||"—";
+
+ var h='<div class="report">';
+ h+='<div class="notice warn" style="margin-bottom:14px">'+bi("以下為【示意】即時運算，非最終邏輯——ESPR 面向與商業模型矩陣尚未定版。改上一步的作答，這裡會即時變化。",
+   "Below is an ILLUSTRATIVE live computation, not final logic — the ESPR aspect and business-model matrices are not yet finalised. Change your answers and this updates live.")+'</div>';
+ h+='<div class="rhero"><h2>Your Circular Journey Map</h2><p>'+bi("將您檢視的循環行動，轉化為方向、能力、缺口與下一步。","Turns your circular-action review into direction, capability, gaps and next steps.")+'</p>'+
+   '<div class="chipset"><span class="ctx"><b>'+bi("產品","Product")+'：</b>'+pLabel+'</span><span class="ctx"><b>'+bi("角色","Role")+'：</b>'+(roleO?bi(roleO.zh,roleO.en):"—")+'</span><span class="ctx"><b>'+bi("路徑","Path")+'：</b>'+jLabel+'</span></div></div>';
+ h+=rc("01",bi("產品與企業位置","Product & company position"),
+   '<div class="stat-row"><div class="stat"><b>'+S.product.scopes.length+'</b><span>'+bi("涉及範疇","Scopes")+'</span></div><div class="stat"><b>'+S.product.markets.length+'</b><span>'+bi("銷售市場","Markets")+'</span></div><div class="stat"><b>'+S.journeys.length+'</b><span>'+bi("探索路徑","Paths")+'</span></div></div>'+
+   '<div style="font-size:12.5px;color:var(--muted)">'+bi("焦點產品","Focus product")+'：<b>'+pLabel+'</b>'+(S.product.name?'（'+S.product.name+'）':'')+'</div>');
+ h+=rc("02",bi("現況起點","Current starting point"),
+   '<div class="stat-row"><div class="stat"><b>'+done+'</b><span>'+bi("已執行","Implemented")+'</span></div><div class="stat"><b>'+not+'</b><span>'+bi("未執行","Not yet")+'</span></div><div class="stat"><b>'+na+'</b><span>'+bi("自評不適用","N/A")+'</span></div></div>');
+ var haveH=have.length?have.map(function(id){var a=ceById(id);return '<div class="res ok">'+id+". "+bi(a.zh,a.en)+'</div>';}).join(""):'<div class="res und">'+bi("此路徑尚未盤到已執行的目標行動。","No implemented target actions yet for this path.")+'</div>';
+ h+=rc("03",bi("已具備能力","Capabilities in place"),haveH);
+ var pathH="";
+ if(S.journeys.indexOf("B")>-1){
+   var mv=S.resultModel||S.model;
+   pathH+='<div class="qh">'+bi("即時切換商業模型看缺口變化（示意）：","Switch business model to see gaps change (illustrative):")+'</div><div class="model-switch">'+
+     MODELS.map(function(m){return chip(bi(m.zh,m.en),mv===m.v,"S.resultModel='"+m.v+"';render()");}).join("")+'</div>';
+   var mm=MODELS.filter(function(x){return x.v===mv;})[0];
+   pathH+='<div class="res ok">'+bi(mm.dz,mm.de)+'</div>';
+ }
+ if(S.journeys.indexOf("A")>-1) pathH+='<div class="res ok">'+bi("ESPR／歐盟市場準備：由產品特性自動推導相關面向，映射分直接支持／使能支持／證據依賴。","ESPR / EU-market readiness: relevant aspects auto-derived from product traits; mapping is direct / enabling / evidence-dependent.")+'</div>';
+ h+=rc("04",bi("可能路徑","Possible paths"),pathH||'<div class="res und">'+bi("尚未選擇路徑。","No path selected.")+'</div>');
+ var gapH="";
+ gaps.forEach(function(id){var a=ceById(id);var must=(t[id].B==="must");gapH+='<div class="res gap">'+(must?'<b>['+bi("必要","Must")+'] </b>':'')+id+". "+bi(a.zh,a.en)+'</div>';});
+ nas.forEach(function(id){var a=ceById(id);gapH+='<div class="res und">'+id+". "+bi(a.zh,a.en)+' — '+bi("自評不適用，建議再確認","N/A — please reconfirm")+'</div>';});
+ if(!gapH) gapH='<div class="res ok">'+bi("此路徑的目標行動大致已具備。","Target actions for this path are largely in place.")+'</div>';
+ h+=rc("05",bi("缺口與依賴","Gaps & dependencies"),gapH+'<div class="qh" style="margin-top:8px">'+bi("含「證據依賴」項者，不能只靠自評，尚需測試／計算／供應商文件。","Evidence-dependent items can't rely on self-assessment alone — they need testing, calculation or supplier documents.")+'</div>');
+ h+=rc("06",bi("下一步選項","Next-step options"),
+   (gaps.length?'<div class="res ok">'+bi("優先補足","Prioritise")+'：'+gaps.slice(0,3).map(function(id){return bi(ceById(id).zh,ceById(id).en);}).join("、")+'</div>':'<div class="res ok">'+bi("可整理既有強項為對外案例。","Package existing strengths into an external case.")+'</div>')+
+   '<div class="notice" style="margin-top:8px">'+bi("若想把方向轉成實作，可了解結構化實施接口 ","To turn direction into implementation, explore the structured route ")+'<a href="https://circular-onsite.com/" target="_blank">Circular On-site</a>'+bi("（非唯一出口、不強制）。","(one option, not the only exit, not mandatory).")+'</div>');
+ h+=rc("07",bi("資源與夥伴","Resources & partners"),'<div class="res ok">'+bi("材料/再生料供應商、維修/翻新/再製造業者、逆向物流、回收業者、DPP/資料服務、法規/標準顧問。","Material/recycled-material suppliers, repair/refurbishment/remanufacturing providers, reverse logistics, recyclers, DPP/data services, regulatory/standards advisors.")+'</div>');
+ h+=reportContact();
+ h+='<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px"><button class="btn btn-g" onclick="prev()">'+bi("← 修改作答","← Edit answers")+'</button><button class="btn btn-g" onclick="replayOther()">↺ '+bi("探索另一條路徑","Explore the other path")+'</button></div>';
+ h+='<div class="notice" style="margin-top:14px;font-size:11.5px">'+bi("分析日期 2026-07-15 ・ CE Action 定義 v0.2（1–25）・ ISO 59004:2024／ESPR 參考版本 ・ 本結果為方向性參考，非合規判定或法律意見。",
+   "Analysis date 2026-07-15 ・ CE Action definitions v0.2 (1–25) ・ ISO 59004:2024 / ESPR reference versions ・ Directional reference only; not a compliance ruling or legal advice.")+'</div></div>';
+ return topStepper()+h;
+}
+function rc(k,title,body){ return '<div class="rcard"><div class="rk">'+k+'</div><h3>'+title+'</h3>'+body+'</div>'; }
+
+/* ===== main render ===== */
+function render(){
+ document.documentElement.lang=LANG==="zh"?"zh-Hant":"en";
+ renderNav();
+ var el=document.getElementById("app"), s=S.step;
+ if(s===1)el.innerHTML=scHome();
+ else if(s===2)el.innerHTML=sc2();
+ else if(s===3)el.innerHTML=sc3();
+ else if(s===4)el.innerHTML=sc5();
+ else if(s===5)el.innerHTML=sc6();
+ else if(s===6)el.innerHTML=sc8();
+}
+render();
+</script>
+</body>
+</html>
