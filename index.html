@@ -345,7 +345,7 @@ function submitAnswersToBackend(){
  if(!S.admin.submissionId)S.admin.submissionId=genId();
  postToBackend('submitResponse',{
   submissionId:S.admin.submissionId,
-  prototypeVersion:'v0.15',
+  prototypeVersion:'v0.16',
   productName:S.productName||'',
   markets:S.markets.slice(),
   productTypeCode:S.pt||'',
@@ -613,7 +613,6 @@ function renderAction(n){
  }
  return '<div class="ce-item">'
   +'<div class="ce-method-line"><span class="ce-num">'+String(n).padStart(2,'0')+'</span><span>CE ACTION</span><span class="ce-method-name">'+esc(bi(a.zh,a.en))+'</span></div>'
-  +'<div class="ce-practice">'+esc(bi(a.pz,a.pe))+'</div>'
   +'<div class="ce-main-q">'+esc(bi(a.qz,a.qe))+'</div>'
   +'<div class="ce-status-prompt">'+bi(ROLE_Q_ZH,ROLE_Q_EN)+'</div>'
   +roleChips
