@@ -166,7 +166,7 @@ input:focus{border-color:var(--navy);outline:none;box-shadow:0 0 0 3px var(--acc
 .home-details-body{padding:14px 16px 16px;font-size:12.8px;line-height:1.78;color:var(--ink)}
 .home-details-body p{font-size:12.8px;margin:0 0 9px;line-height:1.78}
 .home-details-body p:last-child{margin-bottom:0}
-.home-pair-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.home-pair-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:8px}
 .home-pair{padding:9px 11px}
 .home-pair b{display:block;font-size:12.5px;color:var(--navy);margin-bottom:2px}
 .home-pair span{font-size:11.7px;color:var(--muted);line-height:1.55}
@@ -359,9 +359,14 @@ input:focus{border-color:var(--navy);outline:none;box-shadow:0 0 0 3px var(--acc
 .exit-card{background:#fff;border:1px solid var(--warn-line);border-radius:12px;padding:22px;margin-top:8px}
 .exit-card h3{margin:0 0 8px;color:var(--navy);font-size:18px}
 .exit-card p{margin:0 0 12px;color:var(--muted);font-size:13px;line-height:1.75}
+.inline-panel{background:var(--warn-bg);border:1px solid var(--warn-line);border-left:3px solid var(--warn);border-radius:0 10px 10px 0;padding:16px 18px;margin-top:14px}
+.inline-panel h4{margin:0 0 6px;color:var(--navy);font-size:14.5px}
+.inline-panel p{margin:0 0 10px;color:var(--muted);font-size:12.8px;line-height:1.7}
+.inline-panel p:last-of-type{margin-bottom:12px}
 .field-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
 .field-grid .full{grid-column:1/-1}
 .label{display:block;font-size:11.8px;color:var(--muted);margin-bottom:4px}
+.req-mark{color:#dc2626;font-weight:700}
 .route-badge{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.06em}
 .method-boundary{font-size:11.8px;color:var(--muted);line-height:1.75}
 @media(max-width:640px){.choice-grid{grid-template-columns:1fr}.field-grid{grid-template-columns:1fr}}
@@ -393,6 +398,19 @@ input:focus{border-color:var(--navy);outline:none;box-shadow:0 0 0 3px var(--acc
 .qpanel{padding:16px 20px 22px}
 .illus{padding:20px 12px}
 .ce-item{padding:15px 16px}
+.ce-steps{margin-top:12px}
+.ce-step{position:relative;padding-left:32px}
+.ce-step-1{padding-bottom:14px}
+.ce-step-1:after{content:'';position:absolute;left:11px;top:24px;bottom:0;width:2px;background:var(--line)}
+.ce-step-dot{position:absolute;left:0;top:0;width:23px;height:23px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11.5px;font-weight:700;background:#fff}
+.ce-step-1 .ce-step-dot{background:var(--navy);color:#fff}
+.ce-step-2 .ce-step-dot{background:#fff;color:var(--navy);border:2px solid var(--navy)}
+.ce-step-body{border-radius:8px;padding:11px 13px}
+.ce-step-1 .ce-step-body{border:1px solid var(--line);background:#f9fafc}
+.ce-step-2 .ce-step-body{border:1px dashed var(--line);background:transparent}
+.ce-layer-label{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--navy);margin-bottom:7px;text-transform:uppercase}
+.ce-step-2 .ce-layer-label{color:var(--muted)}
+.ce-step .ce-status-prompt{margin:0 0 8px}
 @media(max-width:820px){.shell-body{grid-template-columns:1fr}.illus{display:none}}
 @media print{.nav,.stepper,.shell-foot,.no-print,.shell-head-right{display:none!important}.shell{box-shadow:none;border:none}.illus{display:none}.shell-body{grid-template-columns:1fr}body{background:#fff}}
 </style></head><body>
@@ -534,8 +552,9 @@ function submitReport(){
  if(btn){btn.disabled=true;btn.innerHTML=bi('寄送中…','Sending…');}
  postToBackend('sendReport',reportPayload_({})).then(handleSendResult_);
 }
-function updateSendBtn(){var b=document.getElementById('sendReportBtn');if(b){var ok=isEmail(S.admin.email);b.disabled=!ok;b.className='btn '+(ok?'btn-p':'btn-d');}}
-function adminField(k,zh,en,type,ph,full){var a=S.admin;return '<div class="'+(full?'full':'')+'"><label class="label">'+bi(zh,en)+'</label><input type="'+(type||'text')+'" value="'+esc(a[k]||'')+'" placeholder="'+esc(ph||'')+'" oninput="updateAdmin(\''+k+'\',this);updateSendBtn()"></div>';}
+function updateSendBtn(){var b=document.getElementById('sendReportBtn');if(b){var ok=reportRequiredOk_(S.admin);b.disabled=!ok;b.className='btn '+(ok?'btn-p':'btn-d');}}
+function adminField(k,zh,en,type,ph,full,required){var a=S.admin;return '<div class="'+(full?'full':'')+'"><label class="label">'+bi(zh,en)+(required?' <span class="req-mark">*</span>':'')+'</label><input type="'+(type||'text')+'" value="'+esc(a[k]||'')+'" placeholder="'+esc(ph||'')+'" oninput="updateAdmin(\''+k+'\',this);updateSendBtn()"></div>';}
+function reportRequiredOk_(a){return !!(isEmail(a.email)&&a.company&&a.company.trim()&&a.name&&a.name.trim()&&a.title&&a.title.trim()&&a.tax&&a.tax.trim());}
 function reportSection(){
  var a=S.admin;
  if(a.sent){
@@ -548,10 +567,10 @@ function reportSection(){
   return '<div class="sec"><h3><span class="sec-num">04</span> '+bi('接收完整報告','Receive full report')+'</h3><div class="res ok"><b>'+bi('已送出 ✓','Submitted ✓')+'</b>　'+bi('完整報告寄送資訊已登記至','Delivery information registered as')+' <b>'+esc(a.email)+'</b>。<div class="ce-def-note" style="margin-top:6px">'+confirmMsg+'</div>'+attachNote+'</div></div>';
  }
  var body=a.sendError?('<div class="notice" style="margin-bottom:14px;border-color:#d97706;color:#92400e">'+bi('寄送失敗，可能是網路連線問題，請確認後再按一次下方按鈕重試；若持續失敗，請直接聯繫我們。','Sending failed, possibly a connection issue. Please retry below; contact us directly if it keeps failing.')+'</div>'):'';
- body+='<div class="notice" style="margin-bottom:14px">'+bi('以下欄位僅用於報告寄送與您另行選擇的後續聯繫，不影響前述任何分析內容。只有 Email 為必填，其餘欄位可視需要填寫。','The fields below are only for report delivery and any follow-up you separately choose; they do not affect the analysis above. Only email is required.')+'</div><div class="field-grid">';
- body+=adminField('company','公司／組織名稱（選填）','Company / organisation (optional)','text','',false)+adminField('name','姓名（選填）','Name (optional)','text','',false)+adminField('title','職稱（選填）','Job title (optional)','text','',false)+adminField('email','Email（寄送報告必填）','Email (required)','email','name@company.com',false)+adminField('tax','統一編號（選填）','Business ID (optional)','text','',false)+adminField('partner','合作單位來源（選填）','Referring partner (optional)','text','',true);
+ body+='<div class="notice" style="margin-bottom:14px">'+bi('以下欄位僅用於報告寄送與您另行選擇的後續聯繫，不影響前述任何分析內容。標示 <span class="req-mark">*</span> 為必填，其餘欄位可視需要填寫。','The fields below are only for report delivery and any follow-up you separately choose; they do not affect the analysis above. Fields marked <span class="req-mark">*</span> are required; others are optional.')+'</div><div class="field-grid">';
+ body+=adminField('company','公司／組織名稱','Company / organisation','text','',false,true)+adminField('name','姓名','Name','text','',false,true)+adminField('title','職稱','Job title','text','',false,true)+adminField('email','Email','Email','email','name@company.com',false,true)+adminField('tax','統一編號','Business ID','text','',false,true)+adminField('partner','合作單位來源（選填）','Referring partner (optional)','text','',true,false);
  body+='</div><label class="consent-line"><input type="checkbox" '+(a.followup?'checked':'')+' onchange="updateAdmin(\'followup\',this)"><span>'+bi('我願意接收與本計畫相關的後續聯繫或資訊。','I would like to receive Programme-related follow-up.')+'</span></label><div class="notice" style="margin-top:14px">'+bi('您主動提供的資料僅用於報告寄送、相關查詢及您另行選擇的後續聯繫。完整資料使用說明請參考首頁。','The information you provide is used only for report delivery, related enquiries and follow-up you separately choose. See the homepage for the full data-use notice.')+'</div>';
- var ok=isEmail(a.email);
+ var ok=reportRequiredOk_(a);
  body+='<div style="margin-top:14px"><button class="btn '+(ok?'btn-p':'btn-d')+'" id="sendReportBtn" '+(ok?'':'disabled')+' onclick="submitReport()">'+bi('送出並接收完整報告','Submit and receive full report')+'</button></div>';
  return '<div class="sec no-print"><h3><span class="sec-num">04</span> '+bi('接收完整報告','Receive full report')+'</h3>'+body+'</div>';
 }
@@ -895,22 +914,25 @@ function scP0(){
  var cards='<div class="choice-grid">'+retained.map(function(p){return ptCard(p,false);}).join('')+'</div>';
  var exToggle='<div style="margin-top:12px"><a class="exp-toggle" href="javascript:toggleExcluded()">'+(S.showExcluded?'<span class="exp-mark">－</span> '+bi('收合不適用的產品類型','Hide product types not covered'):'<span class="exp-mark">＋</span> '+bi('我的產品不在上列？查看不適用的產品類型（'+excluded.length+'）','Not listed above? View product types not covered ('+excluded.length+')'))+'</a></div>';
  var exCards=S.showExcluded?'<div class="choice-grid" style="margin-top:8px">'+excluded.map(function(p){return ptCard(p,true);}).join('')+'</div>':'';
+ var ptSel=S.pt?ptById(S.pt):null;
+ var ptExcluded=!!(ptSel&&!ptSel.retained);
+ var ptPanel=!ptExcluded?'':'<div class="inline-panel"><h4>'+bi('此產品類型目前不適用本工具','This product type is not currently covered by the tool')+'</h4><p>'+bi('您選擇的「<b>'+esc(ptSel.name)+'</b>」屬於基本版排除類型。目前方法無法為此類產品在三種商業模式下提供足夠一致的解讀；這不代表該產品沒有循環經濟機會。','The type you selected, <b>'+esc(bi(ptSel.name,ptSel.name_en))+'</b>, is outside the basic version. The current method cannot give a sufficiently consistent reading across the three business models for this type. This does not mean the product has no circular-economy opportunity.')+'</p><p class="ce-def-note">'+bi('建議重新界定 Product in Focus（例如改以可維護的設備或完整系統為分析單位），或改用其他循環分析方法。','Consider redefining the Product in Focus (for example a serviceable piece of equipment or a complete system), or use another circular-analysis method.')+'</p><button class="btn btn-g" onclick="clearPT()">'+bi('← 重新選擇產品類型','← Choose another product type')+'</button></div>';
  var marketChips='<div class="chips">'+MARKET_OPTIONS.map(function(o){return chip(bi(o.zh,o.en),S.markets.indexOf(o.code)>=0,"pickMarket('"+o.code+"')");}).join('')+'</div>';
  var body='<div class="q"><div class="qt">'+bi('Q0.1　產品／產品線名稱','Q0.1  Product / product-line name')+'</div><div class="qh">'+bi('本工具以一條具體產品線為分析單位。','This tool uses one specific product line as the unit of analysis.')+'</div><input type="text" id="pn" value="'+esc(S.productName)+'" placeholder="'+bi('例：商用洗衣設備','e.g. commercial laundry equipment')+'" oninput="S.productName=this.value;syncNext()"></div>'
    +'<div class="q"><div class="qt">'+bi('Q0.2　主要銷售市場','Q0.2  Main sales markets')+'</div><div class="qh">'+bi('請選擇貴公司此產品或產線的主要銷售市場（可複選，至少選擇一項）。此題不影響後續流程，僅供未來報告參考。','Select the main markets where your company sells this product or product line (multi-select, choose at least one). This does not affect the flow; it is recorded for future report use only.')+'</div>'+marketChips+'</div>'
-   +'<div class="q"><div class="qt">'+bi('Q0.3　產品類型','Q0.3  Product type')+'</div><div class="qh">'+bi('選擇後系統判斷是否進入工具（不適用類型將導向提示頁）。','Your choice determines whether the tool applies; types not covered lead to an explanatory page.')+'</div>'+cards+exToggle+exCards+'</div>';
- var foot='<button class="btn btn-g" onclick="go(\'home\')">'+bi('← 首頁','← Home')+'</button><div class="right"><button class="btn '+((S.productName.trim()&&S.markets.length&&S.pt)?'btn-p':'btn-d')+'" id="next0" onclick="submitP0()">'+bi('下一步','Next')+'</button></div>';
+   +'<div class="q"><div class="qt">'+bi('Q0.3　產品類型','Q0.3  Product type')+'</div><div class="qh">'+bi('選到不適用的類型時，會立即顯示說明。','Selecting a type not covered shows an explanation immediately.')+'</div>'+cards+exToggle+exCards+ptPanel+'</div>';
+ var nextOk=S.productName.trim()&&S.markets.length&&S.pt&&!ptExcluded;
+ var nextLabel=ptExcluded?bi('請重新選擇產品類型','Choose another product type'):bi('下一步','Next');
+ var foot='<button class="btn btn-g" onclick="go(\'home\')">'+bi('← 首頁','← Home')+'</button><div class="right"><button class="btn '+(nextOk?'btn-p':'btn-d')+'" id="next0" '+(nextOk?'onclick="submitP0()"':'')+'>'+nextLabel+'</button></div>';
  var cap=bi('請以一條具體產品線為分析單位。三種商業模式都會以同一項產品為準，過程中可隨時返回修改。','Use one specific product line as the unit of analysis. All three business models refer to the same product; you can go back and edit at any time.');
  return shell(0,bi('選擇分析對象','Choose your analysis object'),bi('界定 Product in Focus 與產品類型','Define the Product in Focus and product type'),illusIcon(ICON_PROD),cap,body,foot);
 }
 function toggleExcluded(){S.showExcluded=!S.showExcluded;render();}
 function pickPT(c){S.pt=c;render();}
+function clearPT(){S.pt=null;render();}
 function pickMarket(c){var i=S.markets.indexOf(c);if(i>=0){S.markets.splice(i,1);}else{S.markets.push(c);}render();}
-function syncNext(){var b=document.getElementById('next0');if(b){var ok=S.productName.trim()&&S.markets.length&&S.pt;b.className='btn '+(ok?'btn-p':'btn-d');}}
-function submitP0(){if(!S.productName.trim()||!S.markets.length||!S.pt)return;if(!ptById(S.pt).retained){go('exitP');return;}S.mode=null;go('pm');}
-function scExitP(){var p=ptById(S.pt);
- return stepper(0)+'<div class="shell"><div class="exit-card" style="padding:24px 26px"><h3>'+bi('此產品類型目前不適用本工具','This product type is not currently covered by the tool')+'</h3><p>'+bi('您選擇的「<b>'+esc(p.name)+'</b>」屬於基本版排除類型。目前方法無法為此類產品在三種商業模式下提供足夠一致的解讀；這不代表該產品沒有循環經濟機會。','The type you selected, <b>'+esc(bi(p.name,p.name_en))+'</b>, is outside the basic version. The current method cannot give a sufficiently consistent reading across the three business models for this type. This does not mean the product has no circular-economy opportunity.')+'</p><p class="ce-def-note">'+bi('建議重新界定 Product in Focus（例如改以可維護的設備或完整系統為分析單位），或改用其他循環分析方法。','Consider redefining the Product in Focus (for example a serviceable piece of equipment or a complete system), or use another circular-analysis method.')+'</p><button class="btn btn-g" onclick="go(\'p0\')">'+bi('← 重新選擇產品類型','← Choose another product type')+'</button></div></div>';
-}
+function syncNext(){var b=document.getElementById('next0');if(b){var exSel=S.pt&&!ptById(S.pt).retained;var ok=S.productName.trim()&&S.markets.length&&S.pt&&!exSel;b.className='btn '+(ok?'btn-p':'btn-d');}}
+function submitP0(){if(!S.productName.trim()||!S.markets.length||!S.pt||!ptById(S.pt).retained)return;S.mode=null;go('pm');}
 
 /* ---------- PM ---------- */
 function scPM(){
@@ -921,29 +943,30 @@ function scPM(){
    return choiceCard(S.mode===m.mode,"pickMode('"+m.mode+"')",bi(m.name,m.name_en)+tag,bi(m.rationale,m.rationale_en),!open);
  }).join('')+'</div>';
  var body='<div class="focus-tag"><b>'+bi('分析對象：','Analysis object: ')+'</b>'+esc(S.productName)+'（'+esc(bi(ptById(S.pt).name,ptById(S.pt).name_en))+'）</div><div class="q"><div class="qt">'+bi('請選一種循環商業模式作為本次診斷目標','Choose one circular business model as the diagnostic target')+'</div><div class="qh">'+bi('單選。選項依產品類型自動篩選。','Single choice. Options are filtered automatically by product type.')+'</div>'+cards+'</div>';
- var foot='<button class="btn btn-g" onclick="go(\'p0\')">'+bi('← 上一步','← Back')+'</button><div class="right"></div>';
+ var selMd=S.mode?ms.find(function(x){return x.mode===S.mode;}):null;
+ var needsQual=!!(selMd&&selMd.strength!=='STRONG'&&selMd.strength!=='BASIC_NOT_OPEN');
+ var qualFail=needsQual&&S.qual==='fail';
+ if(needsQual){
+  body+='<div class="q"><div class="notice">'+bi('「'+esc(selMd.name)+'」對「'+esc(ptById(S.pt).name)+'」屬<b>條件式模式</b>，需要下列條件成立才適合。請就您本次的產品與客戶關係，選擇比較接近的一種情境：','<b>'+esc(bi(selMd.name,selMd.name_en))+'</b> is a <b>conditional model</b> for <b>'+esc(bi(ptById(S.pt).name,ptById(S.pt).name_en))+'</b>; it fits only when the conditions below hold. For your product and customer relationship, choose the scenario that is closer:')+'</div>'
+   +'<div class="qt" style="margin-top:14px">'+bi('哪一種情境比較接近您的實際狀況？','Which scenario is closer to your actual situation?')+'</div>'
+   +'<div class="choice-grid" style="grid-template-columns:1fr 1fr;margin-top:8px">'
+   +choiceCard(S.qual==='pass',"setQual('pass')",bi('比較接近「可成立」','Closer to “applies”'),bi(selMd.qpass,selMd.qpass_en))
+   +choiceCard(S.qual==='fail',"setQual('fail')",bi('比較接近「不成立」','Closer to “does not apply”'),bi(selMd.qfail,selMd.qfail_en))
+   +'</div>'
+   +(qualFail?'<div class="inline-panel"><h4>'+bi('此模式在本次情境不開放','This model is not open in the current scenario')+'</h4><p>'+bi('「'+esc(selMd.name)+'」對此產品需要條件成立，而您的情境較接近不成立情境：','<b>'+esc(bi(selMd.name,selMd.name_en))+'</b> requires qualifying conditions for this product, and your situation is closer to the non-qualifying scenario:')+'</p><p class="ce-def-note">'+esc(bi(selMd.qfail,selMd.qfail_en))+'</p></div>':'')
+   +'</div>';
+ }
+ var nextBtn='';
+ if(needsQual){
+  nextBtn=qualFail
+   ? '<button class="btn btn-d">'+bi('請改選其他商業模式','Choose another business model')+'</button>'
+   : '<button class="btn '+(S.qual==='pass'?'btn-p':'btn-d')+'" '+(S.qual==='pass'?'onclick="go(\'p6\')"':'')+'>'+bi('繼續 →','Continue →')+'</button>';
+ }
+ var foot='<button class="btn btn-g" onclick="go(\'p0\')">'+bi('← 上一步','← Back')+'</button><div class="right">'+nextBtn+'</div>';
  var cap=bi('商業模式描述「交易、收入與責任」如何配置，不是循環成熟度階梯。選項已依產品類型自動篩選。','A business model describes how transactions, revenue and responsibility are configured; it is not a maturity ladder. Options are filtered by product type.');
  return shell(1,bi('選擇商業模式','Choose a business model'),bi('單選一種循環商業模式作為診斷目標','Select one circular business model as the diagnostic target'),illusIcon(ICON_MODEL),cap,body,foot);
 }
-function pickMode(m){S.mode=m;S.qual=null;var md=modesFor(S.pt).find(function(x){return x.mode===m;});if(md.strength==='STRONG'){go('p6');}else{go('qual');}}
-function scQual(){var md=modesFor(S.pt).find(function(x){return x.mode===S.mode;});
- var body='<div class="notice">'+bi('「'+esc(md.name)+'」對「'+esc(ptById(S.pt).name)+'」屬<b>條件式模式</b>，需要下列條件成立才適合。請就您本次的產品與客戶關係，選擇比較接近的一種情境：','<b>'+esc(bi(md.name,md.name_en))+'</b> is a <b>conditional model</b> for <b>'+esc(bi(ptById(S.pt).name,ptById(S.pt).name_en))+'</b>; it fits only when the conditions below hold. For your product and customer relationship, choose the scenario that is closer:')+'</div>'
-  +'<div class="q"><div class="qt">'+bi('哪一種情境比較接近您的實際狀況？','Which scenario is closer to your actual situation?')+'</div></div>'
-  +'<div class="choice-grid" style="grid-template-columns:1fr 1fr">'
-  +choiceCard(S.qual==='pass',"setQual('pass')",bi('比較接近「可成立」','Closer to “applies”'),bi(md.qpass,md.qpass_en))
-  +choiceCard(S.qual==='fail',"setQual('fail')",bi('比較接近「不成立」','Closer to “does not apply”'),bi(md.qfail,md.qfail_en))
-  +'</div>';
- var ok=!!S.qual;
- var nextBtn = S.qual==='fail'
-   ? '<button class="btn btn-p" onclick="go(\'exitM\')">'+bi('繼續 →','Continue →')+'</button>'
-   : '<button class="btn '+(ok?'btn-p':'btn-d')+'" '+(ok?'onclick="go(\'p6\')"':'')+'>'+bi('繼續 →','Continue →')+'</button>';
- var foot='<button class="btn btn-g" onclick="go(\'pm\')">'+bi('← 改選模式','← Change model')+'</button><div class="right">'+nextBtn+'</div>';
- var cap=bi('條件式模式需要具體成立條件。選錯不影響其他分析，可隨時返回改選模式。','A conditional model needs specific qualifying conditions. A wrong choice does not affect other analysis; you can return and change the model anytime.');
- return shell(1,bi(md.name,md.name_en),bi('資格確認','Qualification'),illusIcon(ICON_MODEL),cap,body,foot);
-}
-function scExitM(){var md=modesFor(S.pt).find(function(x){return x.mode===S.mode;});
- return stepper(1)+'<div class="shell"><div class="exit-card" style="padding:24px 26px"><h3>'+bi('此模式在本次情境不開放','This model is not open in the current scenario')+'</h3><p>'+bi('「'+esc(md.name)+'」對此產品需要條件成立，而您的情境較接近不成立情境：','<b>'+esc(bi(md.name,md.name_en))+'</b> requires qualifying conditions for this product, and your situation is closer to the non-qualifying scenario:')+'</p><p class="ce-def-note">'+esc(bi(md.qfail,md.qfail_en))+'</p><button class="btn btn-g" onclick="go(\'pm\')">'+bi('← 改選其他商業模式','← Choose another business model')+'</button></div></div>';
-}
+function pickMode(m){S.mode=m;S.qual=null;var md=modesFor(S.pt).find(function(x){return x.mode===m;});if(md.strength==='STRONG'){go('p6');}else{render();}}
 
 /* ---------- P6 (phase-grouped, restored icons) ---------- */
 function renderAction(n){
@@ -962,20 +985,20 @@ function renderAction(n){
  var tabHead='<div class="ce-tabs">'+tabs.map(function(t,i){return '<span class="ce-tab'+(i===tabIdx?' on':'')+(i===tabIdx&&t.warn?' warn-on':'')+'" onclick="setCeTab('+n+','+i+')">'+t.label+'</span>';}).join('')+'</div>';
  var tabBody='<div class="ce-tab-panel'+(tabs[tabIdx].warn?' warn':'')+'">'+tabs[tabIdx].html+'</div>';
  var roleChips='<div class="chips">'+ROLE_OPTIONS.map(function(o){var cls=(o.code==='ROLE_UNCERTAIN'||o.code==='NOT_APPLICABLE')?'unk':'';return chip(bi(o.zh,o.en),roleCur===o.code,"setRole('"+id6+"','"+o.code+"')",cls);}).join('')+'</div>';
- var progressBlock;
+ var roleStep='<div class="ce-step ce-step-1"><div class="ce-step-dot">1</div><div class="ce-step-body"><div class="ce-layer-label">'+bi('決策角色','Decision role')+'</div><div class="ce-status-prompt">'+bi(ROLE_Q_ZH,ROLE_Q_EN)+'</div>'+roleChips+'</div></div>';
+ var progressInner;
  if(isNA){
-  progressBlock='<div class="ce-def-note" style="margin-top:8px">'+bi('已標示此作法不適用於本產品線，不會再詢問進展狀態，也不會記錄進展答案。','Marked as not applicable to this product line; the progress question is skipped and no progress answer is recorded.')+'</div>';
+  progressInner='<div class="ce-def-note" style="margin-top:2px">'+bi('已標示此作法不適用於本產品線，不會再詢問進展狀態，也不會記錄進展答案。','Marked as not applicable to this product line; the progress question is skipped and no progress answer is recorded.')+'</div>';
  } else {
   var progChips='<div class="chips">'+PROGRESS_OPTIONS.map(function(o){var cls=(o.code==='PROGRESS_UNCERTAIN')?'unk':'';return chip(bi(o.zh,o.en),progCur===o.code,"setProgress('"+id6+"','"+o.code+"')",cls,bi(o.defZh,o.defEn));}).join('')+'</div>';
-  progressBlock='<div class="ce-status-prompt" style="margin-top:12px">'+esc(bi(PROGRESS_Q_ZH,PROGRESS_Q_EN))+'</div>'+progChips;
+  progressInner='<div class="ce-status-prompt">'+esc(bi(PROGRESS_Q_ZH,PROGRESS_Q_EN))+'</div>'+progChips;
  }
+ var progressStep='<div class="ce-step ce-step-2"><div class="ce-step-dot">2</div><div class="ce-step-body"><div class="ce-layer-label">'+bi('推動進展','Progress')+'</div>'+progressInner+'</div></div>';
  return '<div class="ce-item">'
-  +'<div class="ce-method-line"><span class="ce-num">'+String(n).padStart(2,'0')+'</span><span>CE ACTION</span><span class="ce-method-name">'+esc(bi(a.zh,a.en))+'</span></div>'
-  +'<div class="ce-main-q">'+esc(bi(a.qz,a.qe))+'</div>'
-  +'<div class="ce-status-prompt">'+bi(ROLE_Q_ZH,ROLE_Q_EN)+'</div>'
-  +roleChips
-  +progressBlock
-  +'<div class="ce-help-tabs">'+tabHead+tabBody+'</div>'
+   +'<div class="ce-method-line"><span class="ce-num">'+String(n).padStart(2,'0')+'</span><span>CE ACTION</span><span class="ce-method-name">'+esc(bi(a.zh,a.en))+'</span></div>'
+   +'<div class="ce-main-q">'+esc(bi(a.qz,a.qe))+'</div>'
+   +'<div class="ce-steps">'+roleStep+progressStep+'</div>'
+   +'<div class="ce-help-tabs">'+tabHead+tabBody+'</div>'
  +'</div>';
 }
 function scP6(){
@@ -1056,7 +1079,12 @@ function scResult(){
  var priorityBlock=priority.length
   ?'<div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">'+priority.map(function(a){return '<div class="card" style="padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font-size:13.5px">'+esc(bi(a.zh,a.en))+'</span>'+statusPill(S.ce[a.id])+'</div>';}).join('')+'</div>'
   :'<div class="ce-def-note">'+bi('目前對本模式最關鍵的行動皆已在推動中，暫無特別建議優先檢視的項目。','No standout items right now — the actions most critical to this model are already underway.')+'</div>';
- var analysis='<div class="notice">'+bi('這一頁是<b>運算邏輯的驗證輸出</b>，非最終報告（報告版面另做）。','This page is a <b>logic verification output</b>, not the final report (report layout is separate).')+'</div>'
+ var analysis='<div class="notice">'+bi('在開始閱讀以下結果之前：本工具協助您先將分散在日常工作中、尚未系統盤點的循環經濟作為，整理為可辨識的 25 項 CE Actions，並在您選擇的商業模式與交易情境下，建立對行動現況、企業角色、商業關聯及後續可考量範圍的共同理解。以下結果呈現：','Before you read the results below: this tool first organises circular-economy work that is already happening but not yet systematically tracked into 25 identifiable CE Actions, and builds a shared understanding — under your selected business model and transaction context — of current status, company role, business relevance and scope for further consideration. The results below show:')+'<ul class="home-bullets">'
+  +'<li>'+bi('貴公司針對所選產品線，哪些 CE Actions 已制度化、正在執行、規劃中、預計規劃、尚未展開或無法確認。','Which CE Actions are institutionalised, underway, being planned, intended for planning, not yet started, or unclear for your selected product line.')+'</li>'
+  +'<li>'+bi('在您所選的現行商業模式下，各項 CE Actions 可能支持哪些商業價值因子，以及建議優先檢視的行動。','Under your selected business model, which business value factors each CE Action may support, and which actions are worth reviewing first.')+'</li>'
+  +'<li>'+bi('哪些 CE Actions 已構成目前行動基礎、哪些正在準備，以及哪些可在後續循環轉型規劃中進一步考量。','Which CE Actions already form your current action base, which are being prepared, and which can be considered further in later circular-transition planning.')+'</li>'
+  +'<li>'+bi('可作為展開跨部門循環轉型路徑規劃的共同語言基礎。','A shared language your company can use to take cross-department circular-transition planning further.')+'</li>'
+  +'</ul></div>'
   +'<div class="sec"><h3><span class="sec-num">01</span> '+bi('基本資訊','Summary')+'</h3><ul><li>'+bi('產品：','Product: ')+'<b>'+esc(S.productName)+'</b></li><li>'+bi('產品類型：','Type: ')+esc(bi(ptById(S.pt).name,ptById(S.pt).name_en))+'</li><li>'+bi('診斷模式：','Model: ')+'<b>'+esc(modeName)+'</b></li></ul></div>'
   +'<div class="sec"><h3><span class="sec-num">02</span> '+bi('循環行動現況總覽','CE action status overview')+'</h3><ul>'+stBlock+'</ul></div>'
   +'<div class="sec"><h3><span class="sec-num">03</span> '+bi('建議優先檢視的行動','Suggested priority actions')+'</h3><p class="qh">'+bi('這些行動對您選擇的商業模式有主要影響，但目前尚未推動或仍在規劃中，建議優先檢視。','These actions have a primary influence on your selected business model but are not yet underway or still being planned — worth reviewing first.')+'</p>'+priorityBlock+'</div>';
@@ -1070,7 +1098,7 @@ function scResult(){
 function render(){
  renderNav();
  renderFooter();
- var m={home:scHome,p0:scP0,exitP:scExitP,pm:scPM,qual:scQual,exitM:scExitM,p6:scP6,result:scResult,methodology:scMethodology,dataPolicy:scDataPolicy};
+ var m={home:scHome,p0:scP0,pm:scPM,p6:scP6,result:scResult,methodology:scMethodology,dataPolicy:scDataPolicy};
  document.getElementById('app').innerHTML=(m[S.step]||scHome)();
 }
 render();
