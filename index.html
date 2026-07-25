@@ -401,43 +401,19 @@ function reportPayload_(extra){
  return p;
 }
 function handleSendResult_(res){
- if(res&&res.ok){S.admin.sent=true;S.admin.sendError=false;S.admin.sentOptimistic=!!res.optimistic;}
- else if(res&&/附件|attachment/i.test(res.error||'')&&!S.admin._retriedNoAttachment){
-  S.admin._retriedNoAttachment=true;
-  S.admin.sentNoAttachment=true;
-  postToBackend('sendReport',reportPayload_({})).then(handleSendResult_);
-  return;
- }
+ // v9：後端一律會嘗試寄信（合併失敗時改寄不含附件的版本），mergeOk===false 代表
+ // 這次寄出的信沒有附上正式 PDF（後端會人工補寄），不是前端需要重試的錯誤。
+ if(res&&res.ok){S.admin.sent=true;S.admin.sendError=false;S.admin.sentOptimistic=!!res.optimistic;S.admin.sentNoAttachment=(res.mergeOk===false);}
  else{S.admin.sendError=true;}
  render();
 }
 function submitReport(){
+ // v9 起：正式 PDF 報告改由後端（Code.gs mergeReport）用 Slides 樣板合併產生，
+ // 前端只需要送 submissionId + 聯絡資訊，不再自己截圖產生 PDF 或傳 pdfBase64。
  if(!isEmail(S.admin.email))return;
  var btn=document.getElementById('sendReportBtn');
  if(btn){btn.disabled=true;btn.innerHTML=bi('寄送中…','Sending…');}
- var el=document.getElementById('resultCapture');
- if(!el||!window.html2canvas||!(window.jspdf&&window.jspdf.jsPDF)){
-  postToBackend('sendReport',reportPayload_({})).then(handleSendResult_);
-  return;
- }
- var MAX_ATTACH_B64=9000000; // ~6.5MB 二進位，留安全餘裕給 Gmail 附件上限
- window.html2canvas(el,{scale:1.4,backgroundColor:'#ffffff',ignoreElements:function(n){return n.classList&&n.classList.contains('no-print');}}).then(function(canvas){
-  var img=canvas.toDataURL('image/jpeg',0.82);
-  var pdf=new window.jspdf.jsPDF('p','mm','a4');
-  var w=210,h=canvas.height*w/canvas.width,pos=0,ph=297;
-  pdf.addImage(img,'JPEG',0,0,w,h);var rem=h-ph;
-  while(rem>0){pos-=ph;pdf.addPage();pdf.addImage(img,'JPEG',0,pos,w,h);rem-=ph;}
-  var b64=pdf.output('datauristring').split(',')[1];
-  var fname='DYCJ_'+((S.productName||'report').replace(/[^0-9A-Za-z一-龥-]/g,'_'));
-  if(b64.length>MAX_ATTACH_B64){
-   S.admin.sentNoAttachment=true;
-   return postToBackend('sendReport',reportPayload_({}));
-  }
-  S.admin.sentNoAttachment=false;
-  return postToBackend('sendReport',reportPayload_({fileName:fname,pdfBase64:b64}));
- })['catch'](function(){
-  return postToBackend('sendReport',reportPayload_({}));
- }).then(handleSendResult_);
+ postToBackend('sendReport',reportPayload_({})).then(handleSendResult_);
 }
 function updateSendBtn(){var b=document.getElementById('sendReportBtn');if(b){var ok=isEmail(S.admin.email);b.disabled=!ok;b.className='btn '+(ok?'btn-p':'btn-d');}}
 function adminField(k,zh,en,type,ph,full){var a=S.admin;return '<div class="'+(full?'full':'')+'"><label class="label">'+bi(zh,en)+'</label><input type="'+(type||'text')+'" value="'+esc(a[k]||'')+'" placeholder="'+esc(ph||'')+'" oninput="updateAdmin(\''+k+'\',this);updateSendBtn()"></div>';}
@@ -448,7 +424,7 @@ function reportSection(){
    ?bi('已送出，但瀏覽器安全限制讓我們無法即時確認伺服器是否收到，請以您的信箱或內部 Google Sheet 記錄為準；若稍後沒收到信，請直接聯繫我們。','Sent, but browser security restrictions prevented us from confirming server receipt in real time. Please check your inbox or the internal Google Sheet log; contact us directly if the email does not arrive.')
    :bi('報告已寄至您填寫的信箱，並已將本次填答記錄留存。','The report has been emailed to the address you provided, and this response has been recorded.');
   var attachNote=a.sentNoAttachment
-   ?'<div class="ce-def-note" style="margin-top:6px">'+bi('這次內容較長，PDF 附件超過信件大小上限，因此這封信沒有附上 PDF；您可以在上方按「下載 PDF（測試功能）」自行下載。','This result was large enough that the PDF exceeded the email attachment limit, so this email was sent without it; use the “Download PDF (test)” button above to get it directly.')+'</div>'
+   ?'<div class="ce-def-note" style="margin-top:6px">'+bi('這次報告合併未成功，這封信暫時沒有附上完整 PDF，我們會盡快人工補寄，造成不便敬請見諒。','The full report could not be merged this time, so this email was sent without the PDF attachment. We will follow up manually as soon as possible — sorry for the inconvenience.')+'</div>'
    :'';
   return '<div class="sec"><h3>④ '+bi('接收完整報告','Receive full report')+' <span class="pill pill-w">'+bi('測試','test')+'</span></h3><div class="res ok"><b>'+bi('已送出 ✓','Submitted ✓')+'</b>　'+bi('完整報告寄送資訊已登記至','Delivery information registered as')+' <b>'+esc(a.email)+'</b>。<div class="ce-def-note" style="margin-top:6px">'+confirmMsg+'</div>'+attachNote+'</div></div>';
  }
@@ -693,17 +669,18 @@ function scResult(){
  var stLabel={};PROGRESS_OPTIONS.forEach(function(o){stLabel[o.code]={role:'X',progress:o.code};});stLabel.NOT_APPLICABLE={role:'NOT_APPLICABLE'};
  var stBlock=STATUS_ORDER.map(function(c){return byS[c].length?'<li>'+statusPill(stLabel[c])+' '+byS[c].join(sep)+'</li>':'';}).join('')||'<li class="ce-def-note">'+bi('尚未作答','Not answered yet')+'</li>';
  var G=groupsForMode(mode);
- var GM={PP:bi('主要驅動 × 主要行動','Primary driver × Primary action'),PS:bi('主要驅動 × 次要行動','Primary driver × Secondary action'),SP:bi('次要驅動 × 主要行動','Secondary driver × Primary action'),SS:bi('次要驅動 × 次要行動','Secondary driver × Secondary action')};
- function card(k){var rows=G[k].map(function(a){return '<div style="display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-top:1px solid #eef1f7"><span style="font-size:13px">'+esc(bi(a.zh,a.en))+'</span>'+statusPill(S.ce[a.id])+'</div>';}).join('')||'<div class="ce-def-note">—</div>';
-   return '<div class="card" style="padding:14px 16px"><div style="font-weight:700;color:var(--navy);font-size:13.5px;margin-bottom:4px">'+GM[k]+' <span class="ce-en">('+G[k].length+')</span></div>'+rows+'</div>';}
- var grid='<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px">'+card('PP')+card('PS')+card('SP')+card('SS')+'</div>';
- var analysis='<div class="notice">'+bi('這一頁是<b>運算邏輯的驗證輸出</b>，非最終報告（報告版面另做）。分組為「行動—驅動關係」，非成熟度分數。','This page is a <b>logic verification output</b>, not the final report (report layout is separate). Grouping reflects action–driver relationships, not a maturity score.')+'</div>'
+ var UNRESOLVED=['NOT_STARTED','INTENDS_TO_PLAN','PLANNED'];
+ var priority=(G.PP||[]).filter(function(a){var rec=S.ce[a.id];return rec&&rec.role!=='NOT_APPLICABLE'&&UNRESOLVED.indexOf(rec.progress)>=0;});
+ var priorityBlock=priority.length
+  ?'<div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">'+priority.map(function(a){return '<div class="card" style="padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font-size:13.5px">'+esc(bi(a.zh,a.en))+'</span>'+statusPill(S.ce[a.id])+'</div>';}).join('')+'</div>'
+  :'<div class="ce-def-note">'+bi('目前對本模式最關鍵的行動皆已在推動中，暫無特別建議優先檢視的項目。','No standout items right now — the actions most critical to this model are already underway.')+'</div>';
+ var analysis='<div class="notice">'+bi('這一頁是<b>運算邏輯的驗證輸出</b>，非最終報告（報告版面另做）。','This page is a <b>logic verification output</b>, not the final report (report layout is separate).')+'</div>'
   +'<div class="sec"><h3>① '+bi('基本資訊','Summary')+'</h3><ul><li>'+bi('產品：','Product: ')+'<b>'+esc(S.productName)+'</b></li><li>'+bi('產品類型：','Type: ')+esc(bi(ptById(S.pt).name,ptById(S.pt).name_en))+'</li><li>'+bi('診斷模式：','Model: ')+'<b>'+esc(modeName)+'</b></li></ul></div>'
-  +'<div class="sec"><h3>② '+bi('循環行動狀態總覽','CE action status overview')+'</h3><ul>'+stBlock+'</ul></div>'
-  +'<div class="sec"><h3>③ '+bi('推理分組（該模式全部相關行動 · 依狀態標記）','Reasoning groups (all related actions for this model, tagged by status)')+'</h3><p class="qh">'+bi('依所選模式「'+esc(modeName)+'」，列出所有相關行動並標記您的填答狀態（含缺口全景）。同一行動可因不同 Driver 出現在多組。','For the selected model, all related actions are listed and tagged with your status (a full picture including gaps). An action may appear in several groups via different drivers.')+'</p>'+grid+'</div>';
+  +'<div class="sec"><h3>② '+bi('循環行動現況總覽','CE action status overview')+'</h3><ul>'+stBlock+'</ul></div>'
+  +'<div class="sec"><h3>③ '+bi('建議優先檢視的行動','Suggested priority actions')+'</h3><p class="qh">'+bi('這些行動對您選擇的商業模式有主要影響，但目前尚未推動或仍在規劃中，建議優先檢視。','These actions have a primary influence on your selected business model but are not yet underway or still being planned — worth reviewing first.')+'</p>'+priorityBlock+'</div>';
  var body='<div id="resultCapture">'+analysis+'</div>'
   +reportSection()
-  +'<div class="sec no-print"><h3>⑤ '+bi('下載 PDF','Download PDF')+' <span class="pill pill-w">'+bi('測試功能','test')+'</span></h3><p class="qh">'+bi('此為測試功能：點下方按鈕，會將上方分析區塊直接匯出成 PDF 檔（需連網）。正式版將提供正式報告版面。','Test feature: the button exports the analysis section above directly to a PDF file (requires internet). A formal report layout will come later.')+'</p><button class="btn btn-g" id="pdfBtn" onclick="downloadTestPDF()">'+bi('下載 PDF（測試功能）','Download PDF (test)')+'</button></div>';
+  +'<div class="sec no-print"><h3>⑤ '+bi('下載 PDF','Download PDF')+' <span class="pill pill-w">'+bi('測試功能','test')+'</span></h3><p class="qh">'+bi('此為測試功能：點下方按鈕，會將上方分析區塊直接匯出成 PDF 檔（需連網）。正式完整報告請透過下方「接收完整報告」以 Email 取得，內容包含本模式的獲利邏輯、主要商業價值因子，以及您已推動之行動的個別商業影響分析。','Test feature: the button exports the analysis section above to a PDF (requires internet). The formal full report — including this model’s profit logic, primary business value factors, and per-action business impact analysis — is delivered by email via “Receive full report” below.')+'</p><button class="btn btn-g" id="pdfBtn" onclick="downloadTestPDF()">'+bi('下載 PDF（測試功能）','Download PDF (test)')+'</button></div>';
  var foot='<button class="btn btn-g" onclick="go(\'p6\')">'+bi('← 回填答','← Back to answers')+'</button><div class="right"><button class="btn btn-g" onclick="location.reload()">'+bi('重新開始','Restart')+'</button></div>';
  return shell(3,bi('接收結果','Results'),bi('依所選模式呈現的邏輯輸出與報告接收','Logic output for the selected model, and report delivery'),' ',' ',body,foot,true);
 }
