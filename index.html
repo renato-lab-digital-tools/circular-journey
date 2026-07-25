@@ -10,7 +10,9 @@
   --r:12px; --mono:ui-monospace,Menlo,Consolas,monospace;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;line-height:1.6}
+html{overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;line-height:1.6;overflow-x:hidden;max-width:100vw}
+img,svg{max-width:100%}
 a{color:var(--accent);font-weight:600}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
@@ -28,6 +30,21 @@ a{color:var(--accent);font-weight:600}
 .nav-btn:hover{background:rgba(255,255,255,.08)}
 .nav-btn.on{background:#fff;color:var(--navy);border-color:#fff}
 
+/* footer */
+.site-footer{border-top:1px solid var(--line);background:#fff;margin-top:40px}
+.footer-in{max-width:1320px;margin:0 auto;padding:28px 24px 24px;display:flex;flex-direction:column;gap:16px}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px}
+.footer-brand{font-size:13px;font-weight:800;color:var(--navy)}
+.footer-tagline{font-size:12px;color:var(--muted);margin-top:3px;max-width:360px;line-height:1.6}
+.footer-links{display:flex;flex-wrap:wrap;gap:8px 18px}
+.footer-links a{font-size:12.5px;color:var(--muted);font-weight:600;cursor:pointer;white-space:nowrap}
+.footer-links a:hover{color:var(--navy)}
+.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11.5px;color:var(--faint);border-top:1px solid var(--line);padding-top:14px}
+@media(max-width:640px){
+  .footer-in{padding:22px 16px 20px}
+  .footer-bottom{flex-direction:column;gap:4px}
+}
+
 .wrap{max-width:1100px;margin:0 auto;padding:0 24px 70px}
 .btn{border-radius:8px;padding:13px 30px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;border:none}
 .btn-p{background:var(--navy);color:#fff}.btn-p:hover{background:var(--navy-2)}
@@ -42,6 +59,7 @@ a{color:var(--accent);font-weight:600}
 .pill-c{color:var(--navy);border:1px solid var(--navy);background:var(--navy-tint)}
 .pill-w{color:var(--warn-text);border:1px solid var(--warn-line);background:var(--warn-bg)}
 .pill-u{color:var(--undet);border:1px solid var(--undet-line);background:var(--undet-bg)}
+.pill-n{color:var(--muted);border:1px solid var(--line);background:#eef1f6}
 input[type=text],input[type=email]{width:100%;padding:10px 13px;border:1.5px solid var(--line);border-radius:8px;font-size:13px;font-family:inherit}
 input:focus{border-color:var(--navy);outline:none;box-shadow:0 0 0 3px var(--accent-tint)}
 .card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px 24px}
@@ -99,15 +117,100 @@ input:focus{border-color:var(--navy);outline:none;box-shadow:0 0 0 3px var(--acc
 
 /* home */
 .hero{padding:44px 0 8px}
-.badge{display:inline-block;font-size:12px;font-weight:700;color:var(--warn-text);background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:99px;padding:4px 12px}
+.badge{display:inline-block;font-size:12px;font-weight:700;color:var(--navy);background:var(--navy-tint);border:1px solid var(--navy-line);border-radius:99px;padding:4px 12px}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--accent);font-weight:700;margin:16px 0 6px}
 .hero h1{font-size:36px;line-height:1.2;margin:0 0 14px;color:var(--navy);font-weight:800;letter-spacing:-.01em}
 .hero p.sub{font-size:16px;color:var(--muted);max-width:680px;margin:0;line-height:1.75}
 .home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:22px 0}
 .home-grid .card h4{margin:0 0 6px;font-size:15px;color:var(--navy)}
 .home-grid .card p{margin:0;font-size:12.8px;color:var(--muted);line-height:1.7}
+
+/* home v0.8 draft sections (Design_Your_Circular_Journey_邏輯原型_v0.8_首頁更新) */
+.home-page{max-width:1020px;margin:0 auto;padding-bottom:18px}
+.home-hero{padding-top:48px}
+.home-project-name{font-size:14px;font-weight:800;color:var(--navy);margin:7px 0 3px;letter-spacing:.01em}
+.home-project-zh{font-size:13px;color:var(--muted);margin-bottom:15px}
+.home-hero p.sub{max-width:820px}
+.home-hero p.sub+p.sub{margin-top:8px}
+.home-meta{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 14px}
+.home-meta span{font-size:11.8px;color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:99px;padding:5px 10px}
+.home-actions{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin:4px 0 12px}
+.home-actions .hint{font-size:12px;color:var(--faint)}
+.home-organisers{font-size:12px;color:var(--muted);margin-top:8px}
+.home-section{margin:34px 0}
+.home-section-head{margin-bottom:12px}
+.home-section-head .kicker{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--accent);font-weight:700;margin-bottom:3px}
+.home-section-head h2{font-size:20px;line-height:1.35;color:var(--navy);margin:0 0 7px}
+.home-section-head p{font-size:13.5px;line-height:1.8;color:var(--muted);margin:0;max-width:850px}
+.home-output-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.home-output-card{padding:18px 19px}
+.home-output-card .num{font-family:var(--mono);font-size:10.5px;color:var(--accent);font-weight:800;letter-spacing:.08em}
+.home-output-card h3{font-size:15px;color:var(--navy);margin:5px 0 6px}
+.home-output-card p{font-size:12.8px;color:var(--muted);line-height:1.72;margin:0}
+.home-lead{font-size:15px!important;color:var(--navy)!important;font-weight:700}
+.home-bullets{margin:9px 0 0;padding-left:20px;color:var(--ink);font-size:13px;line-height:1.8}
+.home-bullets li+li{margin-top:3px}
+.home-scope-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.home-scope-card{padding:17px 18px}
+.home-scope-card .num{font-family:var(--mono);font-size:11px;color:var(--accent);font-weight:800}
+.home-scope-card h3{font-size:14.5px;color:var(--navy);margin:5px 0 6px}
+.home-scope-card p{font-size:12.5px;color:var(--muted);line-height:1.7;margin:0}
+.home-details{background:#fff;border:1px solid var(--line);border-radius:10px;margin-top:10px;overflow:hidden}
+.home-details summary{cursor:pointer;list-style:none;padding:12px 15px;font-size:13px;font-weight:700;color:var(--navy);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.home-details summary::-webkit-details-marker{display:none}
+.home-details summary:after{content:'＋';font-family:var(--mono);color:var(--accent);font-size:15px;flex-shrink:0}
+.exp-toggle{font-size:12.5px;font-weight:600}
+.exp-toggle .exp-mark{font-family:var(--mono);color:var(--accent);font-weight:700}
+.home-details[open] summary{border-bottom:1px solid var(--line);background:#f8f9fc}
+.home-details[open] summary:after{content:'－'}
+.home-details-body{padding:14px 16px 16px;font-size:12.8px;line-height:1.78;color:var(--ink)}
+.home-details-body p{font-size:12.8px;margin:0 0 9px;line-height:1.78}
+.home-details-body p:last-child{margin-bottom:0}
+.home-pair-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.home-pair{padding:9px 11px}
+.home-pair b{display:block;font-size:12.5px;color:var(--navy);margin-bottom:2px}
+.home-pair span{font-size:11.7px;color:var(--muted);line-height:1.55}
+.home-flowlist{counter-reset:home-step;display:grid;gap:8px}
+.home-flowitem{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.home-flowitem .no{counter-increment:home-step;width:25px;height:25px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;flex-shrink:0}
+.home-flowitem .no:before{content:counter(home-step)}
+.home-flowitem b{display:block;font-size:13px;color:var(--navy);margin-bottom:2px}
+.home-flowitem span{font-size:12px;color:var(--muted);line-height:1.6}
+.home-5w-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.home-5w{background:#fff;border:1px solid var(--line);border-radius:9px;padding:12px 14px}
+.home-5w b{font-size:12.8px;color:var(--navy);display:block;margin-bottom:3px}
+.home-5w span{font-size:12px;color:var(--muted);line-height:1.65}
+.home-chain{background:var(--navy);color:#fff;border-radius:var(--r);padding:16px 18px;font-size:13px;line-height:1.75;margin:10px 0 12px}
+.home-chain b{color:#fff}
+.home-data-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.home-data-card{padding:14px 15px}
+.home-data-card h3{font-size:13.5px;color:var(--navy);margin:0 0 5px}
+.home-data-card p{font-size:11.8px;color:var(--muted);line-height:1.62;margin:0}
+.home-duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.home-mini-card{padding:15px 16px}
+.home-mini-card h3{font-size:14px;color:var(--navy);margin:0 0 6px}
+.home-mini-card p{font-size:12.5px;color:var(--muted);line-height:1.7;margin:0}
+.home-final{background:linear-gradient(180deg,#fff,#f4f7ff);border:1px solid var(--navy);border-radius:var(--r);padding:24px 25px;margin:34px 0 8px}
+.home-final h2{font-size:21px;color:var(--navy);margin:0 0 7px}
+.home-final p{font-size:13.5px;color:var(--muted);line-height:1.75;margin:0 0 13px;max-width:780px}
+.home-small-note{font-size:11.8px;color:var(--faint);line-height:1.6;margin-top:8px}
+.home-boundary-label{margin:14px 0 4px;font-size:12.5px;color:var(--navy)}
+.home-boundary-list{margin:0;padding-left:20px;font-size:12.8px;line-height:1.75;color:var(--ink)}
+.home-boundary-list li+li{margin-top:5px}
+@media(max-width:760px){
+  .home-output-grid,.home-scope-grid,.home-5w-grid,.home-data-grid,.home-duo,.home-pair-grid{grid-template-columns:1fr}
+  .home-hero{padding-top:34px}
+  .home-section{margin:28px 0}
+}
+/* simple content page (methodology / data policy) */
+.page-shell{max-width:900px;margin:0 auto;padding:0 0 40px}
+.page-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:16px 0;margin-bottom:24px;border-bottom:1px solid var(--line)}
+.page-head .page-back{font-size:12.8px;color:var(--accent);font-weight:600;cursor:pointer;white-space:nowrap}
+.page-head .page-title{font-size:15px;font-weight:800;color:var(--navy)}
+
 .sec{margin:26px 0}
 .sec h3{font-size:17px;color:var(--navy);margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.sec h3 .sec-num{font-family:var(--mono);font-size:11px;color:var(--accent);font-weight:800;letter-spacing:.06em}
 .sec p{font-size:13.5px;color:var(--ink);line-height:1.8;margin:0 0 8px}
 .aud{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:10px}
 .aud .it{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
@@ -164,7 +267,7 @@ input:focus{border-color:var(--navy);outline:none;box-shadow:0 0 0 3px var(--acc
 
 /* results */
 .report{margin-top:6px}
-.rcard{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;margin-bottom:14px}
+.rcard{padding:20px 22px;margin-bottom:14px}
 .rcard h3{margin:0 0 8px;font-size:16px;color:var(--navy)}
 .rcard .rk{font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.08em;font-weight:700}
 .rhero{background:var(--navy);color:#fff;border-radius:var(--r);padding:24px 26px;margin-bottom:14px}
@@ -177,7 +280,7 @@ input:focus{border-color:var(--navy);outline:none;box-shadow:0 0 0 3px var(--acc
 .res.gap{background:var(--warn-bg);color:var(--warn-text);border-left:3px solid var(--warn)}
 .res.und{background:var(--undet-bg);color:var(--undet);border-left:3px solid var(--undet-line)}
 .stat-row{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 4px}
-.stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 16px;text-align:center;min-width:96px}
+.stat{padding:10px 16px;text-align:center;min-width:96px}
 .stat b{display:block;font-size:22px;color:var(--navy)}
 .stat span{font-size:11px;color:var(--muted)}
 .incentive{background:linear-gradient(180deg,#fff,#f4f7ff);border:1px solid var(--navy);border-radius:var(--r);padding:20px 22px;margin-bottom:14px}
@@ -190,11 +293,20 @@ input:focus{border-color:var(--navy);outline:none;box-shadow:0 0 0 3px var(--acc
   .illus{border-right:none;border-bottom:1px solid var(--line);padding:18px}
   .illus svg{width:140px;height:auto}
 }
+@media(max-width:900px){
+  .nav-in{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .nav-in::-webkit-scrollbar{display:none}
+  .nav-spacer{flex:0 0 auto;width:8px}
+}
 @media(max-width:640px){
-  .nav-in{height:56px;gap:10px;padding:0 14px}
+  .nav-in{height:56px;gap:8px;padding:0 14px}
   .nav-title{font-size:13px}
+  .nav-tag{display:none}
+  .nav-btn{padding:6px 10px;font-size:11.5px;flex-shrink:0}
   .wrap{padding:0 16px 50px}
   .hero h1{font-size:26px}
+  .stepper{top:56px;padding:12px 16px 6px;margin:8px -16px 0}
+  .stepper .node{width:70px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
@@ -222,9 +334,15 @@ input:focus{border-color:var(--navy);outline:none;box-shadow:0 0 0 3px var(--acc
 .anon-note .lk svg{width:14px;height:14px;color:var(--navy)}
 .anon-note b{color:var(--navy);font-weight:600}
 
+/* shared card base — choice-card, home-output-card, home-scope-card, home-mini-card,
+   home-data-card, home-pair, status-box, stat, mini-item, rcard all share this base;
+   each rule below only keeps its own padding / layout modifier. */
+.choice-card,.home-output-card,.home-scope-card,.home-mini-card,.home-data-card,
+.home-pair,.status-box,.stat,.mini-item,.rcard{background:#fff;border:1px solid var(--line);border-radius:var(--r)}
+
 /* v0.2 specification-aligned components */
 .choice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
-.choice-card{background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:13px 14px;cursor:pointer;min-height:82px;transition:border-color .12s ease,background .12s ease}
+.choice-card{padding:13px 14px;cursor:pointer;min-height:82px;transition:border-color .12s ease,background .12s ease}
 .choice-card:hover{border-color:var(--navy)}
 .choice-card.on{border-color:var(--navy);background:var(--navy-tint);box-shadow:inset 3px 0 0 var(--accent)}
 .choice-card.disabled{opacity:.55;cursor:not-allowed;background:#f6f7fa}
@@ -233,11 +351,11 @@ input:focus{border-color:var(--navy);outline:none;box-shadow:0 0 0 3px var(--acc
 .focus-tag{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 13px;margin-bottom:10px;font-size:12.5px;color:var(--muted)}
 .focus-tag b{color:var(--navy)}
 .status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px;margin-top:10px}
-.status-box{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-align:center}
+.status-box{padding:10px 12px;text-align:center}
 .status-box b{display:block;color:var(--navy);font-size:21px;line-height:1.2}
 .status-box span{font-size:10.8px;color:var(--muted)}
 .mini-list{display:grid;gap:7px;margin-top:8px}
-.mini-item{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 11px;font-size:12.2px;color:var(--ink)}
+.mini-item{padding:8px 11px;font-size:12.2px;color:var(--ink)}
 .exit-card{background:#fff;border:1px solid var(--warn-line);border-radius:12px;padding:22px;margin-top:8px}
 .exit-card h3{margin:0 0 8px;color:var(--navy);font-size:18px}
 .exit-card p{margin:0 0 12px;color:var(--muted);font-size:13px;line-height:1.75}
@@ -290,6 +408,7 @@ input:focus{border-color:var(--navy);outline:none;box-shadow:0 0 0 3px var(--acc
 </svg>
 <nav class="nav"><div class="nav-in" id="nav"></div></nav>
 <div class="wrap"><div id="app"></div></div>
+<footer class="site-footer"><div class="footer-in" id="footer"></div></footer>
 <script>
 
 const DATA={"meta": {"null": 0}, "productTypes": [{"code": "PT01", "name": "工業資本設備", "items": "工具機、空壓機、泵浦、工業馬達、生產設備", "retained": true, "order": 1, "name_en": "Industrial capital equipment", "items_en": "Machine tools, air compressors, pumps, industrial motors, production equipment"}, {"code": "PT02", "name": "商用設施與營運設備", "items": "商用洗衣機、洗碗機、冷藏設備、商用印表設備", "retained": true, "order": 2, "name_en": "Commercial facility & operations equipment", "items_en": "Commercial laundry, dishwashers, refrigeration, commercial printing equipment"}, {"code": "PT03", "name": "商用交通工具與車隊資產", "items": "卡車、巴士、堆高機、鐵路車輛及企業車隊", "retained": true, "order": 3, "name_en": "Commercial vehicles & fleet assets", "items_en": "Trucks, buses, forklifts, rail vehicles and corporate fleets"}, {"code": "PT04", "name": "可維護建築設備與完整系統", "items": "HVAC、電梯、建築控制及完整照明系統", "retained": true, "order": 4, "name_en": "Serviceable building equipment & complete systems", "items_en": "HVAC, elevators, building controls and complete lighting systems"}, {"code": "PT05", "name": "可重複使用物流資產", "items": "托盤、周轉箱、料架、氣瓶、IBC 容器", "retained": true, "order": 5, "name_en": "Reusable logistics assets", "items_en": "Pallets, returnable crates, racks, gas cylinders, IBC containers"}, {"code": "PT06", "name": "專業工具與儀器", "items": "電動工具、量測設備、測試儀器、施工機具", "retained": true, "order": 6, "name_en": "Professional tools & instruments", "items_en": "Power tools, measurement equipment, test instruments, construction machinery"}, {"code": "PT07", "name": "可維修 ICT 與辦公設備", "items": "企業電腦、伺服器、顯示器、影印機及管理型行動裝置", "retained": true, "order": 7, "name_en": "Repairable ICT & office equipment", "items_en": "Enterprise computers, servers, monitors, copiers and managed mobile devices"}, {"code": "PT08", "name": "可翻修、可再部署的耐久用品與家具", "items": "辦公家具、共享腳踏車、戶外設備及模組化家具", "retained": true, "order": 8, "name_en": "Refurbishable, redeployable durables & furniture", "items_en": "Office furniture, shared bicycles, outdoor equipment and modular furniture"}, {"code": "PT09", "name": "可再製核心件與可獨立服務的高功能模組", "items": "引擎、變速箱、馬達、壓縮機核心及電源模組", "retained": true, "order": 9, "name_en": "Remanufacturable cores & independently serviceable high-function modules", "items_en": "Engines, gearboxes, motors, compressor cores and power modules"}, {"code": "PT10", "name": "家用耐久消費品", "items": "洗衣機、冰箱、洗碗機、電視及空調", "retained": true, "order": 10, "name_en": "Household durable consumer goods", "items_en": "Washing machines, refrigerators, dishwashers, televisions and air conditioners"}, {"code": "PT11", "name": "半耐久消費品", "items": "一般服飾、鞋類、低價運動用品", "retained": false, "order": 11, "name_en": "Semi-durable consumer goods", "items_en": "General apparel, footwear and low-cost sporting goods"}, {"code": "PT12", "name": "嵌入式或低價零組件", "items": "緊固件、連接器、小型感測器、一般電子零件", "retained": false, "order": 12, "name_en": "Embedded or low-value components", "items_en": "Fasteners, connectors, small sensors and general electronic parts"}, {"code": "PT13", "name": "中間材料與一般建材", "items": "金屬、樹脂、玻璃、紙材、水泥、混凝土", "retained": false, "order": 13, "name_en": "Intermediate materials & general construction materials", "items_en": "Metals, resins, glass, paper, cement, concrete"}, {"code": "PT14", "name": "單次使用包裝與拋棄型產品", "items": "一次性容器、包材、餐具及低價耗用品", "retained": false, "order": 14, "name_en": "Single-use packaging & disposable products", "items_en": "Single-use containers, packaging, tableware and low-cost consumables"}, {"code": "PT15", "name": "化學品、燃料與製程耗材", "items": "塗料、潤滑劑、清潔劑、油墨及工業化學品", "retained": false, "order": 15, "name_en": "Chemicals, fuels & process consumables", "items_en": "Coatings, lubricants, cleaning agents, inks and industrial chemicals"}, {"code": "PT16", "name": "食品、飲料與易腐品", "items": "加工食品、飲料及農產品", "retained": false, "order": 16, "name_en": "Food, beverages & perishables", "items_en": "Processed food, beverages and agricultural produce"}, {"code": "PT17", "name": "藥品、化妝品及醫療耗材", "items": "藥品、保養品、試劑及一次性醫療耗材", "retained": false, "order": 17, "name_en": "Pharmaceuticals, cosmetics & medical consumables", "items_en": "Medicines, skincare, reagents and single-use medical consumables"}, {"code": "PT18", "name": "其他高度衛生敏感產品", "items": "床墊、貼身產品及難以重新驗證潔淨狀態的用品", "retained": false, "order": 18, "name_en": "Other highly hygiene-sensitive products", "items_en": "Mattresses, intimate products and items whose cleanliness is hard to re-verify"}, {"code": "PT19", "name": "純數位產品與服務", "items": "SaaS、雲端服務、顧問服務", "retained": false, "order": 19, "name_en": "Purely digital products & services", "items_en": "SaaS, cloud services and consulting services"}, {"code": "PT20", "name": "永久性或被動建築構件", "items": "水泥牆體、不可拆外牆及現場固化構件", "retained": false, "order": 20, "name_en": "Permanent or passive building components", "items_en": "Cast concrete walls, non-removable facades and site-cured components"}], "pm": {"PT01": [{"mode": "M1", "name": "模式一｜循環價值內嵌型產品銷售", "strength": "STRONG", "rationale": "材料、製程效率、能源效率、可靠性、供應及合規條件均能在出售前影響設備成本、保固、客戶採購及市場價值。", "qpass": null, "qfail": null, "name_en": "Model 1 | Circular-value-embedded product sales", "rationale_en": "Materials, process efficiency, energy efficiency, reliability, supply and compliance conditions can all shape equipment cost, warranty, customer procurement and market value before the sale.", "qpass_en": "", "qfail_en": ""}, {"mode": "M2", "name": "模式二｜產品生命週期價值服務", "strength": "STRONG", "rationale": "設備通常可以診斷、拆卸、維修、升級、翻新及再製。客戶避免的停機、拆裝、重新設定與重新驗證成本，也使功能恢復具有明確商業價值。", "qpass": null, "qfail": null, "name_en": "Model 2 | Product life-cycle value services", "rationale_en": "Equipment can typically be diagnosed, disassembled, repaired, upgraded, refurbished and remanufactured. The downtime, removal, reconfiguration and re-validation costs the customer avoids give function recovery clear commercial value.", "qpass_en": "", "qfail_en": ""}, {"mode": "M3", "name": "模式三｜資產責任保留型使用／績效服務", "strength": "STRONG_CONDITIONAL", "rationale": "使用量、可用率、能源效率或產出可以量測，而且供應方可以控制維護、運轉設定及故障處理。", "qpass": "使用量、可用率、能源效率或產出可以量測，而且供應方可以控制維護、運轉設定及故障處理。", "qfail": "設備只是大型系統中的單一零件，供應方無法取得運轉資料，也無法控制影響產出或能源績效的其他條件。", "name_en": "Model 3 | Use / performance services with retained asset responsibility", "rationale_en": "Usage, availability, energy efficiency or output can be measured, and the supplier can control maintenance, operating settings and fault handling.", "qpass_en": "Usage, availability, energy efficiency or output can be measured, and the supplier can control maintenance, operating settings and fault handling.", "qfail_en": "The equipment is only one part of a larger system; the supplier cannot obtain operating data or control the other conditions that affect output or energy performance."}], "PT02": [{"mode": "M1", "name": "模式一｜循環價值內嵌型產品銷售", "strength": "STRONG", "rationale": "能源、水、材料、可靠性及產品資料均能轉化為設備毛利、合規能力及客戶採購價值。", "qpass": null, "qfail": null, "name_en": "Model 1 | Circular-value-embedded product sales", "rationale_en": "Energy, water, materials, reliability and product data can all translate into equipment margin, compliance capability and customer procurement value.", "qpass_en": "", "qfail_en": ""}, {"mode": "M2", "name": "模式二｜產品生命週期價值服務", "strength": "STRONG", "rationale": "使用頻率高、維護需求穩定，而且停機會直接影響客戶營運。維護、備件、升級、翻新及再次部署均具有明確服務價值。", "qpass": null, "qfail": null, "name_en": "Model 2 | Product life-cycle value services", "rationale_en": "Usage is frequent, maintenance needs are stable, and downtime directly affects customer operations. Maintenance, spare parts, upgrades, refurbishment and redeployment all carry clear service value.", "qpass_en": "", "qfail_en": ""}, {"mode": "M3", "name": "模式三｜資產責任保留型使用／績效服務", "strength": "STRONG", "rationale": "使用量、可用率及營運成本可以量測，供應方也能集中管理設備監測、維護、取回與再部署，因此資產生命週期收入與成本均可被管理。", "qpass": null, "qfail": null, "name_en": "Model 3 | Use / performance services with retained asset responsibility", "rationale_en": "Usage, availability and operating cost can be measured, and the supplier can centrally manage monitoring, maintenance, recovery and redeployment, so asset-lifecycle revenue and cost can be managed.", "qpass_en": "", "qfail_en": ""}], "PT03": [{"mode": "M1", "name": "模式一｜循環價值內嵌型產品銷售", "strength": "STRONG", "rationale": "材料、能源效率、耐久性、可靠性、維修設計及法規資料均能影響產品銷售與市場接受。", "qpass": null, "qfail": null, "name_en": "Model 1 | Circular-value-embedded product sales", "rationale_en": "Materials, energy efficiency, durability, reliability, repair design and regulatory data can all influence product sales and market acceptance.", "qpass_en": "", "qfail_en": ""}, {"mode": "M2", "name": "模式二｜產品生命週期價值服務", "strength": "STRONG", "rationale": "車輛與主要模組具有成熟的保養、修復、翻新、再製及二手交易條件，服務後的使用價值與殘值通常可以驗證。", "qpass": null, "qfail": null, "name_en": "Model 2 | Product life-cycle value services", "rationale_en": "Vehicles and major modules have mature conditions for maintenance, repair, refurbishment, remanufacturing and second-hand trading; post-service use value and residual value can usually be verified.", "qpass_en": "", "qfail_en": ""}, {"mode": "M3", "name": "模式三｜資產責任保留型使用／績效服務", "strength": "STRONG_CONDITIONAL", "rationale": "客戶以車隊方式集中管理資產，里程、使用時間、可用率或運輸績效可以量測，供應方也能控制維護與資產取回。", "qpass": "客戶以車隊方式集中管理資產，里程、使用時間、可用率或運輸績效可以量測，供應方也能控制維護與資產取回。", "qfail": "產品主要銷售給零散個人客戶，客戶偏好所有權，而且供應方無法有效管理駕駛行為、維護、事故與資產回流。", "name_en": "Model 3 | Use / performance services with retained asset responsibility", "rationale_en": "The customer manages assets centrally as a fleet; mileage, operating time, availability or transport performance can be measured, and the supplier can control maintenance and asset recovery.", "qpass_en": "The customer manages assets centrally as a fleet; mileage, operating time, availability or transport performance can be measured, and the supplier can control maintenance and asset recovery.", "qfail_en": "The product is sold mainly to dispersed individual customers who prefer ownership, and the supplier cannot effectively manage driving behaviour, maintenance, incidents and asset return."}], "PT04": [{"mode": "M1", "name": "模式一｜循環價值內嵌型產品銷售", "strength": "STRONG", "rationale": "能源效率、材料、可靠性、耐久性、控制能力及法規條件可以在設計與交付前轉化為產品或工程價值。", "qpass": null, "qfail": null, "name_en": "Model 1 | Circular-value-embedded product sales", "rationale_en": "Energy efficiency, materials, reliability, durability, control capability and regulatory conditions can be translated into product or engineering value before design and delivery.", "qpass_en": "", "qfail_en": ""}, {"mode": "M2", "name": "模式二｜產品生命週期價值服務", "strength": "CONDITIONAL", "rationale": "設備與模組可以接近、拆換、維修、升級及重新驗證，且客戶願意支付維護或性能恢復費用。", "qpass": "設備與模組可以接近、拆換、維修、升級及重新驗證，且客戶願意支付維護或性能恢復費用。", "qfail": "構件永久黏結、拆除會破壞主體，或服務只能作用於整棟建築而無法清楚對應本次產品線。", "name_en": "Model 2 | Product life-cycle value services", "rationale_en": "Equipment and modules can be accessed, replaced, repaired, upgraded and re-validated, and the customer is willing to pay for maintenance or performance recovery.", "qpass_en": "Equipment and modules can be accessed, replaced, repaired, upgraded and re-validated, and the customer is willing to pay for maintenance or performance recovery.", "qfail_en": "Components are permanently bonded and removal damages the structure, or the service acts only on the whole building and cannot be clearly attributed to this product line."}, {"mode": "M3", "name": "模式三｜資產責任保留型使用／績效服務", "strength": "CONDITIONAL", "rationale": "Product in Focus 是完整系統，供應方能控制設備、感測、控制及維護，並能對舒適度、可用率或能源績效負責。", "qpass": "Product in Focus 是完整系統，供應方能控制設備、感測、控制及維護，並能對舒適度、可用率或能源績效負責。", "qfail": "公司只供應單一散熱器、光源或控制零件，而客戶付費的結果主要由建築、安裝、其他設備或使用方式決定。", "name_en": "Model 3 | Use / performance services with retained asset responsibility", "rationale_en": "The Product in Focus is a complete system; the supplier can control equipment, sensing, controls and maintenance, and can be accountable for comfort, availability or energy performance.", "qpass_en": "The Product in Focus is a complete system; the supplier can control equipment, sensing, controls and maintenance, and can be accountable for comfort, availability or energy performance.", "qfail_en": "The company supplies only a single radiator, light source or control part, while the outcome the customer pays for is mainly determined by the building, installation, other equipment or usage patterns."}], "PT05": [{"mode": "M1", "name": "模式一｜循環價值內嵌型產品銷售", "strength": "STRONG", "rationale": "耐久性、標準化、材料選擇及追蹤設計可以提高產品價值，並降低遺失、損壞與物流成本。", "qpass": null, "qfail": null, "name_en": "Model 1 | Circular-value-embedded product sales", "rationale_en": "Durability, standardisation, material selection and tracking design can raise product value and reduce loss, damage and logistics cost.", "qpass_en": "", "qfail_en": ""}, {"mode": "M2", "name": "模式二｜產品生命週期價值服務", "strength": "STRONG", "rationale": "產品可以檢查、清潔、修復、重新驗證及再次投入使用；大量標準化回流也能降低單次處理成本。", "qpass": null, "qfail": null, "name_en": "Model 2 | Product life-cycle value services", "rationale_en": "Products can be inspected, cleaned, repaired, re-validated and returned to use; large-scale standardised return flow also lowers per-unit handling cost.", "qpass_en": "", "qfail_en": ""}, {"mode": "M3", "name": "模式三｜資產責任保留型使用／績效服務", "strength": "STRONG", "rationale": "客戶可以按租期、使用次數或循環服務付費，供應方則管理資產池、追蹤、取回、維修與再配置。同一資產可以在多次循環中形成收入。", "qpass": null, "qfail": null, "name_en": "Model 3 | Use / performance services with retained asset responsibility", "rationale_en": "Customers can pay by rental period, number of uses or circular service, while the supplier manages the asset pool, tracking, recovery, repair and reallocation. The same asset can generate revenue across multiple cycles.", "qpass_en": "", "qfail_en": ""}], "PT06": [{"mode": "M1", "name": "模式一｜循環價值內嵌型產品銷售", "strength": "STRONG", "rationale": "可靠性、精度、材料、模組化及產品資料可以在出售前形成品質、保固與產品差異。", "qpass": null, "qfail": null, "name_en": "Model 1 | Circular-value-embedded product sales", "rationale_en": "Reliability, precision, materials, modularity and product data can form quality, warranty and product differentiation before the sale.", "qpass_en": "", "qfail_en": ""}, {"mode": "M2", "name": "模式二｜產品生命週期價值服務", "strength": "STRONG_CONDITIONAL", "rationale": "產品使用強度或精度要求較高，校正、維修、升級或翻新後仍具有足夠使用價值，而且全部處理成本低於可恢復價值。", "qpass": "產品使用強度或精度要求較高，校正、維修、升級或翻新後仍具有足夠使用價值，而且全部處理成本低於可恢復價值。", "qfail": "產品價格低、零件封閉或修復後無法可靠校正，導致人工、備件及測試成本接近或高於新品價值。", "name_en": "Model 2 | Product life-cycle value services", "rationale_en": "Usage intensity or precision requirements are high; after calibration, repair, upgrade or refurbishment the product retains sufficient use value, and total handling cost is lower than the recoverable value.", "qpass_en": "Usage intensity or precision requirements are high; after calibration, repair, upgrade or refurbishment the product retains sufficient use value, and total handling cost is lower than the recoverable value.", "qfail_en": "The product is low-priced, parts are closed, or reliable calibration is not possible after repair, so labour, spare-part and testing cost approaches or exceeds the value of a new unit."}, {"mode": "M3", "name": "模式三｜資產責任保留型使用／績效服務", "strength": "CONDITIONAL", "rationale": "客戶具有短期、波動或專案型需求，工具使用量可以追蹤，而且供應方能管理資產池、損壞責任及快速調度。", "qpass": "客戶具有短期、波動或專案型需求，工具使用量可以追蹤，而且供應方能管理資產池、損壞責任及快速調度。", "qfail": "使用頻率過低、資產分散、遺失與損壞風險高，或客戶長期持有的成本明顯低於租賃與服務價格。", "name_en": "Model 3 | Use / performance services with retained asset responsibility", "rationale_en": "Customers have short-term, fluctuating or project-based needs, tool usage can be tracked, and the supplier can manage the asset pool, damage liability and rapid dispatch.", "qpass_en": "Customers have short-term, fluctuating or project-based needs, tool usage can be tracked, and the supplier can manage the asset pool, damage liability and rapid dispatch.", "qfail_en": "Usage frequency is too low, assets are dispersed with high loss and damage risk, or the customer's long-term ownership cost is clearly lower than rental and service prices."}], "PT07": [{"mode": "M1", "name": "模式一｜循環價值內嵌型產品銷售", "strength": "STRONG", "rationale": "材料、能源效率、軟體支援、可維修性、關鍵材料及資料證據均能影響產品銷售、市場准入與客戶採購。", "qpass": null, "qfail": null, "name_en": "Model 1 | Circular-value-embedded product sales", "rationale_en": "Materials, energy efficiency, software support, repairability, critical materials and data evidence can all influence product sales, market access and customer procurement.", "qpass_en": "", "qfail_en": ""}, {"mode": "M2", "name": "模式二｜產品生命週期價值服務", "strength": "CONDITIONAL", "rationale": "零件可以取得，軟體持續支援，資料可以安全清除，而且翻新產品具有穩定市場。", "qpass": "零件可以取得，軟體持續支援，資料可以安全清除，而且翻新產品具有穩定市場。", "qfail": "產品採用封閉結構、零件配對或停止軟體支援，修復後亦因快速技術淘汰而缺乏使用與再次交易價值。", "name_en": "Model 2 | Product life-cycle value services", "rationale_en": "Parts are available, software support continues, data can be securely erased, and refurbished products have a stable market.", "qpass_en": "Parts are available, software support continues, data can be securely erased, and refurbished products have a stable market.", "qfail_en": "The product uses a closed structure, part-pairing or discontinued software support, and after repair it lacks use and re-trade value due to rapid technological obsolescence."}, {"mode": "M3", "name": "模式三｜資產責任保留型使用／績效服務", "strength": "CONDITIONAL", "rationale": "客戶是企業或機構，設備可以集中管理，供應方能提供維修、替換、資安、取回及再次部署服務。", "qpass": "客戶是企業或機構，設備可以集中管理，供應方能提供維修、替換、資安、取回及再次部署服務。", "qfail": "產品主要面向一般消費者，客戶重視個人所有權，且資料隱私、遺失、損壞及分散回流成本無法有效控制。", "name_en": "Model 3 | Use / performance services with retained asset responsibility", "rationale_en": "The customer is an enterprise or institution, devices can be centrally managed, and the supplier can provide repair, replacement, data security, recovery and redeployment services.", "qpass_en": "The customer is an enterprise or institution, devices can be centrally managed, and the supplier can provide repair, replacement, data security, recovery and redeployment services.", "qfail_en": "The product is aimed mainly at general consumers who value personal ownership, and data privacy, loss, damage and dispersed return costs cannot be effectively controlled."}], "PT08": [{"mode": "M1", "name": "模式一｜循環價值內嵌型產品銷售", "strength": "STRONG", "rationale": "材料利用、耐久性、模組化、可拆解及產品資訊能夠在出售前影響成本、品質與產品差異。", "qpass": null, "qfail": null, "name_en": "Model 1 | Circular-value-embedded product sales", "rationale_en": "Material use, durability, modularity, disassembly and product information can influence cost, quality and product differentiation before the sale.", "qpass_en": "", "qfail_en": ""}, {"mode": "M2", "name": "模式二｜產品生命週期價值服務", "strength": "CONDITIONAL", "rationale": "產品可以無損拆解、更換表面或零件、重新配置與品質分級，而且再次使用或銷售價值高於回流、修復、庫存及物流成本。", "qpass": "產品可以無損拆解、更換表面或零件、重新配置與品質分級，而且再次使用或銷售價值高於回流、修復、庫存及物流成本。", "qfail": "產品採永久黏合結構、單位剩餘價值低、運輸體積大，或市場不接受翻新產品。", "name_en": "Model 2 | Product life-cycle value services", "rationale_en": "Products can be disassembled without damage, resurfaced or re-parted, reconfigured and quality-graded, and their reuse or resale value exceeds return, repair, inventory and logistics cost.", "qpass_en": "Products can be disassembled without damage, resurfaced or re-parted, reconfigured and quality-graded, and their reuse or resale value exceeds return, repair, inventory and logistics cost.", "qfail_en": "The product uses a permanently bonded structure, has low unit residual value or large transport volume, or the market does not accept refurbished products."}, {"mode": "M3", "name": "模式三｜資產責任保留型使用／績效服務", "strength": "CONDITIONAL", "rationale": "產品用於辦公室、共享場域或其他集中環境，需求可以標準化，供應方也能管理配置、維護、取回及再部署。", "qpass": "產品用於辦公室、共享場域或其他集中環境，需求可以標準化，供應方也能管理配置、維護、取回及再部署。", "qfail": "產品主要由家庭長期持有，規格高度個人化，使用密度低，而且回流與重新配置成本過高。", "name_en": "Model 3 | Use / performance services with retained asset responsibility", "rationale_en": "Products are used in offices, shared venues or other centralised settings, demand can be standardised, and the supplier can manage allocation, maintenance, recovery and redeployment.", "qpass_en": "Products are used in offices, shared venues or other centralised settings, demand can be standardised, and the supplier can manage allocation, maintenance, recovery and redeployment.", "qfail_en": "The product is mainly held long-term by households, is highly personalised in specification, has low usage density, and its return and reconfiguration cost is too high."}], "PT09": [{"mode": "M1", "name": "模式一｜循環價值內嵌型產品銷售", "strength": "STRONG", "rationale": "設計、材料、可靠性、供應及合規條件可以在銷售前影響產品價值、品質與下游客戶接受。", "qpass": null, "qfail": null, "name_en": "Model 1 | Circular-value-embedded product sales", "rationale_en": "Design, materials, reliability, supply and compliance conditions can influence product value, quality and downstream customer acceptance before the sale.", "qpass_en": "", "qfail_en": ""}, {"mode": "M2", "name": "模式二｜產品生命週期價值服務", "strength": "STRONG", "rationale": "核心件若可以取得、診斷、拆解、修復、測試及再製，便具有清楚的交換、再製及再次交易價值。", "qpass": null, "qfail": null, "name_en": "Model 2 | Product life-cycle value services", "rationale_en": "If cores can be obtained, diagnosed, disassembled, repaired, tested and remanufactured, they carry clear exchange, remanufacturing and re-trade value.", "qpass_en": "", "qfail_en": ""}, {"mode": "M3", "name": "模式三｜資產責任保留型使用／績效服務", "strength": "CONDITIONAL", "rationale": "模組可以獨立識別及監測，供應方能取得運轉資料、控制維護，並對運轉時間或可用率承擔責任。", "qpass": "模組可以獨立識別及監測，供應方能取得運轉資料、控制維護，並對運轉時間或可用率承擔責任。", "qfail": "模組完全嵌入下游整機，供應方無法接觸設備、取得資料或區分模組問題與整機其他因素。", "name_en": "Model 3 | Use / performance services with retained asset responsibility", "rationale_en": "Modules can be individually identified and monitored, and the supplier can obtain operating data, control maintenance and take responsibility for operating time or availability.", "qpass_en": "Modules can be individually identified and monitored, and the supplier can obtain operating data, control maintenance and take responsibility for operating time or availability.", "qfail_en": "The module is fully embedded in a downstream finished machine; the supplier cannot access the equipment, obtain data, or separate module issues from other factors in the machine."}], "PT10": [{"mode": "M1", "name": "模式一｜循環價值內嵌型產品銷售", "strength": "STRONG", "rationale": "能源、材料、品質、保固、維修設計及合規條件都能在出售前進入產品經濟性。", "qpass": null, "qfail": null, "name_en": "Model 1 | Circular-value-embedded product sales", "rationale_en": "Energy, materials, quality, warranty, repair design and compliance conditions can all enter product economics before the sale.", "qpass_en": "", "qfail_en": ""}, {"mode": "M2", "name": "模式二｜產品生命週期價值服務", "strength": "CONDITIONAL", "rationale": "修復後仍有足夠剩餘壽命，客戶避免的新品替換、搬運及重新安裝價值，高於到府人工、備件、物流及測試成本。", "qpass": "修復後仍有足夠剩餘壽命，客戶避免的新品替換、搬運及重新安裝價值，高於到府人工、備件、物流及測試成本。", "qfail": "新品價格低、產品已接近使用壽命末端，或維修與搬運成本接近新品替換成本。", "name_en": "Model 2 | Product life-cycle value services", "rationale_en": "Sufficient remaining life exists after repair, and the replacement, transport and reinstallation the customer avoids is worth more than on-site labour, spare parts, logistics and testing cost.", "qpass_en": "Sufficient remaining life exists after repair, and the replacement, transport and reinstallation the customer avoids is worth more than on-site labour, spare parts, logistics and testing cost.", "qfail_en": "New-unit prices are low, the product is already near end of life, or repair and transport cost approaches the cost of replacement."}, {"mode": "M3", "name": "模式三｜資產責任保留型使用／績效服務", "strength": "BASIC_NOT_OPEN", "rationale": "一般家庭的停機損失、使用密度及資產管理負擔，通常不足以覆蓋供應方的融資、監測、到府維護、取回與再部署成本。租賃住宅、宿舍或集中物業可在後續擴充版另設模式三情境。", "qpass": null, "qfail": null, "name_en": "Model 3 | Use / performance services with retained asset responsibility", "rationale_en": "For typical households, downtime loss, usage intensity and asset-management burden are usually insufficient to cover the supplier's financing, monitoring, on-site maintenance, recovery and redeployment cost. Rental housing, dormitories or centrally managed properties may be added as a Model 3 scenario in a later extension.", "qpass_en": "", "qfail_en": ""}]}, "actions": [{"id": "6-1", "zh": "循環設計", "en": "Design for Circularity", "q": "就本次產品而言，貴公司是否在設計或開發時，明確要求產品更容易維修、保養、升級、拆解、再次使用、翻新、再製造或回收？"}, {"id": "6-2", "zh": "循環資源選用", "en": "Circular Sourcing", "q": "就本次產品而言，貴公司是否實際選用或明確要求再生材料、符合條件的可再生資源、原生資源替代方案，或避免特定令人關切的有害物質？"}, {"id": "6-3", "zh": "循環採購", "en": "Circular Procurement", "q": "貴公司是否把與產品壽命、材料來源、維修、回收或生命週期成本有關的要求，正式放進採購規格、供應商評選、合約或驗收流程？"}, {"id": "6-4", "zh": "製程優化", "en": "Process Optimization", "q": "貴公司是否曾改變本產品的生產或相關流程，使每單位產品使用較少材料、能源或水，或產生較少廢料、損失與排放，並有改善前後的比較？"}, {"id": "6-5", "zh": "產業、區域或城市共生", "en": "Industrial, Regional or Urban Symbiosis", "q": "貴公司是否與另一個組織建立持續運作的資源共享或交換，讓一方的剩餘能源、水、副產品、材料或閒置設施成為另一方的投入？"}, {"id": "6-6", "zh": "減量、再使用與變更用途", "en": "Reduce, Reuse and Repurpose", "q": "貴公司是否曾避免製造或購買新的產品／資源，或讓使用過的產品、零組件在不被破壞的情況下再次使用，或改作其他用途？"}, {"id": "6-7", "zh": "維護與維修", "en": "Maintenance and Repair", "q": "貴公司是否對本產品提供或執行定期保養、狀態監測或故障維修，使產品能維持或恢復原有功能，而不是因故障提早報廢？"}, {"id": "6-8", "zh": "績效導向循環模式", "en": "Performance-based Approaches", "q": "貴公司是否不是單純出售產品，而是以租賃、訂閱、按使用量或按績效收費提供產品功能，並由貴公司或指定方持續承擔維護、回收或生命週期末責任？"}, {"id": "6-9", "zh": "透過共享提升使用密集度", "en": "Sharing to Intensify Use", "q": "貴公司是否建立一個可運作的機制，讓多位使用者依序或共同使用同一項耐用產品或資產，並因此提高使用率或減少新增產品需求？"}, {"id": "6-10", "zh": "翻新", "en": "Refurbishing", "q": "貴公司是否把使用過的整項產品收回後，進行有限度修復、零件更換或軟硬體更新，使它恢復原有或接近原有功能，再次投入使用？"}, {"id": "6-11", "zh": "再製造", "en": "Remanufacturing", "q": "貴公司是否以標準化、工業化程序處理使用過的產品或核心零件，使其功能、性能與品質達到或高於新品水準，並提供完整保固？"}, {"id": "6-12", "zh": "逆向物流", "en": "Reverse Logistics", "q": "貴公司是否已有可運作的退回、收集、運輸、分類或儲存安排，能把使用過、淘汰或剩餘的產品／零件帶回再使用、翻新、再製造或回收節點？"}, {"id": "6-13", "zh": "資源層級利用", "en": "Cascading of Resources", "q": "貴公司是否為同一項產品、零件或材料安排至少兩個依序發生的用途，先保留較高功能或價值，再進入較低階用途，最後才回收或處理？"}, {"id": "6-14", "zh": "回收", "en": "Recycling", "q": "就本次產品相關的使用後物或廢料而言，貴公司是否自行或透過明確安排，進行物理、化學或生物處理，產出可再次使用的材料或資源，並能掌握輸入、處理、輸出與去向？"}, {"id": "6-15", "zh": "廢棄物管理", "en": "Waste Management", "q": "貴公司是否已對本產品相關製程或回收活動產生的廢棄物，建立辨識、分類、儲存、移交、處理與最終處置安排，並能追蹤主要數量或去向？"}, {"id": "6-16", "zh": "材料回復", "en": "Material Recovery", "q": "貴公司是否從廢棄物流中，透過特定程序分離或提取某一種有價值材料，並讓該材料重新進入供應鏈或生產使用？"}, {"id": "6-17", "zh": "能源回收", "en": "Energy Recovery", "q": "對於已確認無法再使用、翻新、再製造或材料回收的剩餘物，貴公司是否安排將其轉為實際被利用的熱能、電力或其他能源？"}, {"id": "6-18", "zh": "生態系統再生", "en": "Regenerate Ecosystems", "q": "貴公司的產品、材料來源或營運是否與某一個已退化的土壤、水域、棲地或其他自然系統有關，且貴公司已採取措施使其生態功能相較基準狀態獲得恢復？"}, {"id": "6-19", "zh": "教育與研究", "en": "Education and Research", "q": "貴公司是否已針對循環經濟，實施明確的教育、專業培訓或研究，使員工具備新的循環能力，或產生可用於循環轉型的新知與方法？"}, {"id": "6-20", "zh": "創新", "en": "Innovation", "q": "貴公司是否為了解決一個明確的資源、延壽、回流或價值回復問題，開發、測試或導入相較既有做法有實質新變化的技術、產品、制度或商業模式？"}, {"id": "6-21", "zh": "協作與網絡", "en": "Collaboration and Networks", "q": "貴公司是否與其他部門或外部組織，為一個明確的循環目標建立持續合作，分配角色、共享資料或資源，並共同執行實際行動？"}, {"id": "6-22", "zh": "協助使用者改變行為", "en": "Helping Users Change Their Behaviour", "q": "貴公司是否針對一項明確的使用者行為，例如減量、正確使用、維修、共享、歸還或回收，提供容易採用的替代方案或介入，並觀察使用者是否真的改變行為？"}, {"id": "6-23", "zh": "政策與法律體系", "en": "Policy and Legal System", "q": "貴公司或所屬組織是否具有正式治理權限，並已制定、實施或修訂適用於特定對象的循環政策、規則、義務、誘因、產品責任或公共採購制度？"}, {"id": "6-24", "zh": "金融服務", "en": "Financial Services", "q": "貴公司、金融合作方或資金提供者是否把明確的循環條件納入投資、授信、保險或資金配置，且該條件實際影響資金是否提供、金額、價格或風險管理？"}, {"id": "6-25", "zh": "數位化", "en": "Digitalization", "q": "貴公司是否使用產品識別、感測、資料平台或資料交換等數位技術，實際支援本產品的維修、資源管理、回收、再使用、翻新或生命週期決策？"}], "b": {"6-1": {"BD03": "P", "BD05": "P", "BD06": "S", "BD09": "S", "BD10": "S", "BD11": "P"}, "6-2": {"BD01": "P", "BD08": "P", "BD09": "P", "BD10": "S"}, "6-3": {"BD01": "S", "BD08": "P", "BD09": "P", "BD10": "P", "BD16": "S"}, "6-4": {"BD01": "P", "BD02": "P", "BD09": "S", "BD11": "S", "BD12": "S"}, "6-5": {"BD01": "P", "BD08": "S", "BD11": "P", "BD14": "S", "BD16": "P"}, "6-6": {"BD01": "P", "BD05": "P", "BD07": "P", "BD11": "S"}, "6-7": {"BD03": "P", "BD04": "P", "BD05": "P", "BD06": "S", "BD10": "S", "BD17": "S"}, "6-8": {"BD03": "P", "BD04": "S", "BD06": "P", "BD07": "P", "BD10": "S", "BD11": "S", "BD15": "P"}, "6-9": {"BD01": "S", "BD03": "S", "BD06": "P", "BD07": "P", "BD13": "S", "BD16": "S"}, "6-10": {"BD05": "P", "BD06": "P", "BD07": "S", "BD10": "S", "BD11": "P", "BD13": "S"}, "6-11": {"BD01": "S", "BD05": "P", "BD06": "P", "BD09": "S", "BD10": "S", "BD11": "P"}, "6-12": {"BD05": "S", "BD06": "S", "BD07": "P", "BD09": "S", "BD10": "P", "BD11": "P"}, "6-13": {"BD05": "P", "BD08": "S", "BD11": "P", "BD16": "P"}, "6-14": {"BD01": "S", "BD08": "P", "BD09": "P", "BD10": "S", "BD11": "P"}, "6-15": {"BD01": "S", "BD09": "P", "BD10": "P", "BD11": "P", "BD14": "S"}, "6-16": {"BD01": "S", "BD08": "P", "BD09": "S", "BD10": "P", "BD11": "P"}, "6-17": {"BD01": "P", "BD09": "P", "BD10": "S", "BD11": "P"}, "6-18": {"BD08": "S", "BD09": "S", "BD10": "P", "BD13": "S", "BD14": "P"}, "6-19": {"BD02": "S", "BD12": "P", "BD16": "S", "BD17": "P"}, "6-20": {"BD01": "S", "BD06": "P", "BD11": "S", "BD12": "P", "BD13": "S"}, "6-21": {"BD08": "S", "BD10": "P", "BD11": "S", "BD12": "S", "BD13": "S", "BD16": "P"}, "6-22": {"BD04": "P", "BD05": "S", "BD06": "S", "BD11": "P", "BD13": "P"}, "6-23": {"BD06": "S", "BD09": "P", "BD10": "P", "BD15": "S", "BD16": "S"}, "6-24": {"BD07": "P", "BD09": "S", "BD10": "P", "BD12": "S", "BD15": "P"}, "6-25": {"BD02": "P", "BD03": "P", "BD06": "S", "BD07": "P", "BD09": "S", "BD10": "P", "BD11": "P", "BD16": "S"}}, "a": {"BD01": {"M1": {"g": "P", "why": "單位合格產品所需的原料、能源與用水下降，或製程邊料、報廢及能源損失減少，會降低每件合格產品的直接成本。因果鏈為：資源投入與損失下降 → 單位合格產品成本下降 → M1-C1 材料及製造成本下降 → 產品毛利提高。若廢棄物產生量、處理量或生產者責任費用同步下降，亦會降低 M1-C4 合規及生命週期末責任成本。"}, "M2": {"g": "S", "why": "維修、翻新及再製仍需使用零件、材料、能源、清洗用水與測試資源。單次成功修復所需投入下降 → M2-C1 診斷、工時及備件成本下降；修復失敗、耗材浪費及材料報廢減少 → M2-C4 重工、保固及不可回復損失下降 → 每件成功恢復產品的服務毛利提高。"}, "M3": {"g": "S", "why": "若供應方承擔資產製造、能源、耗材、清洗或維護成本，降低每項資產製造及運作所需資源 → M3-C1 或 M3-C3 下降；降低每次翻新所需材料與能源 → M3-C5 下降 → 每單位可收費功能的生命週期成本下降。"}}, "BD02": {"M1": {"g": "P", "why": "良率與吞吐量提高 → 單件產品分攤的人力、設備與材料損失下降 → M1-C1 材料及製造成本下降。製程缺陷與重工下降 → 出貨後品質問題減少 → M1-C3 保固與品質成本下降。若企業原本受產能或交期限制，產出與交付效率改善亦可提高或保護 M1-R1 產品銷售收入。"}, "M2": {"g": "P", "why": "診斷、拆解、修復與測試效率提高 → 單件工時及等待時間下降 → M2-C1 下降；回流產品停留時間縮短 → M2-C3 下降；首次修復成功率提高 → M2-C4 下降；相同人力可完成更多服務與翻新品 → M2-R1、M2-R2 上升。"}, "M3": {"g": "P", "why": "資產調度、維護排程與故障處理效率提高 → 閒置及停機時間縮短 → 利用率與可用率提高 → M3-R1 上升；維護與現場服務效率提高 → M3-C3、M3-C4 下降。取回與翻新週期縮短 → 資產更快進入下一輪部署 → M3-R2 上升、M3-C5 下降。"}}, "BD03": {"M1": {"g": "P", "why": "故障率下降與修復時間縮短 → 退貨、換機、客訴、保固工時及備件支出下降 → M1-C3 保固與品質成本下降。品質聲譽與購買信心提高 → M1-R1 產品銷售收入上升或受到保護。"}, "M2": {"g": "P", "why": "可維修性與診斷效率提高 → 修復工時、備件浪費及誤判下降 → M2-C1 下降；首次修復率提高 → M2-C4 下降；產品功能與剩餘價值更容易恢復 → M2-R2、M2-R3 上升。"}, "M3": {"g": "P", "why": "故障率下降與平均修復時間縮短 → 資產可用率提高 → M3-R1 上升；維護工時、備件及緊急服務下降 → M3-C3 下降；停機、賠償與履約失敗下降 → M3-C4 下降；可恢復性及資產品質提高 → M3-R2 上升。"}}, "BD04": {"M1": {"g": "S", "why": "客戶使用成本與停機損失下降 → 產品整體經濟價值提高 → 購買、得標、續購或價格接受度提高 → M1-R1 產品銷售收入上升。"}, "M2": {"g": "P", "why": "服務縮短停機並延後新品替換 → 客戶總持有成本下降 → 服務採用、續約及重複購買增加 → M2-R1、M2-R2 上升。服務品質提高 → 客訴與再次故障下降 → M2-C4 下降。"}, "M3": {"g": "P", "why": "客戶停機及自行管理資產的負擔下降 → 採用率、續約率、計費單價或合約期間提高 → M3-R1 上升；服務爭議與履約風險下降 → M3-C4 下降。"}}, "BD05": {"M1": {"g": "S", "why": "壽命、耐用性及可升級性提高 → 產品品質與客戶價值提高 → M1-R1 可能上升；故障與過早報廢下降 → M1-C3、M1-C4 下降。"}, "M2": {"g": "P", "why": "可恢復功能及剩餘價值提高 → 可維修、翻新或再製比例提高 → M2-C4 下降；再次交易機會增加 → M2-R2 上升；核心零件與回流產品殘值提高 → M2-R3 上升；標準化與可拆解性改善 → M2-C1 下降。"}, "M3": {"g": "P", "why": "資產可用年限與部署次數增加 → 可收費期間增加 → M3-R1 上升；資產取得成本分攤至更多收入週期 → M3-C1 下降；再部署能力及最終殘值提高 → M3-R2 上升。"}}, "BD06": {"M2": {"g": "P", "why": "建立維修、升級、翻新、再製及再銷售方案 → 可付費服務與再次交易次數增加 → M2-R1、M2-R2 上升；回流核心的商業用途增加 → M2-R3 上升。"}, "M3": {"g": "P", "why": "交易標的由產品所有權轉為使用、可用性或績效 → 資產在合約期間持續收費 → M3-R1 上升；合約結束後再次部署或出售 → M3-R2 上升。"}}, "BD07": {"M2": {"g": "P", "why": "回流產品快速檢測、分流與修復 → 在製品與待修庫存時間下降 → M2-C3 下降；備件及交換機配置改善 → 服務等待下降 → M2-R1、M2-R2 上升；錯配與緊急處理下降 → M2-C1 下降。"}, "M3": {"g": "P", "why": "資產閒置時間下降與部署率提高 → M3-R1 上升；相同收入所需資產數量下降 → M3-C1 及融資需求下降 → M3-C2 下降；取回與再部署週期縮短 → M3-C5 下降。"}}, "BD08": {"M1": {"g": "P", "why": "供應來源多元、替代材料或回復材料增加 → 缺料、停產與延遲交付機率下降 → M1-R1 受到保護；價格波動與緊急採購下降 → M1-C1 下降或趨於穩定。"}, "M2": {"g": "S", "why": "備件及回流核心來源穩定 → 缺件、等待及無法修復下降 → M2-R1、M2-R2 受到保護；緊急採購下降 → M2-C1 下降；不可修復與報廢下降 → M2-C4 下降。"}, "M3": {"g": "S", "why": "資產與備件供應穩定 → 維修等待與停機下降 → M3-R1 受到保護；緊急維修與替代支出下降 → M3-C3、M3-C4 下降；新資產價格及交期風險降低 → M3-C1 趨於穩定。"}}, "BD09": {"M1": {"g": "P", "why": "法規要求被正確納入產品及流程 → 產品取得或維持市場准入 → M1-R1 受到保護；違規、召回、罰款、整治及生命週期末責任損失下降 → M1-C4 下降；安全與品質違規下降亦可能降低 M1-C3。"}, "M2": {"g": "S", "why": "翻新、再製、二手銷售與回流活動符合要求 → 服務及再次交易可合法進行 → M2-R1、M2-R2 受到保護；錯誤分類、產品責任及不可銷售損失下降 → M2-C4 下降。"}, "M3": {"g": "S", "why": "契約、計費、資料、資產責任及取回安排符合要求 → 合約可以成立並持續履約 → M3-R1 受到保護；爭議、罰款、違約與產品責任下降 → M3-C4 下降。"}}, "BD10": {"M1": {"g": "P", "why": "產品與材料資料完整可追溯 → 客戶、採購方及主管機關可驗證產品 → 市場准入、得標與聲明可信度提高 → M1-R1 上升或受到保護；錯誤聲明、召回及責任下降 → M1-C4 下降。"}, "M2": {"g": "P", "why": "產品歷史、故障、換件及測試資料可取得 → 診斷與分流加快 → M2-C1、M2-C2 下降；等待與錯配下降 → M2-C3 下降；誤判與重工下降 → M2-C4 下降；翻新品品質與可信度提高 → M2-R1、M2-R2 上升。"}, "M3": {"g": "P", "why": "使用、績效與資產狀態資料可信 → 正確計費與收入漏損下降 → M3-R1 上升；預防維護與調度改善 → M3-C3 下降；計費爭議、履約及資產遺失下降 → M3-C4 下降；取回與再部署效率提高 → M3-C5 下降；風險可被評估 → M3-C2 下降。"}}, "BD11": {"M1": {"g": "S", "why": "企業承擔 take-back、生產者責任或材料回復時，回流效率提高 → 處置與責任成本下降 → M1-C4 下降；回復材料替代新材料 → M1-C1 下降；可信回收安排亦可能提高產品接受 → M1-R1 上升。"}, "M2": {"g": "P", "why": "回流量與可修復比例提高 → 翻新、再製及再銷售供料增加 → M2-R2、M2-R3 上升；收集與分流效率提高 → M2-C2 下降；不可回復與處置損失下降 → M2-C4 下降。"}, "M3": {"g": "P", "why": "資產按期取回且狀態可控 → 資產遺失與收入週期中斷下降 → M3-R1 受到保護；翻新及再部署成功率提高 → M3-R2 上升；每項資產產生更多收入週期 → M3-C1 下降；單位取回與處理成本下降 → M3-C5 下降。"}}, "BD12": {"M1": {"g": "S", "why": "試驗與學習速度提高 → 可行的新材料、設計與製程更快導入 → 產品競爭力與市場回應提高 → M1-R1 可能上升；有效技術降低製造、品質或合規成本 → M1-C1、M1-C3、M1-C4 可能下降。"}, "M2": {"g": "S", "why": "新診斷、維修、翻新、再製與市場方案更快成熟 → 可服務範圍與再次交易機會增加 → M2-R1、M2-R2、M2-R3 上升；有效技術降低工時、物流、庫存與失敗成本 → M2-C1 至 M2-C4 可能下降。"}, "M3": {"g": "S", "why": "新計價、調度、維護、數位與融資方式更快試驗 → 利用率、可用率、單價或合約期間提高 → M3-R1 上升；再部署方式改善 → M3-R2 上升；維護、融資、履約與再部署成本可能下降。"}}, "BD13": {"M1": {"g": "S", "why": "循環特性及企業承諾可信 → 客戶購買、得標與價格接受度提高 → M1-R1 上升；誤導性聲明、投訴及聲明責任下降 → M1-C4 下降。"}, "M2": {"g": "P", "why": "客戶信任維修品質、翻新品分級、安全與保固 → 採用率、重複購買及價格接受度提高 → M2-R1、M2-R2 上升；退貨、爭議與品質責任下降 → M2-C4 下降。"}, "M3": {"g": "P", "why": "客戶信任使用權、績效、計費及資產管理安排 → 採用、續約及合約期間提高 → M3-R1 上升；計費、服務、歸還與資料爭議下降 → M3-C4 下降。"}}, "BD15": {"M2": {"g": "S", "why": "回流庫存、備件及交換機取得合適融資 → 資金占用成本下降 → M2-C3 下降；可負擔的服務及翻新規模增加 → M2-R1、M2-R2 上升；品質保險與風險分攤降低重大損失 → M2-C4 下降。"}, "M3": {"g": "P", "why": "融資成本下降且資產風險可被評估與分攤 → M3-C2 下降；可負擔的資產池規模增加 → 可服務客戶與部署數增加 → M3-R1、M3-R2 上升。"}}, "BD16": {"M1": {"g": "S", "why": "共同規格與供應網絡成熟 → 材料搜尋、驗證及採購成本下降 → M1-C1 下降；物流與市場覆蓋效率提高 → M1-C2 下降、M1-R1 上升；回收及責任分工清楚 → M1-C4 下降。"}, "M2": {"g": "P", "why": "合作網絡覆蓋與標準化提高 → 回流搜尋、收集與運輸成本下降 → M2-C2 下降；技術與零件更易取得 → M2-C1 下降；庫存共享改善 → M2-C3 下降；服務及二次市場擴大 → M2-R1、M2-R2、M2-R3 上升。"}, "M3": {"g": "P", "why": "維護、融資、物流、數位及再部署網絡成熟 → 服務範圍、回應速度、利用率與可用率提高 → M3-R1 上升；單位維護及再部署成本下降 → M3-C3、M3-C5 下降；履約中斷風險下降 → M3-C4 下降；融資與風險分攤改善 → M3-C2 下降。"}}, "BD17": {"M1": {"g": "S", "why": "人員具備設計、材料、採購、製程及資料能力 → 錯誤與重工下降 → M1-C1、M1-C3 下降；合規與聲明錯誤下降 → M1-C4 下降；產品品質、交付及市場接受提高 → M1-R1 受到保護。"}, "M2": {"g": "P", "why": "診斷與修復能力標準化 → 工時、誤判與備件浪費下降 → M2-C1 下降；分流及庫存協作改善 → M2-C2、M2-C3 下降；重工、保固與安全風險下降 → M2-C4 下降；服務產能及品質提高 → M2-R1、M2-R2 上升。"}, "M3": {"g": "P", "why": "跨部門具備資產、維護、計費、資料、契約及風險管理能力 → 調度、維護與計費正確性提高 → M3-R1 上升；維護、履約及爭議成本下降 → M3-C3、M3-C4 下降；取回與再部署品質提高 → M3-C5 下降、M3-R2 上升。"}}}, "bdName": {"BD01": "材料、能源與用水成本效率", "BD02": "製程生產力、良率與營運效率", "BD03": "可靠性、維修與保固經濟性", "BD04": "客戶總持有成本、可用性與留存", "BD05": "產品壽命、殘值與價值保留", "BD06": "新收益、服務毛利與多次收益週期", "BD07": "資產利用率、庫存與營運資金", "BD08": "供應安全、關鍵材料與價格波動", "BD09": "市場進入、法規責任與環境負債", "BD10": "資料透明、追溯與聲明可信度", "BD11": "回流率、回復產率與生命週期末端成本", "BD12": "創新速度與策略選擇權", "BD13": "品牌信任、客戶接受與利害關係人價值", "BD14": "生態系統與自然資本韌性", "BD15": "融資、保險與資金成本", "BD16": "夥伴網絡、交易成本與規模經濟", "BD17": "人才能力、組織學習與變革執行力"}, "modeName": {"M1": "模式一｜循環價值內嵌型產品銷售", "M2": "模式二｜產品生命週期價值服務", "M3": "模式三｜資產責任保留型使用／績效服務"}, "modeName_en": {"M1": "Model 1 | Circular-value-embedded product sales", "M2": "Model 2 | Product life-cycle value services", "M3": "Model 3 | Use / performance services with retained asset responsibility"}};
@@ -345,7 +464,7 @@ function submitAnswersToBackend(){
  if(!S.admin.submissionId)S.admin.submissionId=genId();
  postToBackend('submitResponse',{
   submissionId:S.admin.submissionId,
-  prototypeVersion:'v0.16',
+  prototypeVersion:'v0.18',
   productName:S.productName||'',
   markets:S.markets.slice(),
   productTypeCode:S.pt||'',
@@ -426,7 +545,7 @@ function reportSection(){
   var attachNote=a.sentNoAttachment
    ?'<div class="ce-def-note" style="margin-top:6px">'+bi('這次報告合併未成功，這封信暫時沒有附上完整 PDF，我們會盡快人工補寄，造成不便敬請見諒。','The full report could not be merged this time, so this email was sent without the PDF attachment. We will follow up manually as soon as possible — sorry for the inconvenience.')+'</div>'
    :'';
-  return '<div class="sec"><h3>④ '+bi('接收完整報告','Receive full report')+' <span class="pill pill-w">'+bi('測試','test')+'</span></h3><div class="res ok"><b>'+bi('已送出 ✓','Submitted ✓')+'</b>　'+bi('完整報告寄送資訊已登記至','Delivery information registered as')+' <b>'+esc(a.email)+'</b>。<div class="ce-def-note" style="margin-top:6px">'+confirmMsg+'</div>'+attachNote+'</div></div>';
+  return '<div class="sec"><h3><span class="sec-num">04</span> '+bi('接收完整報告','Receive full report')+'</h3><div class="res ok"><b>'+bi('已送出 ✓','Submitted ✓')+'</b>　'+bi('完整報告寄送資訊已登記至','Delivery information registered as')+' <b>'+esc(a.email)+'</b>。<div class="ce-def-note" style="margin-top:6px">'+confirmMsg+'</div>'+attachNote+'</div></div>';
  }
  var body=a.sendError?('<div class="notice" style="margin-bottom:14px;border-color:#d97706;color:#92400e">'+bi('寄送失敗，可能是網路連線問題，請確認後再按一次下方按鈕重試；若持續失敗，請直接聯繫我們。','Sending failed, possibly a connection issue. Please retry below; contact us directly if it keeps failing.')+'</div>'):'';
  body+='<div class="notice" style="margin-bottom:14px">'+bi('以下欄位僅用於報告寄送與您另行選擇的後續聯繫，不影響前述任何分析內容。只有 Email 為必填，其餘欄位可視需要填寫。','The fields below are only for report delivery and any follow-up you separately choose; they do not affect the analysis above. Only email is required.')+'</div><div class="field-grid">';
@@ -434,7 +553,7 @@ function reportSection(){
  body+='</div><label class="consent-line"><input type="checkbox" '+(a.followup?'checked':'')+' onchange="updateAdmin(\'followup\',this)"><span>'+bi('我願意接收與本計畫相關的後續聯繫或資訊。','I would like to receive Programme-related follow-up.')+'</span></label><div class="notice" style="margin-top:14px">'+bi('您主動提供的資料僅用於報告寄送、相關查詢及您另行選擇的後續聯繫。完整資料使用說明請參考首頁。','The information you provide is used only for report delivery, related enquiries and follow-up you separately choose. See the homepage for the full data-use notice.')+'</div>';
  var ok=isEmail(a.email);
  body+='<div style="margin-top:14px"><button class="btn '+(ok?'btn-p':'btn-d')+'" id="sendReportBtn" '+(ok?'':'disabled')+' onclick="submitReport()">'+bi('送出並接收完整報告','Submit and receive full report')+'</button></div>';
- return '<div class="sec no-print"><h3>④ '+bi('接收完整報告','Receive full report')+' <span class="pill pill-w">'+bi('測試','test')+'</span></h3>'+body+'</div>';
+ return '<div class="sec no-print"><h3><span class="sec-num">04</span> '+bi('接收完整報告','Receive full report')+'</h3>'+body+'</div>';
 }
 function downloadTestPDF(){
  var el=document.getElementById('resultCapture');
@@ -447,8 +566,8 @@ function downloadTestPDF(){
   pdf.addImage(img,'PNG',0,0,w,h);var rem=h-ph;
   while(rem>0){pos-=ph;pdf.addPage();pdf.addImage(img,'PNG',0,pos,w,h);rem-=ph;}
   pdf.save('DYCJ_'+((S.productName||'report').replace(/[^0-9A-Za-z一-龥-]/g,'_'))+'.pdf');
-  if(btn){btn.disabled=false;btn.innerHTML=bi('下載 PDF（測試功能）','Download PDF (test)');}
- })['catch'](function(){if(btn){btn.disabled=false;btn.innerHTML=bi('下載 PDF（測試功能）','Download PDF (test)');}alert(bi('產生 PDF 失敗，請重試。','PDF generation failed, please retry.'));});
+  if(btn){btn.disabled=false;btn.innerHTML=bi('下載 PDF','Download PDF');}
+ })['catch'](function(){if(btn){btn.disabled=false;btn.innerHTML=bi('下載 PDF','Download PDF');}alert(bi('產生 PDF 失敗，請重試。','PDF generation failed, please retry.'));});
 }
 function ptById(c){return DATA.productTypes.find(function(p){return p.code===c;});}
 function modesFor(pt){return DATA.pm[pt]||[];}
@@ -461,7 +580,24 @@ function answeredCount(){return Object.keys(S.ce).filter(function(k){return S.ce
 
 /* nav */
 function renderNav(){
- document.getElementById('nav').innerHTML='<span class="nav-brand" onclick="go(\'home\')"><svg class="nav-logo" viewBox="0 0 148 49"><use href="#logo"/></svg><span class="nav-div"></span><span class="nav-title">Design Your Circular Journey</span></span><span class="nav-spacer"></span><span class="nav-tag">PROTOTYPE · MARKET TEST</span><button class="nav-btn '+(LANG==="zh"?"on":"")+'" onclick="setLang(\'zh\')">繁中</button><button class="nav-btn '+(LANG==="en"?"on":"")+'" onclick="setLang(\'en\')">EN</button>';
+ document.getElementById('nav').innerHTML='<span class="nav-brand" onclick="go(\'home\')"><svg class="nav-logo" viewBox="0 0 148 49"><use href="#logo"/></svg><span class="nav-div"></span><span class="nav-title">Design Your Circular Journey</span></span><span class="nav-spacer"></span><button class="nav-btn '+(S.step==="methodology"?"on":"")+'" onclick="go(\'methodology\')">'+bi('問卷方法學','Methodology')+'</button><button class="nav-btn '+(S.step==="dataPolicy"?"on":"")+'" onclick="go(\'dataPolicy\')">'+bi('資料使用條例','Data policy')+'</button><button class="nav-btn '+(LANG==="zh"?"on":"")+'" onclick="setLang(\'zh\')">繁中</button><button class="nav-btn '+(LANG==="en"?"on":"")+'" onclick="setLang(\'en\')">EN</button>';
+}
+function renderFooter(){
+ document.getElementById('footer').innerHTML=
+  '<div class="footer-top">'
+   +'<div><div class="footer-brand">Design Your Circular Journey</div><div class="footer-tagline">'+bi('為您的耐久產品線設計循環旅程','Building the action foundation for circular-transition pathway planning')+'</div></div>'
+   +'<div class="footer-links">'
+     +'<a onclick="go(\'home\')">'+bi('首頁','Home')+'</a>'
+     +'<a onclick="go(\'methodology\')">'+bi('問卷方法學','Methodology')+'</a>'
+     +'<a onclick="go(\'dataPolicy\')">'+bi('資料使用條例','Data policy')+'</a>'
+     +'<a href="https://renato-lab.com/" target="_blank" rel="noopener">REnato lab</a>'
+     +'<a href="https://www.linkedin.com/company/tracestandards/" target="_blank" rel="noopener">TRACE Standards</a>'
+   +'</div>'
+  +'</div>'
+  +'<div class="footer-bottom">'
+    +'<span>© 2026 REnato lab × TRACE Standards</span>'
+    +'<span>info@renato-lab.com</span>'
+  +'</div>';
 }
 var NODES=[['產品','Product'],['模式','Model'],['行動','Actions'],['接收結果','Results']];
 function stepper(cur){
@@ -487,31 +623,291 @@ function setQual(v){S.qual=v;render();}
 
 /* ---------- HOME ---------- */
 function scHome(){
- var deliver=[["您目前的循環定位","Where you stand","看見這條產品線在 25 項循環行動中的現況起點。","See where this product line stands across 25 circular actions."],["路徑與優先缺口","Path & priorities","對照您選定的方向，辨識既有優勢與優先補強項目。","Match your chosen direction; identify existing strengths and priority gaps."],["可供團隊討論的分析結果","A team-ready analysis","取得一份可供內部討論的 Circular Journey Map；如留下 Email，可另收到包含完整比較與判斷依據的 PDF 報告。","Receive a Circular Journey Map for internal discussion. Leave an email to receive a PDF report with the full comparison and rationale."]];
- var flow=[["界定本次探索的產品","Define the Product in Focus"],["選擇一種商業模式","Choose one business model"],["回顧 25 項循環行動的角色與進展","Review your role and progress on 25 circular actions"],["查看循環旅程地圖","View your Circular Journey Map"],["取得完整結果","Get your full results"]];
- var h='<div class="hero"><span class="badge">◐ '+bi('市場測試版','Market test')+'</span><div class="eyebrow">DESIGN YOUR CIRCULAR JOURNEY · 2026 APAC MANUFACTURING PILOT</div><h1>'+bi('為貴公司的一項產品，規劃可執行的循環轉型下一步','Plan practical circular-transition next steps for one of your products')+'</h1><p class="sub">'+bi('循環轉型沒有單一路徑。本工具從貴公司一項焦點產品（本次要分析的那一項產品）出發，盤點你已採取的循環行動，並對照你想走的方向——因應歐盟 ESPR 等產品法規、掌握不同市場的循環要求，或開拓新的收益機會，協助你看清現況與下一步。','There is no single path to circularity. Starting from one focus product (the single product you analyse this time), this tool takes stock of the circular actions you already take and maps them against where you want to go — responding to product regulation such as the EU ESPR, understanding circular requirements across different markets, or opening new revenue — so you can see your current position and next step.')+'</p></div>';
- h+='<div class="home-grid">'+deliver.map(function(d){return '<div class="card"><h4>'+bi(d[0],d[1])+'</h4><p>'+bi(d[2],d[3])+'</p></div>';}).join('')+'</div>';
- h+='<div style="margin:4px 0 24px"><button class="btn btn-p" onclick="go(2)">'+bi('開始 →','Start →')+'</button><span style="margin-left:14px;font-size:12px;color:var(--faint)">'+bi('約 20–30 分鐘','About 20–30 min')+'</span></div>';
- h+='<div class="sec"><h3>◑ '+bi('關於本計畫','About the Programme')+'</h3><p>'+bi('Design Your Circular Journey Program 旨在協助參與企業以一項焦點產品為分析單位，盤點現有循環經濟行動，理解不同循環轉型方向所需的能力、資料、合作關係與後續行動。','The Design Your Circular Journey Program helps participating companies assess one focus product, review their existing circular-economy actions, and understand the capabilities, data, partnerships and next steps required for different circular-transition pathways.')+'</p><p>'+bi('本計畫並非單次問卷調查，而是一項結合線上評估、循環旅程分析、在地合作與後續交流活動的企業支持計畫。企業完成線上填寫後，將取得 Circular Journey Map，並可選擇接收完整 PDF 報告，作為內部討論及後續活動的基礎。','The Programme is not a one-off survey. It combines an online assessment, Circular Journey analysis, local partnerships and follow-up activities. After completing the assessment, participating companies can view a Circular Journey Map and choose to receive a full PDF report for internal discussion and subsequent Programme activities.')+'</p><p style="font-size:12.5px;color:var(--muted)">'+bi('計畫期間：［YYYY 年 MM 月 DD 日］至［YYYY 年 MM 月 DD 日］','Programme period: [DD Month YYYY] to [DD Month YYYY]')+'</p></div>';
- h+='<div class="sec"><h3>◑ '+bi('關於本工具','About this tool')+'</h3><p>'+bi('亞太製造業正同時面對產品法規（如歐盟 ESPR）與新的商業機會。企業缺的通常不是更多資訊，而是一套把外部變化轉成決策的方法。本工具以焦點產品、企業角色與控制權、25 項循環經濟行動為結構，協助您看清現況、缺口與下一步。','Asia-Pacific manufacturers face both product regulation (e.g. EU ESPR) and new business opportunities. What companies lack is usually not more information, but a way to turn external change into decisions. This tool is structured around a focus product, your company\'s role and control, and 25 circular-economy actions — helping you see your current status, gaps and next steps.')+'</p></div>';
- h+='<div class="sec"><h3>◑ '+bi('適用對象','Who it is for')+'</h3><p>'+bi('首波聚焦選定最終產品及其零組件的製造業企業：','The first version focuses on selected final-product and component manufacturers:')+'</p><div class="aud"><div class="it"><b>'+bi('最終產品與品牌企業','Final product & brand owners')+'</b></div><div class="it"><b>'+bi('最終產品製造商','Final product manufacturers')+'</b></div><div class="it"><b>'+bi('零組件／模組供應商','Component / module suppliers')+'</b></div></div><p style="font-size:12px;color:var(--muted);margin-top:10px">'+bi('首波涵蓋十種產品類型，完整清單請見下一步的「產品類型」選項；材料供應商本版暫不納入。','The first wave covers ten product types; see the “Product type” options in the next step for the full list. Material suppliers are not included in this version.')+'</p></div>';
- h+='<div class="sec"><h3>◆ '+bi('您會完成的流程','The flow you will complete')+'</h3><div class="flowlist">'+flow.map(function(f){return '<div class="fl"><span class="no"></span><div><b>'+bi(f[0],f[1])+'</b></div></div>';}).join('')+'</div><p style="font-size:12px;color:var(--muted);margin-top:8px">'+bi('約 20–30 分鐘，過程中可隨時返回修改。','About 20–30 min; you can go back and edit at any time.')+'</p></div>';
- h+='<div class="sec"><h3>◆ '+bi('方法與 ISO 說明','Method & ISO note')+'</h3><p>'+bi('本工具以 ISO 59000 系列（含 ISO 59004:2024）作為方法參考，建立跨產品、跨市場可共同理解的循環經濟語言；25 項循環經濟行動構成共用輸入層。標準的角色是提供結構，而非替企業決定唯一答案。參與本工具不代表完成 ISO 符合性評估或取得認證，也不構成 ESPR 合規判定。','This tool references the ISO 59000 series (including ISO 59004:2024) to build a shared circular-economy language across products and markets; the 25 circular-economy actions form a common input layer. Standards provide structure, not a single answer. Participation does not mean an ISO conformity assessment or certification, and is not an ESPR compliance ruling.')+'</p></div>';
- h+='<div class="sec"><h3>◆ '+bi('關於我們','About us')+'</h3><p>'+bi('REnato lab 是一支永續工程團隊，結合科學、工程、商業與設計，協助企業以更少的自然資源達成更高的產品與材料利用率，並將循環經濟要求轉化為可執行、可調整的工作流程。','REnato lab is a sustainable engineering team combining science, engineering, business and design. It helps companies achieve higher product and material utilisation with fewer natural resources, and turns circular-economy requirements into workflows that can be implemented and adjusted.')+' <a href="https://renato-lab.com/" target="_blank" rel="noopener">renato-lab.com</a></p><p>'+bi('TRACE Standards 是一個以東協為基地的循環經濟顧問平台，結合產業研究、政策分析、國際標準與企業實務，協助企業將循環經濟要求轉化為可實施、可衡量並可因應市場與法規變化的策略與行動。','TRACE Standards is an ASEAN-rooted circular economy advisory platform that integrates industry research, policy analysis, international standards and business practice to help organisations translate circular economy requirements into strategies and actions that are implementable, measurable and responsive to market and regulatory change.')+' <a href="https://www.linkedin.com/company/tracestandards/" target="_blank" rel="noopener">TRACE Standards</a></p></div>';
- h+='<div class="sec"><h3>◆ '+bi('資料使用','Data use')+'</h3><div class="notice" style="margin:6px 0"><p>'+bi('本工具可在不提供公司名稱、姓名或聯絡資料的情況下完成。您提供的產品、企業角色、價值鏈範圍及循環行動等填答內容，將用於產生本次即時分析結果。','You may complete this tool without providing a company name, personal name or contact details. Your responses concerning the product, company role, value-chain scope and circular actions will be used to generate the instant result for this assessment.')+'</p><p>'+bi('填答內容經去識別化及彙整處理後，得用於研究、統計分析及工具功能改善；前述處理不以識別特定個人或企業為目的，亦不會於研究、統計或公開成果中揭露可直接識別特定個人或企業之資訊。','After de-identification and aggregation, the responses may be used for research, statistical analysis and improvement of the tool. Such processing is not intended to identify any specific individual or company, and no information that directly identifies a specific individual or company will be disclosed in research, statistical or public outputs.')+'</p><p>'+bi('若您選擇接收完整 PDF 報告，REnato lab 將另行蒐集您主動提供的姓名、電子郵件及統一編號（如有），並僅於寄送報告、處理相關查詢，以及您另行選擇的後續聯繫或資訊寄送目的範圍內使用。','If you choose to receive the full PDF report, REnato lab will also collect the name, email address and business ID, if any, that you voluntarily provide. Those details will be used only to deliver the report, respond to related enquiries, and for follow-up contact or information delivery that you separately select.')+'</p><p>'+bi('除適用法令要求、為完成寄送或系統維運而由受託服務提供者處理，或經您另行同意外，REnato lab 不會將可識別個人之資料提供予第三人。資料保存期間以達成前述目的所必要之期間為限；您得依適用法令請求查詢、閱覽、更正、停止處理或刪除個人資料。聯絡窗口：info@renato-lab.com','REnato lab will not disclose identifiable personal data to third parties except where required by applicable law, where processing by a service provider is necessary for report delivery or system operation, or where you have separately agreed. Data will be retained only for as long as necessary for these purposes. Subject to applicable law, you may request access, correction, restriction of processing or deletion of your personal data. Contact: info@renato-lab.com')+'</p><p>'+bi('本工具為 prototype／市場測試版本，分析結果僅供一般資訊與內部討論，不構成法律、合規、認證、投資或其他專業意見，亦不取代依個案事實及適用法規進行的正式評估。','This tool is a prototype / market-test version. Its output is provided for general information and internal discussion only and does not constitute legal, compliance, certification, investment or other professional advice, nor does it replace a formal assessment based on the specific facts and applicable law.')+'</p></div></div>';
- h+='<button class="btn btn-p" onclick="go(2)">'+bi('開始 →','Start →')+'</button><span style="margin-left:14px;font-size:12px;color:var(--faint)">'+bi('約 20–30 分鐘','About 20–30 min')+'</span>';
- return '<div style="max-width:820px">'+h+'</div>';
+ var zh=`<div class="home-page">
+  <div class="hero home-hero">
+    <span class="badge">2026 亞太製造業試辦計畫</span>
+    <div class="eyebrow">DESIGN YOUR CIRCULAR JOURNEY PROGRAMME · PROJECT 1</div>
+    <h1>從一條正在經營的耐久產品線開始，建立循環轉型路徑規劃的行動基礎</h1>
+    <p class="sub">我們相信，循環轉型應從企業所在市場、產品特性、客戶需求、交易方式與實際能力出發，因地制宜地發展多元路徑。</p>
+    <p class="sub">本計畫邀請製造業企業選定一條既有耐久產品線，以一個現行商業模式與一組明確交易情境為範圍，盤點企業目前的循環經濟行動，理解這些行動與產品線商業價值之間的關聯，建立後續循環轉型路徑規劃所需的共同起點。</p>
+    <div class="home-meta"><span>約需 20–30 分鐘</span><span>可未具名完成</span><span>不需上傳文件</span><span>資訊不足時可選擇「不確定」</span></div>
+    <div class="home-actions"><button class="btn btn-p" onclick="go(2)">開始探索 →</button><span class="hint">過程中可隨時返回修改</span></div>
+    <div class="home-organisers">共同發起：REnato lab × TRACE Standards</div>
+  </div>
+
+  
+
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">WHAT YOU WILL RECEIVE</div><h2>完成探索後，您將取得什麼</h2><p>將一條產品線的行動現況、商業價值關聯與後續可考量範圍，整理為可供企業內部理解與討論的共同底圖。</p></div>
+    <div class="home-output-grid">
+      <div class="home-output-card"><div class="num">01</div><h3>產品線的循環行動現況</h3><p>以一條具體產品線為範圍，呈現 25 項循環經濟行動中的企業角色與目前推動狀態，包括已制度化、執行中、規劃中、預計規劃、尚未展開、不確定及不適用。</p></div>
+      <div class="home-output-card"><div class="num">02</div><h3>現行商業模式下的商業價值關聯</h3><p>依您所選擇的現行商業模式，說明各項循環經濟行動可能支持哪些商業價值因子，並標示主要、次要、情境性或目前未建立關聯的解讀層級。</p></div>
+      <div class="home-output-card"><div class="num">03</div><h3>循環行動考量全貌</h3><p>將 25 項行動整理為目前行動基礎、準備中行動、可進一步考量、資訊不確定及不適用五種類型。此分類不代表成熟度、缺口或優先順序。</p></div>
+      <div class="home-output-card"><div class="num">04</div><h3>可供企業內部討論的結果</h3><p>未具名使用者可查看當次線上結果；提供具名資料者可取得個別化 PDF 報告，包含分析範圍、獲利邏輯、行動摘要、商業價值解讀與完整填答附錄。</p></div>
+    </div>
+    
+    
+  </div>
+
+  
+
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">WHY THIS PROGRAMME</div><h2>讓每一條產品線，從自身條件出發設計循環旅程</h2></div>
+    <p class="home-lead">循環轉型可以從不同位置開始。</p>
+    <p>企業可以從材料與製程效率著手，也可以強化產品耐久性、維修與價值保留，或進一步發展回流、再部署、生命週期服務及使用權／績效服務。</p>
+    <p>適合一條產品線的路徑，取決於產品如何被設計、製造、使用與維護，也取決於企業如何取得收入、客戶支付什麼，以及產品生命週期中的責任由誰承擔。</p>
+    <p>許多製造業企業已經進行耐久設計、材料替代、良率改善、維修、回流、翻新、資料管理或供應鏈合作。這些工作往往分散在不同部門，使用不同名稱，尚未形成一致的循環經濟行動全貌。</p>
+    <p>本計畫以 ISO 59004 所提出的 25 項循環經濟行動作為共同語言，協助企業將現有工作整理為可理解、可討論的結構，並在現行商業模式下理解其可能支持的商業價值。</p>
+    <div class="notice"><b>本計畫的核心定位</b><br>本計畫建立企業進入循環轉型路徑規劃前所需的行動與商業理解基礎，協助企業看清目前位置、已具備的行動基礎，以及後續規劃時可納入考量的行動範圍。</div>
+    
+  </div>
+
+  
+
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">DEFINE THE SCOPE</div><h2>開始前，請先確認本次探索範圍</h2><p>為使所有問題與分析使用相同的產品及商業邊界，本次探索需要固定以下三項條件。</p></div>
+    <div class="home-scope-grid">
+      <div class="home-scope-card"><div class="num">01</div><h3>一條 Product in Focus</h3><p>本次所有問題與結果共同指向的一條具體產品線。產品線應具有足夠一致的功能、使用情境、客戶與交易條件。</p></div>
+      <div class="home-scope-card"><div class="num">02</div><h3>一個目前實際存在的商業模式</h3><p>單次探索只選擇一個現行商業模式。同一產品線若採用不同模式，應分別完成獨立探索。</p></div>
+      <div class="home-scope-card"><div class="num">03</div><h3>一組主要交易情境</h3><p>固定主要客戶、付費標的、所有權與生命週期責任，並在後續填答中維持相同範圍。</p></div>
+    </div>
+    
+    
+  </div>
+
+  
+
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">WHO AND WHAT IT IS FOR</div><h2>誰適合參與</h2></div>
+    <p>本計畫服務製造業企業使用者。使用者不需要具備循環經濟或 ISO 59000 系列的先備知識。</p>
+    <p>適合的填答者能夠選定一條具體耐久產品線，理解該產品線目前如何向客戶提供價值並取得收入，固定一組主要交易情境，並依目前掌握的資訊回答設計、材料、採購、製造、服務、回流、資源、資料與合作現況。</p>
+    <p>資訊不足時，請選擇「不確定」，不以推測補足資訊。填答者不需要由一人掌握所有跨部門資訊；企業可以先進行內部確認，再由指定窗口提交整合後的回答。</p>
+    <div class="notice"><b>基本版核心適用範圍</b><br>可辨識、可持續使用、具有維護或價值恢復可能，而且製造企業能影響其生命週期條件的耐久產品、設備、資產及高功能模組。</div>
+    
+    
+  </div>
+
+  
+
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">THE JOURNEY</div><h2>您將完成的流程</h2><p>六個步驟固定分析範圍、完成行動盤點，並形成可供後續規劃使用的分析結果。</p></div>
+    <div class="home-flowlist">
+      <div class="home-flowitem"><span class="no"></span><div><b>確認產品是否適用</b><span>選擇產品類型，確認本次產品是否屬於基本版服務範圍。</span></div></div>
+      <div class="home-flowitem"><span class="no"></span><div><b>設定 Product in Focus</b><span>選定並命名一條具體產品線，確認其主要功能、客戶與使用情境。</span></div></div>
+      <div class="home-flowitem"><span class="no"></span><div><b>選擇現行商業模式與交易情境</b><span>從三種模式中選擇一個目前實際存在的模式，並固定主要交易條件。部分產品與模式組合需要先回答少數資格問題。</span></div></div>
+      <div class="home-flowitem"><span class="no"></span><div><b>盤點 25 項循環經濟行動</b><span>逐項回答企業角色與推動狀態；資訊不足時，直接選擇「不確定」。</span></div></div>
+      <div class="home-flowitem"><span class="no"></span><div><b>查看分析結果</b><span>查看循環行動現況、商業價值因子關聯、目前行動基礎、準備中行動、可進一步考量、資訊不確定與不適用項目。</span></div></div>
+      <div class="home-flowitem"><span class="no"></span><div><b>選擇參與方式</b><span>選擇未具名使用、取得個別化 PDF 報告，並另行決定是否同意作答內容去識別化後納入計畫統計與公共研究。</span></div></div>
+    </div>
+    
+  </div>
+
+  
+
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">SERVICE BOUNDARY</div><h2>本工具提供的範圍與服務邊界</h2></div>
+    <div class="home-duo"><div class="home-mini-card"><h3>本工具提供</h3><ul class="home-bullets"><li>情境限定的循環行動盤點。</li><li>現行商業模式與獲利邏輯說明。</li><li>循環經濟行動與商業價值因子的關聯解讀。</li><li>目前行動基礎與準備中行動整理。</li><li>後續循環轉型規劃可納入考量的行動全貌。</li><li>可供企業內部留存與跨部門討論的結果。</li></ul></div><div class="home-mini-card"><h3>結果的正確用途</h3><p>結果供一般資訊、企業內部理解與後續規劃使用。它建立轉型路徑規劃的前置基礎，不取代依個案事實進行的工程、財務、環境、法規或其他專業評估。</p></div></div>
+    <p class="home-boundary-label"><b>本工具不提供的判定</b></p>
+    <ul class="home-bullets home-boundary-list">
+      <li><b>循環轉型 pathway 或 roadmap</b>——不排列行動先後順序、不設依賴關係、不設時程與責任人。</li>
+      <li><b>缺口診斷或優先行動建議</b>——「尚未展開」「可進一步考量」都只是現況描述，不等於改善要求或優先行動。</li>
+      <li><b>循環成熟度分數或企業排名</b>——不同產品與模式路徑不同，不壓縮為單一高低分數。</li>
+      <li><b>企業應選擇的產品或商業模式</b>——由使用者依企業現況自行設定。</li>
+      <li><b>技術可行性、財務預測或投資報酬率</b>——不蒐集完整工程、成本、價格、需求與資本資料。</li>
+      <li><b>環境淨效益或減碳量證明</b>——需要完整生命週期資料、比較基準與專業評估。</li>
+      <li><b>ISO 符合性、驗證或認證</b>——完成本工具不構成符合性、驗證或認證證據。</li>
+      <li><b>法規合規判定</b>——不直接判定 ESPR 或其他產品法規的適用性與合規狀態。</li>
+      <li><b>法律、投資或其他專業意見</b>——不能取代依個案事實進行的正式專業評估。</li>
+    </ul>
+  </div>
+
+  
+
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">PARTICIPATION AND DATA</div><h2>參與方式與資料使用</h2><p>本計畫依資料最小化、目的限定、同意分離、最小權限、有限保存與彙整揭露原則處理資料。工具不要求上傳財務資料、產品技術文件、客戶名單、供應商資料或其他敏感商業文件。</p></div>
+    <p><a onclick="go('dataPolicy')" style="cursor:pointer">查看完整資料使用條例 →</a></p>
+  </div>
+
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">ABOUT THE PROJECT</div><h2>關於本計畫與共同發起單位</h2></div>
+    <p>Design the Circular Journey | For Your Durable Product Line 是 Design Your Circular Journey Programme 的第一項主題計畫，定位為面向亞太製造業的循環轉型路徑規劃前置探索服務。</p>
+    <p>本計畫協助企業將一條既有耐久產品線的工作事實，轉換為一致的循環經濟行動資料，並理解這些行動在現行商業模式下可能支持的商業價值。真正的 pathway、roadmap 與實施方案，仍需企業依自身目標、資源、成本、技術、依賴關係與時程進一步設計。</p>
+    <div class="home-duo"><div class="home-mini-card"><h3>REnato lab</h3><p>負責計畫架構、應用方法、數位工具、商業解讀與資料治理。團隊結合科學、工程、商業與設計，協助企業將循環經濟要求轉化為可理解、可執行及可持續改善的產品與工作流程。 <a href="https://renato-lab.com/" target="_blank" rel="noopener">renato-lab.com</a></p></div><div class="home-mini-card"><h3>TRACE Standards</h3><p>負責 ISO 59000 系列專業知識、25 項循環經濟行動定義、術語與內容品質。平台以東協為基地，結合產業研究、政策分析、國際標準與企業實務，協助企業建立可實施、可衡量並能因應市場變化的循環經濟方法。 <a href="https://www.linkedin.com/company/tracestandards/" target="_blank" rel="noopener">TRACE Standards</a></p></div></div>
+  </div>
+
+  
+
+  <div class="home-final">
+    <h2>從您正在經營的產品線開始</h2>
+    <p>您不需要先具備完整的循環經濟策略，也不需要準備額外文件。請選擇一條具體耐久產品線，依目前實際掌握的資訊回答；無法確認的事項，可以直接選擇「不確定」。透過一趟結構化探索，建立下一階段循環轉型規劃的共同起點。</p>
+    <div class="home-actions"><button class="btn btn-p" onclick="go(2)">開始探索 →</button><span class="hint">約需 20–30 分鐘｜可未具名完成｜不需上傳文件</span></div>
+  </div>
+</div>`;
+ var en=`<div class="home-page">
+  <div class="hero home-hero">
+    <span class="badge">2026 APAC Manufacturing Pilot</span>
+    <div class="eyebrow">DESIGN YOUR CIRCULAR JOURNEY PROGRAMME · PROJECT 1</div>
+    <h1>Start with one durable product line you already operate</h1>
+    <p class="sub">We believe circular transition should reflect the market, product, customer, transaction model and capabilities of each company—enabling diverse pathways suited to real operating conditions.</p>
+    <p class="sub">This project invites manufacturing companies to select one existing durable product line, one current business model and one defined transaction context; review current circular-economy actions; understand their links to business value; and establish a shared starting point for subsequent pathway planning.</p>
+    <div class="home-meta"><span>About 20–30 minutes</span><span>Anonymous participation available</span><span>No document upload</span><span>Select “Uncertain” when information is unavailable</span></div>
+    <div class="home-actions"><button class="btn btn-p" onclick="go(2)">Start the exploration →</button><span class="hint">You may return and revise your answers</span></div>
+    <div class="home-organisers">Co-initiated by REnato lab × TRACE Standards</div>
+  </div>
+
+  
+
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">WHAT YOU WILL RECEIVE</div><h2>What you will receive</h2><p>A shared baseline that brings together the action status, business-value links and areas for further consideration for one product line.</p></div>
+    <div class="home-output-grid">
+      <div class="home-output-card"><div class="num">01</div><h3>Circular-action status for the product line</h3><p>See the company’s role and current progress across 25 circular-economy actions, including institutionalised, in progress, planned, intended for planning, not started, uncertain and not applicable.</p></div>
+      <div class="home-output-card"><div class="num">02</div><h3>Business-value links under the current model</h3><p>Understand which business value factors each circular action may support under the selected current business model, with primary, secondary, contextual or no established link.</p></div>
+      <div class="home-output-card"><div class="num">03</div><h3>A complete action consideration view</h3><p>Organise the 25 actions into current foundations, actions in preparation, actions for further consideration, uncertain information and not applicable. These categories are not maturity scores, gaps or priorities.</p></div>
+      <div class="home-output-card"><div class="num">04</div><h3>Results for internal discussion</h3><p>Anonymous users can view the online result. Users who provide named information can receive a personalised PDF covering the scope, profit logic, action summary, business-value interpretation and full response appendix.</p></div>
+    </div>
+    
+    
+  </div>
+
+  
+
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">WHY THIS PROGRAMME</div><h2>Let each product line design its journey from its own conditions</h2></div>
+    <p class="home-lead">Circular transition can begin from different points.</p>
+    <p>A company may start with material and process efficiency, strengthen durability, maintenance and value retention, or develop returns, redeployment, life-cycle services and access or performance services.</p>
+    <p>The appropriate pathway depends on how the product is designed, manufactured, used and maintained, how the company earns revenue, what the customer pays for and how life-cycle responsibilities are allocated.</p>
+    <p>Many manufacturers already work on durability, material substitution, yield improvement, maintenance, returns, refurbishment, data management or supply-chain collaboration. These activities are often distributed across departments and described in different terms.</p>
+    <p>Using the 25 circular-economy actions in ISO 59004 as a shared language, the project helps companies organise existing work into a structure that can be understood and discussed, and interpret the business value it may support under the current business model.</p>
+    <div class="notice"><b>Core position of the project</b><br>The project establishes the action and business-understanding foundation required before circular-transition pathway planning: where the company stands, what foundations already exist and which actions may be considered in subsequent planning.</div>
+    
+  </div>
+
+  
+
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">DEFINE THE SCOPE</div><h2>Confirm the scope before you begin</h2><p>Three conditions remain fixed so that all questions and analysis use the same product and business boundary.</p></div>
+    <div class="home-scope-grid"><div class="home-scope-card"><div class="num">01</div><h3>One Product in Focus</h3><p>One specific product line used across all questions and results, with sufficiently consistent functions, use context, customers and transaction conditions.</p></div><div class="home-scope-card"><div class="num">02</div><h3>One business model that currently exists</h3><p>Each exploration uses one current business model. Complete separate explorations when the same product line uses different models.</p></div><div class="home-scope-card"><div class="num">03</div><h3>One main transaction context</h3><p>Fix the main customer, payment object, ownership and life-cycle responsibility throughout the assessment.</p></div></div>
+    
+    
+  </div>
+
+  
+
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">WHO AND WHAT IT IS FOR</div><h2>Who should participate</h2></div>
+    <p>This project serves business users in manufacturing companies. No prior knowledge of circular economy or the ISO 59000 series is required.</p>
+    <p>An appropriate respondent can define one durable product line, understand how it currently delivers value and earns revenue, fix one main transaction context, and answer questions on design, materials, sourcing, manufacturing, service, returns, resources, data and collaboration using currently available information.</p>
+    <p>Select “Uncertain” when information is unavailable rather than filling gaps by assumption. One person does not need to hold all cross-functional knowledge; the company may confirm answers internally and submit an integrated response through a designated contact.</p>
+    <div class="notice"><b>Core scope of the basic version</b><br>Identifiable durable products, equipment, assets and high-function modules that remain in use, have maintenance or value-recovery potential, and whose life-cycle conditions can be influenced by the manufacturer.</div>
+    
+    
+  </div>
+
+  
+
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">THE JOURNEY</div><h2>The process you will complete</h2><p>Six steps define the context, review the actions and form results for subsequent planning.</p></div>
+    <div class="home-flowlist"><div class="home-flowitem"><span class="no"></span><div><b>Confirm product applicability</b><span>Select the product type and confirm that it is within the basic-version scope.</span></div></div><div class="home-flowitem"><span class="no"></span><div><b>Set the Product in Focus</b><span>Name one specific product line and confirm its function, customer and use context.</span></div></div><div class="home-flowitem"><span class="no"></span><div><b>Select the current business model and transaction context</b><span>Select one currently existing model and fix the main transaction conditions. Some combinations require a short qualification check.</span></div></div><div class="home-flowitem"><span class="no"></span><div><b>Review 25 circular-economy actions</b><span>Answer the company role and progress status for each action. Select “Uncertain” when information is unavailable.</span></div></div><div class="home-flowitem"><span class="no"></span><div><b>View the analysis</b><span>See the action status, business-value links, current foundations, actions in preparation, further considerations, uncertainty and not-applicable items.</span></div></div><div class="home-flowitem"><span class="no"></span><div><b>Choose the participation route</b><span>Use the tool anonymously, request a personalised PDF, and separately decide whether to consent to de-identified research use.</span></div></div></div>
+    
+  </div>
+
+  
+
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">SERVICE BOUNDARY</div><h2>What the tool provides—and does not provide</h2></div>
+    <div class="home-duo"><div class="home-mini-card"><h3>The tool provides</h3><ul class="home-bullets"><li>Context-specific circular-action review.</li><li>Current business-model and profit-logic explanation.</li><li>Interpretation of links between circular actions and business value factors.</li><li>Organisation of current foundations and actions in preparation.</li><li>A complete set of actions that may be considered in subsequent pathway planning.</li><li>Results for internal records and cross-functional discussion.</li></ul></div><div class="home-mini-card"><h3>Appropriate use of the result</h3><p>The result is for general information, internal understanding and subsequent planning. It establishes a pre-planning foundation and does not replace case-specific engineering, financial, environmental, regulatory or other professional assessment.</p></div></div>
+    <p class="home-boundary-label"><b>What the tool does not determine</b></p>
+    <ul class="home-bullets home-boundary-list">
+      <li><b>Circular-transition pathway or roadmap</b> — no sequencing, dependencies, timing or responsibility assignment.</li>
+      <li><b>Gap diagnosis or priority recommendations</b> — “not started” and “for further consideration” are status descriptions, not improvement requirements or priorities.</li>
+      <li><b>Circular maturity score or ranking</b> — different products and models have different valid pathways and are not compressed into one score.</li>
+      <li><b>Which product or model the company should choose</b> — the user defines the Product in Focus, current model and transaction context.</li>
+      <li><b>Technical feasibility, financial forecast or ROI</b> — the tool does not collect complete engineering, cost, price, demand and capital data.</li>
+      <li><b>Proof of net environmental benefit or emissions reduction</b> — requires full life-cycle data, a comparison baseline and professional assessment.</li>
+      <li><b>ISO conformity, verification or certification</b> — completion does not establish conformity or evidence for verification or certification.</li>
+      <li><b>Regulatory compliance determination</b> — the tool does not determine applicability or compliance under ESPR or other product regulation.</li>
+      <li><b>Legal, investment or other professional advice</b> — cannot replace a formal case-specific professional assessment.</li>
+    </ul>
+  </div>
+
+  
+
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">PARTICIPATION AND DATA</div><h2>Participation and data use</h2><p>The project applies data minimisation, purpose limitation, separate consent, least privilege, limited retention and aggregated disclosure. No financial data, product technical files, customer lists, supplier data or other sensitive business documents are required.</p></div>
+    <p><a onclick="go('dataPolicy')" style="cursor:pointer">View the full data policy →</a></p>
+  </div>
+
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">ABOUT THE PROJECT</div><h2>About the project and co-initiators</h2></div>
+    <p>Design the Circular Journey | For Your Durable Product Line is the first thematic project under the Design Your Circular Journey Programme. It is a pre-pathway exploration service for manufacturing companies in the Asia-Pacific region.</p>
+    <p>The project converts the working facts of one existing durable product line into consistent circular-action data and explains the business value those actions may support under the current business model. The actual pathway, roadmap and implementation plan remain to be designed by the company according to its objectives, resources, costs, technologies, dependencies and timing.</p>
+    <div class="home-duo"><div class="home-mini-card"><h3>REnato lab</h3><p>Responsible for project architecture, applied method, digital tool, business interpretation and data governance. The team combines science, engineering, business and design to translate circular-economy requirements into understandable, implementable and continuously improvable products and workflows. <a href="https://renato-lab.com/" target="_blank" rel="noopener">renato-lab.com</a></p></div><div class="home-mini-card"><h3>TRACE Standards</h3><p>Responsible for ISO 59000 expertise, definitions of the 25 circular-economy actions, terminology and content quality. Based in ASEAN, the platform combines industry research, policy analysis, international standards and business practice to support implementable, measurable and adaptive circular-economy methods. <a href="https://www.linkedin.com/company/tracestandards/" target="_blank" rel="noopener">TRACE Standards</a></p></div></div>
+  </div>
+
+  
+
+  <div class="home-final"><h2>Start with the product line you already operate</h2><p>You do not need a complete circular-economy strategy or additional documents. Select one durable product line and answer using the information currently available. Choose “Uncertain” where information cannot be confirmed. Use this structured exploration to establish a shared starting point for the next stage of pathway planning.</p><div class="home-actions"><button class="btn btn-p" onclick="go(2)">Start the exploration →</button><span class="hint">About 20–30 minutes｜Anonymous participation available｜No document upload</span></div></div>
+</div>`;
+ return LANG==='en'?en:zh;
 }
 
+function scMethodology(){
+ var zh=`<div class="page-shell"><div class="page-head"><a class="page-back" onclick="go('home')">← 返回首頁</a><span class="page-title">問卷方法學</span></div>
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">HOW THE ANALYSIS WORKS</div><h2>本工具如何形成分析</h2><p>本工具以 ISO 59004 所提出的 25 項循環經濟行動作為共同基礎語言。系統先依使用者選擇的現行商業模式建立相應的獲利邏輯，再依既定矩陣，判斷各項行動與商業價值因子的關聯。</p></div>
+    <div class="home-chain"><b>核心分析鏈</b><br>一條既有 Product in Focus × 一個現行商業模式 × 一組交易情境 → 25 項循環經濟行動的企業角色與推動狀態 → 商業價值因子關聯 → 循環行動考量全貌。</div>
+    <details class="home-details"><summary>查看四種關聯層級</summary><div class="home-details-body"><div class="home-pair-grid"><div class="home-pair"><b>Primary｜主要關聯</b><span>該行動直接作用於商業價值因子的核心機制，可作為主要商業解讀。</span></div><div class="home-pair"><b>Secondary｜次要關聯</b><span>該行動透過支援條件或間接機制影響商業價值因子，作為補充解讀。</span></div><div class="home-pair"><b>Contextual｜情境性關聯</b><span>關聯只在特定產品、場域、控制權、成本或合作條件下成立。</span></div><div class="home-pair"><b>NA｜目前未建立關聯</b><span>目前方法尚未建立足夠清楚的商業關聯，不進入該價值因子的解讀。</span></div></div><p><b>解讀限制：</b>關聯層級描述關係的直接性與結構重要性，不代表實際效益大小，不會直接加總成分數，也不構成投資或行動優先順序。企業角色用於呈現決策與參與方式，不會改變既定商業映射，也不會直接形成企業缺口。</p></div></details>
+  </div>
 
+  
+ </div>`;
+ var en=`<div class="page-shell"><div class="page-head"><a class="page-back" onclick="go('home')">← Back to home</a><span class="page-title">Methodology</span></div>
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">HOW THE ANALYSIS WORKS</div><h2>How the analysis is formed</h2><p>The tool uses the 25 circular-economy actions in ISO 59004 as a shared foundation. It establishes the profit logic for the selected model and uses a predefined matrix to identify the links between actions and business value factors.</p></div>
+    <div class="home-chain"><b>Core analysis chain</b><br>One existing Product in Focus × one current business model × one transaction context → company role and progress across 25 circular-economy actions → business-value links → complete action consideration view.</div>
+    <details class="home-details"><summary>View the four link levels</summary><div class="home-details-body"><div class="home-pair-grid"><div class="home-pair"><b>Primary</b><span>The action directly affects the core mechanism of the business value factor and can be used as a main interpretation.</span></div><div class="home-pair"><b>Secondary</b><span>The action affects the factor through a supporting condition or indirect mechanism.</span></div><div class="home-pair"><b>Contextual</b><span>The link holds only under particular product, operating, control, cost or collaboration conditions.</span></div><div class="home-pair"><b>NA</b><span>The current method has not established a sufficiently clear business link.</span></div></div><p><b>Interpretation limit:</b> Link levels describe directness and structural importance, not the magnitude of actual benefit. They are not added into a score and do not establish investment or action priority. Company roles show decision and participation arrangements and do not change the predefined mapping or create a gap.</p></div></details>
+  </div>
+
+  
+ </div>`;
+ return LANG==='en'?en:zh;
+}
+
+function scDataPolicy(){
+ var zh=`<div class="page-shell"><div class="page-head"><a class="page-back" onclick="go('home')">← 返回首頁</a><span class="page-title">資料使用條例</span></div>
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">PARTICIPATION AND DATA</div><h2>參與方式與資料使用</h2><p>本計畫依資料最小化、目的限定、同意分離、最小權限、有限保存與彙整揭露原則處理資料。工具不要求上傳財務資料、產品技術文件、客戶名單、供應商資料或其他敏感商業文件。</p></div>
+    <div class="home-data-grid">
+      <div class="home-data-card"><h3>路徑一｜未具名使用</h3><p>不提供公司名稱、聯絡人姓名或電子郵件。作答用於產生當次線上結果、必要系統功能及短期技術除錯；不納入計畫統計、公共研究或夥伴彙整，最多保存 30 日。</p></div>
+      <div class="home-data-card"><h3>路徑二｜取得個別化 PDF 報告</h3><p>提供公司名稱、聯絡人姓名、商用電子郵件及本次現況確認，用於身分與提交資料確認、PDF 產生與寄送及必要查詢。具名不代表自動同意研究；直接識別資料原則上最長保存 6 個月。</p></div>
+      <div class="home-data-card"><h3>路徑三｜同意去識別化研究使用</h3><p>在取得 PDF 報告之外，另行選擇是否同意研究使用。資料可用於計畫統計、方法分析與改善、階段性觀察、公共研究與知識分享；不同意研究不影響 PDF 報告取得。</p></div>
+    </div>
+    <details class="home-details"><summary>查看資料使用的重要原則</summary><div class="home-details-body"><ul class="home-bullets"><li>取得 PDF 報告與研究同意分開處理。</li><li>商用電子郵件不會用於行銷或其他資訊寄送，除非使用者另行明確同意。</li><li>去識別化資料不以識別特定企業或個人為目的。</li><li>未具名及未同意研究的作答，不納入計畫統計、公共成果或知識推廣夥伴彙整。</li></ul></div></details>
+    <details class="home-details"><summary>查看資料存取、公開規則與使用者權利</summary><div class="home-details-body"><div class="home-pair-grid"><div class="home-pair"><b>REnato lab</b><span>依職務分工存取完成工具運作、PDF 交付、資料治理與研究分析所必要的資料。</span></div><div class="home-pair"><b>TRACE Standards</b><span>原則上只存取去識別化資料與方法內容，用於 ISO 59000 系列專業審查，不存取公司及聯絡資料。</span></div><div class="home-pair"><b>知識推廣夥伴</b><span>只在達到最低樣本門檻時，取得與其推廣來源相關的去識別化群體彙整結果，不取得企業名稱、聯絡資料或個別原始回答。</span></div></div><p><b>公開與彙整規則：</b>公開資料只以去識別化群體形式呈現。原則上，每個公開分組至少需要 10 筆有效研究樣本；未達門檻者將合併至較高層級分類，或不單獨呈現。即使達到門檻，若欄位組合仍可能使外部人士合理推知個別企業身分，相關結果不予公開。公開成果反映參與樣本的階段性訊號，不代表亞太製造業整體母體的統計推估。</p><p><b>使用者權利：</b>在資料完成不可逆去識別化以前，使用者可依適用法令提出查詢或閱覽、更正、停止處理、刪除，或撤回研究同意。完成不可逆去識別化後，因個別紀錄已無法重新連結至特定參與者，原則上無法再針對單一紀錄撤回。</p><p><b>資料聯絡窗口：</b>info@renato-lab.com</p></div></details>
+  </div>
+
+  
+ </div>`;
+ var en=`<div class="page-shell"><div class="page-head"><a class="page-back" onclick="go('home')">← Back to home</a><span class="page-title">Data policy</span></div>
+  <div class="home-section">
+    <div class="home-section-head"><div class="kicker">PARTICIPATION AND DATA</div><h2>Participation and data use</h2><p>The project applies data minimisation, purpose limitation, separate consent, least privilege, limited retention and aggregated disclosure. No financial data, product technical files, customer lists, supplier data or other sensitive business documents are required.</p></div>
+    <div class="home-data-grid"><div class="home-data-card"><h3>Route 1｜Anonymous use</h3><p>No company name, contact name or email. Responses support the immediate online result, necessary system functions and short-term technical debugging. They are excluded from project statistics, public research and partner aggregation, and retained for no more than 30 days.</p></div><div class="home-data-card"><h3>Route 2｜Personalised PDF report</h3><p>Provide company name, contact name, business email and confirmation of the current context for identity and submission checks, PDF generation and delivery, and necessary enquiries. Named participation does not automatically constitute research consent. Direct identifiers are generally retained for no more than six months.</p></div><div class="home-data-card"><h3>Route 3｜Consent to de-identified research use</h3><p>Research use is a separate choice in addition to the PDF service. Data may support statistics, method analysis and improvement, stage observations, public research and knowledge sharing. Declining research does not affect PDF delivery.</p></div></div>
+    <details class="home-details"><summary>Important data-use principles</summary><div class="home-details-body"><ul class="home-bullets"><li>PDF delivery and research consent are separate.</li><li>Business email will not be used for marketing or other information delivery without separate explicit consent.</li><li>De-identified data is not used to identify a specific company or individual.</li><li>Anonymous responses and responses without research consent are excluded from project statistics, public outputs and outreach-partner aggregation.</li></ul></div></details>
+    <details class="home-details"><summary>Data access, publication rules and user rights</summary><div class="home-details-body"><div class="home-pair-grid"><div class="home-pair"><b>REnato lab</b><span>Role-based access to data necessary for tool operation, PDF delivery, data governance and research analysis.</span></div><div class="home-pair"><b>TRACE Standards</b><span>Normally accesses only de-identified data and method content for ISO 59000 professional review, not company or contact data.</span></div><div class="home-pair"><b>Knowledge-outreach partners</b><span>Receive only de-identified group-level results related to their outreach source when the minimum sample threshold is met; no company name, contact information or individual raw response.</span></div></div><p><b>Publication and aggregation:</b> Public information is presented only in de-identified group form. Each published group generally requires at least ten valid research samples. Smaller groups are combined or not shown. Results are withheld when a combination of fields could reasonably identify a company. Public outputs show stage signals from participating samples and are not statistical estimates of the entire APAC manufacturing population.</p><p><b>User rights:</b> Before irreversible de-identification, users may request access, correction, cessation of processing, deletion or withdrawal of research consent, subject to applicable law. After irreversible de-identification, an individual record can no longer be linked to the participant and generally cannot be withdrawn separately.</p><p><b>Data contact:</b> info@renato-lab.com</p></div></details>
+  </div>
+
+  
+ </div>`;
+ return LANG==='en'?en:zh;
+}
 
 /* ---------- P0 ---------- */
 function scP0(){
  var retained=DATA.productTypes.filter(function(p){return p.retained;});
  var excluded=DATA.productTypes.filter(function(p){return !p.retained;});
- function ptCard(p,ex){return choiceCard(S.pt===p.code,"pickPT('"+p.code+"')",bi(p.name,p.name_en)+(ex?' <span class="pill pill-w">'+bi('不適用','Not covered')+'</span>':''),bi(p.items,p.items_en));}
+ function ptCard(p,ex){return choiceCard(S.pt===p.code,"pickPT('"+p.code+"')",bi(p.name,p.name_en)+(ex?' <span class="pill pill-n">'+bi('不適用','Not covered')+'</span>':''),bi(p.items,p.items_en));}
  var cards='<div class="choice-grid">'+retained.map(function(p){return ptCard(p,false);}).join('')+'</div>';
- var exToggle='<div style="margin-top:12px"><a href="javascript:toggleExcluded()" style="font-size:12.5px">'+(S.showExcluded?bi('▾ 收合不適用的產品類型','▾ Hide product types not covered'):bi('▸ 我的產品不在上列？查看不適用的產品類型（'+excluded.length+'）','▸ Not listed above? View product types not covered ('+excluded.length+')'))+'</a></div>';
+ var exToggle='<div style="margin-top:12px"><a class="exp-toggle" href="javascript:toggleExcluded()">'+(S.showExcluded?'<span class="exp-mark">－</span> '+bi('收合不適用的產品類型','Hide product types not covered'):'<span class="exp-mark">＋</span> '+bi('我的產品不在上列？查看不適用的產品類型（'+excluded.length+'）','Not listed above? View product types not covered ('+excluded.length+')'))+'</a></div>';
  var exCards=S.showExcluded?'<div class="choice-grid" style="margin-top:8px">'+excluded.map(function(p){return ptCard(p,true);}).join('')+'</div>':'';
  var marketChips='<div class="chips">'+MARKET_OPTIONS.map(function(o){return chip(bi(o.zh,o.en),S.markets.indexOf(o.code)>=0,"pickMarket('"+o.code+"')");}).join('')+'</div>';
  var body='<div class="q"><div class="qt">'+bi('Q0.1　產品／產品線名稱','Q0.1  Product / product-line name')+'</div><div class="qh">'+bi('本工具以一條具體產品線為分析單位。','This tool uses one specific product line as the unit of analysis.')+'</div><input type="text" id="pn" value="'+esc(S.productName)+'" placeholder="'+bi('例：商用洗衣設備','e.g. commercial laundry equipment')+'" oninput="S.productName=this.value;syncNext()"></div>'
@@ -599,7 +995,7 @@ function renderAction(n){
 function scP6(){
  var ph=PHASES[S.cePhase];
  var body='<div class="focus-tag"><b>'+bi('分析對象：','Object: ')+'</b>'+esc(S.productName)+'　·　'+bi('診斷模式：','Model: ')+esc(bi(DATA.modeName[S.mode],DATA.modeName_en[S.mode]))+'</div>';
- body+='<div class="notice" style="margin:8px 0 12px">'+bi('每題先描述可觀察的工作作法，再請選擇目前狀態。若主要由其他價值鏈角色負責或無法判斷，請直接選對應選項。','Each item first describes an observable practice, then asks for its current status. If another value-chain actor is mainly responsible, or it cannot be determined, choose the matching option.')+' <a href="javascript:demoFill()" style="font-size:11px">'+bi('（測試用：一鍵示意填答）','(test: illustrative auto-fill)')+'</a></div>';
+ body+='<div class="notice" style="margin:8px 0 12px">'+bi('每題先描述可觀察的工作作法，再請選擇目前狀態。若主要由其他價值鏈角色負責或無法判斷，請直接選對應選項。','Each item first describes an observable practice, then asks for its current status. If another value-chain actor is mainly responsible, or it cannot be determined, choose the matching option.')+' <a href="javascript:demoFill()" style="font-size:11px">'+bi('（示範用：一鍵填入範例答案）','(Demo: one-click sample answers)')+'</a></div>';
  body+='<div class="phase-h"><span class="ph-ic">'+stageIconEl(ph.k,'stg-ic',false)+'</span><div style="flex:1"><div class="pt">'+bi(ph.zh,ph.en)+'</div><div class="pc">'+bi('本階段已答 ','Answered ')+phaseAnswered(ph)+' ／ '+ph.ids.length+'</div></div></div>';
  ph.ids.forEach(function(n){body+=renderAction(n);});
  if(S.cePhase<PHASES.length-1)body+='<div style="text-align:right;margin-top:6px"><button class="btn btn-g" onclick="setPhase('+(S.cePhase+1)+')">'+bi('下一階段 →','Next stage →')+'</button></div>';
@@ -675,12 +1071,12 @@ function scResult(){
   ?'<div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">'+priority.map(function(a){return '<div class="card" style="padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px"><span style="font-size:13.5px">'+esc(bi(a.zh,a.en))+'</span>'+statusPill(S.ce[a.id])+'</div>';}).join('')+'</div>'
   :'<div class="ce-def-note">'+bi('目前對本模式最關鍵的行動皆已在推動中，暫無特別建議優先檢視的項目。','No standout items right now — the actions most critical to this model are already underway.')+'</div>';
  var analysis='<div class="notice">'+bi('這一頁是<b>運算邏輯的驗證輸出</b>，非最終報告（報告版面另做）。','This page is a <b>logic verification output</b>, not the final report (report layout is separate).')+'</div>'
-  +'<div class="sec"><h3>① '+bi('基本資訊','Summary')+'</h3><ul><li>'+bi('產品：','Product: ')+'<b>'+esc(S.productName)+'</b></li><li>'+bi('產品類型：','Type: ')+esc(bi(ptById(S.pt).name,ptById(S.pt).name_en))+'</li><li>'+bi('診斷模式：','Model: ')+'<b>'+esc(modeName)+'</b></li></ul></div>'
-  +'<div class="sec"><h3>② '+bi('循環行動現況總覽','CE action status overview')+'</h3><ul>'+stBlock+'</ul></div>'
-  +'<div class="sec"><h3>③ '+bi('建議優先檢視的行動','Suggested priority actions')+'</h3><p class="qh">'+bi('這些行動對您選擇的商業模式有主要影響，但目前尚未推動或仍在規劃中，建議優先檢視。','These actions have a primary influence on your selected business model but are not yet underway or still being planned — worth reviewing first.')+'</p>'+priorityBlock+'</div>';
+  +'<div class="sec"><h3><span class="sec-num">01</span> '+bi('基本資訊','Summary')+'</h3><ul><li>'+bi('產品：','Product: ')+'<b>'+esc(S.productName)+'</b></li><li>'+bi('產品類型：','Type: ')+esc(bi(ptById(S.pt).name,ptById(S.pt).name_en))+'</li><li>'+bi('診斷模式：','Model: ')+'<b>'+esc(modeName)+'</b></li></ul></div>'
+  +'<div class="sec"><h3><span class="sec-num">02</span> '+bi('循環行動現況總覽','CE action status overview')+'</h3><ul>'+stBlock+'</ul></div>'
+  +'<div class="sec"><h3><span class="sec-num">03</span> '+bi('建議優先檢視的行動','Suggested priority actions')+'</h3><p class="qh">'+bi('這些行動對您選擇的商業模式有主要影響，但目前尚未推動或仍在規劃中，建議優先檢視。','These actions have a primary influence on your selected business model but are not yet underway or still being planned — worth reviewing first.')+'</p>'+priorityBlock+'</div>';
  var body='<div id="resultCapture">'+analysis+'</div>'
   +reportSection()
-  +'<div class="sec no-print"><h3>⑤ '+bi('下載 PDF','Download PDF')+' <span class="pill pill-w">'+bi('測試功能','test')+'</span></h3><p class="qh">'+bi('此為測試功能：點下方按鈕，會將上方分析區塊直接匯出成 PDF 檔（需連網）。正式完整報告請透過下方「接收完整報告」以 Email 取得，內容包含本模式的獲利邏輯、主要商業價值因子，以及您已推動之行動的個別商業影響分析。','Test feature: the button exports the analysis section above to a PDF (requires internet). The formal full report — including this model’s profit logic, primary business value factors, and per-action business impact analysis — is delivered by email via “Receive full report” below.')+'</p><button class="btn btn-g" id="pdfBtn" onclick="downloadTestPDF()">'+bi('下載 PDF（測試功能）','Download PDF (test)')+'</button></div>';
+  +'<div class="sec no-print"><h3><span class="sec-num">05</span> '+bi('下載 PDF','Download PDF')+'</h3><p class="qh">'+bi('點下方按鈕，會將上方分析區塊直接匯出成 PDF 檔（需連網）。正式完整報告請透過下方「接收完整報告」以 Email 取得，內容包含本模式的獲利邏輯、主要商業價值因子，以及您已推動之行動的個別商業影響分析。','The button exports the analysis section above to a PDF (requires internet). The formal full report — including this model’s profit logic, primary business value factors, and per-action business impact analysis — is delivered by email via “Receive full report” below.')+'</p><button class="btn btn-g" id="pdfBtn" onclick="downloadTestPDF()">'+bi('下載 PDF','Download PDF')+'</button></div>';
  var foot='<button class="btn btn-g" onclick="go(\'p6\')">'+bi('← 回填答','← Back to answers')+'</button><div class="right"><button class="btn btn-g" onclick="location.reload()">'+bi('重新開始','Restart')+'</button></div>';
  return shell(3,bi('接收結果','Results'),bi('依所選模式呈現的邏輯輸出與報告接收','Logic output for the selected model, and report delivery'),' ',' ',body,foot,true);
 }
@@ -688,7 +1084,8 @@ function scResult(){
 /* ---------- router ---------- */
 function render(){
  renderNav();
- var m={home:scHome,p0:scP0,exitP:scExitP,pm:scPM,qual:scQual,exitM:scExitM,p6:scP6,result:scResult};
+ renderFooter();
+ var m={home:scHome,p0:scP0,exitP:scExitP,pm:scPM,qual:scQual,exitM:scExitM,p6:scP6,result:scResult,methodology:scMethodology,dataPolicy:scDataPolicy};
  document.getElementById('app').innerHTML=(m[S.step]||scHome)();
 }
 render();
