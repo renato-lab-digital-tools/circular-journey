@@ -26,6 +26,7 @@ a{color:var(--accent);font-weight:600}
 .nav-brand:hover .nav-title{color:#c7d3ea}
 .nav-spacer{flex:1}
 .nav-tag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;font-weight:700;color:#9db4dd;border:1px solid var(--navy-line);border-radius:99px;padding:3px 10px;white-space:nowrap}
+.nav-proto-tag{font-family:var(--mono);font-size:10px;letter-spacing:.08em;font-weight:700;color:#ffd166;border:1px solid #7a5a1f;background:rgba(255,209,102,.08);border-radius:99px;padding:3px 10px;white-space:nowrap}
 .nav-btn{background:transparent;color:#fff;border:1px solid var(--navy-line);border-radius:7px;padding:6px 13px;font-size:12.5px;font-weight:600;font-family:inherit;cursor:pointer}
 .nav-btn:hover{background:rgba(255,255,255,.08)}
 .nav-btn.on{background:#fff;color:var(--navy);border-color:#fff}
@@ -40,6 +41,8 @@ a{color:var(--accent);font-weight:600}
 .footer-links a{font-size:12.5px;color:var(--muted);font-weight:600;cursor:pointer;white-space:nowrap}
 .footer-links a:hover{color:var(--navy)}
 .footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11.5px;color:var(--faint);border-top:1px solid var(--line);padding-top:14px}
+.footer-bottom-left{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.footer-proto-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;font-weight:700;color:var(--warn-text);border:1px solid var(--warn);border-radius:99px;padding:2px 9px;white-space:nowrap}
 @media(max-width:640px){
   .footer-in{padding:22px 16px 20px}
   .footer-bottom{flex-direction:column;gap:4px}
@@ -118,6 +121,8 @@ input:focus{border-color:var(--navy);outline:none;box-shadow:0 0 0 3px var(--acc
 /* home */
 .hero{padding:44px 0 8px}
 .badge{display:inline-block;font-size:12px;font-weight:700;color:var(--navy);background:var(--navy-tint);border:1px solid var(--navy-line);border-radius:99px;padding:4px 12px}
+.home-badges-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.badge-muted{color:var(--muted);background:transparent;border-color:var(--line);font-weight:600}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--accent);font-weight:700;margin:16px 0 6px}
 .hero h1{font-size:36px;line-height:1.2;margin:0 0 14px;color:var(--navy);font-weight:800;letter-spacing:-.01em}
 .hero p.sub{font-size:16px;color:var(--muted);max-width:680px;margin:0;line-height:1.75}
@@ -462,6 +467,7 @@ function progressOptText(code){var o=PROGRESS_OPTIONS.find(function(x){return x.
 
 var S={step:'home',productName:'',markets:[],pt:null,mode:null,ce:{},cePhase:0,ceTab:{},admin:{},showExcluded:false};
 var LANG='zh';
+var LAST_UPDATED='2026-07-25';
 var GAS_URL='https://script.google.com/macros/s/AKfycbxDyGew5mgdR8WpB2otqg8SR4TNTfI6PfT3kuUL_38L4jFTO0NXprG_t_FBV5t4s7sK/exec';
 function postToBackend(action,payload){
  if(!GAS_URL)return Promise.resolve(null);
@@ -533,7 +539,7 @@ function reportPayload_(extra){
  var a=S.admin;
  var pt=ptById(S.pt);
  var md=(pt?modesFor(S.pt):[]).find(function(x){return x.mode===S.mode;});
- var p={submissionId:a.submissionId,email:a.email,productName:S.productName||'',company:a.company||'',contactName:a.name||'',jobTitle:a.title||'',taxId:a.tax||'',partner:a.partner||'',followup:!!a.followup,productTypeName:pt?pt.name:'',businessModelName:md?md.name:''};
+ var p={submissionId:a.submissionId,email:a.email,productName:S.productName||'',company:a.company||'',contactName:a.name||'',jobTitle:a.title||'',taxId:a.tax||'',partner:a.partner||'',followup:!!a.followup,productTypeName:pt?pt.name:'',businessModelName:md?md.name:'',lang:LANG};
  for(var k in extra){p[k]=extra[k];}
  return p;
 }
@@ -585,7 +591,7 @@ function answeredCount(){return Object.keys(S.ce).filter(function(k){return S.ce
 
 /* nav */
 function renderNav(){
- document.getElementById('nav').innerHTML='<span class="nav-brand" onclick="go(\'home\')"><svg class="nav-logo" viewBox="0 0 148 49"><use href="#logo"/></svg><span class="nav-div"></span><span class="nav-title">Design Your Circular Journey</span></span><span class="nav-spacer"></span><button class="nav-btn '+(S.step==="methodology"?"on":"")+'" onclick="go(\'methodology\')">'+bi('問卷方法學','Methodology')+'</button><button class="nav-btn '+(S.step==="dataPolicy"?"on":"")+'" onclick="go(\'dataPolicy\')">'+bi('資料使用條例','Data policy')+'</button><button class="nav-btn '+(LANG==="zh"?"on":"")+'" onclick="setLang(\'zh\')">繁中</button><button class="nav-btn '+(LANG==="en"?"on":"")+'" onclick="setLang(\'en\')">EN</button>';
+ document.getElementById('nav').innerHTML='<span class="nav-brand" onclick="go(\'home\')"><svg class="nav-logo" viewBox="0 0 148 49"><use href="#logo"/></svg><span class="nav-div"></span><span class="nav-title">Design Your Circular Journey</span></span><span class="nav-proto-tag">'+bi('Prototype・市場測試版','Prototype · Market Test')+'</span><span class="nav-spacer"></span><button class="nav-btn '+(S.step==="methodology"?"on":"")+'" onclick="go(\'methodology\')">'+bi('問卷方法學','Methodology')+'</button><button class="nav-btn '+(S.step==="dataPolicy"?"on":"")+'" onclick="go(\'dataPolicy\')">'+bi('資料使用條例','Data policy')+'</button><button class="nav-btn '+(LANG==="zh"?"on":"")+'" onclick="setLang(\'zh\')">繁中</button><button class="nav-btn '+(LANG==="en"?"on":"")+'" onclick="setLang(\'en\')">EN</button>';
 }
 function renderFooter(){
  document.getElementById('footer').innerHTML=
@@ -600,7 +606,7 @@ function renderFooter(){
    +'</div>'
   +'</div>'
   +'<div class="footer-bottom">'
-    +'<span>© 2026 REnato lab × TRACE Standards</span>'
+    +'<div class="footer-bottom-left"><span>© 2026 REnato lab × TRACE Standards</span><span class="footer-proto-tag">'+bi('Prototype・市場測試版','Prototype · Market Test')+'</span><span>'+bi('最後更新：','Last updated: ')+LAST_UPDATED+'</span></div>'
     +'<span>info@renato-lab.com</span>'
   +'</div>';
 }
@@ -630,7 +636,7 @@ function setQual(v){S.qual=v;render();}
 function scHome(){
  var zh=`<div class="home-page">
   <div class="hero home-hero">
-    <span class="badge">2026 亞太製造業試辦計畫</span>
+    <div class="home-badges-row"><span class="badge">2026 亞太製造業試辦計畫</span><span class="badge badge-muted">最後更新：${LAST_UPDATED}</span></div>
     <div class="eyebrow">DESIGN YOUR CIRCULAR JOURNEY PROGRAMME · PROJECT 1</div>
     <h1>從一條正在經營的耐久產品線開始，建立循環轉型路徑規劃的行動基礎</h1>
     <p class="sub">我們相信，循環轉型應從企業所在市場、產品特性、客戶需求、交易方式與實際能力出發，因地制宜地發展多元路徑。</p>
@@ -750,7 +756,7 @@ function scHome(){
 </div>`;
  var en=`<div class="home-page">
   <div class="hero home-hero">
-    <span class="badge">2026 APAC Manufacturing Pilot</span>
+    <div class="home-badges-row"><span class="badge">2026 APAC Manufacturing Pilot</span><span class="badge badge-muted">Last updated: ${LAST_UPDATED}</span></div>
     <div class="eyebrow">DESIGN YOUR CIRCULAR JOURNEY PROGRAMME · PROJECT 1</div>
     <h1>Start with one durable product line you already operate</h1>
     <p class="sub">We believe circular transition should reflect the market, product, customer, transaction model and capabilities of each company—enabling diverse pathways suited to real operating conditions.</p>
